@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="eventPropertiesWindow" fx:id="eventPropertiesWindowAnchor" minHeight="311.1328125" prefHeight="351.002907617185" prefWidth="311.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="gui.EventPropertiesWindowController">
+  <!-- TODO Add Nodes -->
+  <children>
+    <Label fx:id="titleLabel" layoutY="14.0" prefHeight="22.0" prefWidth="36.0" text="Title" AnchorPane.leftAnchor="14.0">
+      <font>
+        <Font name="System Bold Italic" size="13.0" fx:id="x1" />
+      </font>
+    </Label>
+    <Label fx:id="typeLabel" font="$x1" layoutY="43.0" prefHeight="22.0" text="Type" AnchorPane.leftAnchor="14.0" />
+    <Label fx:id="dateLabel" font="$x1" layoutY="72.0" prefHeight="22.0" prefWidth="36.0" text="Date" AnchorPane.leftAnchor="14.0" />
+    <Label fx:id="descriptionLabel" font="$x1" prefHeight="22.0" text="Description" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="171.13" />
+    <TextArea fx:id="descriptionTextArea" prefHeight="111.56640625" prefWidth="258.0" wrapText="true" AnchorPane.bottomAnchor="51.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="197.13" />
+    <TextField fx:id="titleTextField" layoutY="14.0" prefWidth="200.0" AnchorPane.leftAnchor="72.0" AnchorPane.rightAnchor="14.0" />
+    <Label fx:id="categoryLabel" font="$x1" layoutY="101.0" prefHeight="22.0" prefWidth="72.0" text="Category" AnchorPane.leftAnchor="14.0" />
+    <CheckBox fx:id="durationCheckBox" alignment="CENTER_RIGHT" layoutY="43.0" mnemonicParsing="false" onAction="#durationPressed" prefHeight="22.0" prefWidth="85.00009999999747" text="Duration" AnchorPane.rightAnchor="14.0" />
+    <TextField fx:id="endDateTextField" layoutY="72.0" prefWidth="85.0" AnchorPane.rightAnchor="15.0" />
+    <TextField fx:id="startDateTextField" layoutY="72.0" prefWidth="85.0" AnchorPane.rightAnchor="142.0" />
+    <Label fx:id="dateToLabel" layoutY="75.0" text="to" AnchorPane.rightAnchor="113.0" />
+    <ComboBox fx:id="categoryComboBox" layoutY="101.0" prefWidth="161.0" AnchorPane.rightAnchor="14.0" />
+    <Separator fx:id="buttonSeparator" prefWidth="286.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+    <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelPressed" text="Cancel" AnchorPane.bottomAnchor="9.13" AnchorPane.rightAnchor="14.0" />
+    <Button fx:id="createButton" mnemonicParsing="false" onAction="#createPressed" text="Create" AnchorPane.bottomAnchor="9.13" AnchorPane.rightAnchor="94.0" />
+    <Label id="descriptionLabel" fx:id="iconLabel" font="$x1" layoutY="138.0" prefHeight="22.0" text="Icon" AnchorPane.leftAnchor="14.0" />
+    <ComboBox id="categoryComboBox" fx:id="iconComboBox" layoutY="138.0" prefWidth="200.0" AnchorPane.rightAnchor="14.0" />
+  </children>
+</AnchorPane>

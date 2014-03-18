@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="timlinePropertiesWindowAnchor" fx:id="timelinePropertiesWindowAnchor" minHeight="243.7" prefHeight="287.7" prefWidth="425.9998558593725" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="gui.TimelinePropertiesWindowController">
+  <!-- TODO Add Nodes -->
+  <children>
+    <Label fx:id="appearanceLabel" layoutY="78.0" text="Appearance:" AnchorPane.leftAnchor="14.0">
+      <font>
+        <Font name="System Bold Italic" size="16.0" fx:id="x1" />
+      </font>
+    </Label>
+    <Label fx:id="informationLabel" font="$x1" layoutY="14.0" text="Information:" AnchorPane.leftAnchor="14.0" />
+    <Label fx:id="axisUnitLabel" layoutY="187.0" prefHeight="22.0" text="Axis Unit" AnchorPane.leftAnchor="13.0">
+      <font>
+        <Font name="System Bold Italic" size="13.0" fx:id="x2" />
+      </font>
+    </Label>
+    <Label fx:id="titleLabel" font="$x2" layoutY="40.0" text="Title" AnchorPane.leftAnchor="14.0" />
+    <Label id="colorLabel" fx:id="colorLabelBackground" alignment="TOP_LEFT" font="$x2" layoutY="119.0" prefHeight="25.0" text="Background Color" AnchorPane.leftAnchor="14.0" />
+    <ColorPicker id="colorColorChooser" fx:id="colorBackgroundChooser" layoutY="114.0" AnchorPane.rightAnchor="13.0" />
+    <TextField fx:id="titleTextField" layoutY="37.0" prefWidth="199.99991689452872" AnchorPane.leftAnchor="213.0" AnchorPane.rightAnchor="13.0" />
+    <ComboBox fx:id="fontComboBox" layoutY="215.0" AnchorPane.rightAnchor="14.0" />
+    <Button fx:id="createButton" mnemonicParsing="false" onAction="#createButtonPressed" text="Create" AnchorPane.bottomAnchor="13.7" AnchorPane.rightAnchor="97.0" />
+    <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelButtonPressed" text="Cancel" AnchorPane.bottomAnchor="13.7" AnchorPane.rightAnchor="27.0" />
+    <ComboBox fx:id="axisUnitComboBox" layoutY="187.0" AnchorPane.rightAnchor="14.0" />
+    <Separator fx:id="appearanceSeparator" layoutY="70.0" prefWidth="426.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+    <Label fx:id="fontLabel" font="$x2" layoutY="214.0" prefHeight="22.0" text="Font" AnchorPane.leftAnchor="14.0" />
+    <Separator fx:id="buttonSeparator" prefWidth="426.000244140625" AnchorPane.bottomAnchor="39.7" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-1.0" />
+    <ColorPicker id="colorP" fx:id="colorTimelineChooser" layoutY="144.0" AnchorPane.rightAnchor="13.0" />
+    <Label id="colorLabel" fx:id="colorLabelTimeline" alignment="TOP_LEFT" font="$x2" layoutY="144.0" prefHeight="25.0" text="Timeline Color" AnchorPane.leftAnchor="13.0" />
+  </children>
+</AnchorPane>

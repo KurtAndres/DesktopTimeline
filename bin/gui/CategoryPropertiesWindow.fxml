@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane minWidth="-1.0" prefHeight="119.0" prefWidth="292.00019999999495" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="gui.CategoryPropertiesWindowController">
+  <!-- TODO Add Nodes -->
+  <children>
+    <TextField fx:id="categoryNameTextField" prefWidth="132.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0" />
+    <Label fx:id="categoryNameLabel" prefHeight="22.0" prefWidth="123.0" text="Category Name:" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="14.0">
+      <font>
+        <Font name="System Bold Italic" size="13.0" fx:id="x1" />
+      </font>
+    </Label>
+    <Label fx:id="renderColorLabel" font="$x1" prefHeight="22.0" prefWidth="123.0" text="Render Color:" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="46.0" />
+    <ColorPicker fx:id="renderColorColorPicker" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="44.0" />
+    <Separator fx:id="buttonSeparator" prefWidth="292.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="82.0" />
+    <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelButtonPressed" text="Cancel" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="13.0" />
+    <Button fx:id="createButton" mnemonicParsing="false" onAction="#createButtonPressed" text="Create" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="93.0" />
+  </children>
+</AnchorPane>

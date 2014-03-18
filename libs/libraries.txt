@@ -1,0 +1,2 @@
+sqlite-jdbc-3.7.15-M1.jar --used for connecting to the SQLite database
+jfxrt.jar                 --javafx

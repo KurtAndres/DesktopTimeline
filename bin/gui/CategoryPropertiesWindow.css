@@ -1,0 +1,15 @@
+/* Applies to everything */
+.root{
+    -fx-font-family: "Liberation Sans Narrow";
+    -fx-font-weight: bold;
+    
+    -fx-base: rgb(0, 109, 204);
+}
+
+/* Applies to all labels */
+.label{
+    -fx-border-radius: 5 5 5 5;
+    -fx-background-radius: 5 5 5 5;
+    -fx-border-style: solid;
+    -fx-border-width: 3;
+}
