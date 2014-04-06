@@ -1,115 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.input.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="mainWindow" fx:id="mainWindowAnchor" prefHeight="603.0" prefWidth="943.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="gui.MainWindowController">
-  <!-- TODO Add Nodes -->
+<AnchorPane id="AnchorPane" fx:id="mainWindowAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="gui.MainWindowController">
   <children>
-    <MenuBar fx:id="menuBar" layoutY="0.0" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="478.9999000000025" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-      <menus>
-        <Menu mnemonicParsing="false" text="File" fx:id="fileMenu">
+    <BorderPane prefHeight="600.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <center>
+        <SplitPane fx:id="splitPane" dividerPositions="0.20044543429844097" focusTraversable="true" prefHeight="160.0" prefWidth="200.0">
           <items>
-            <MenuItem mnemonicParsing="false" onAction="#newTimelinePressed" text="New Timeline" fx:id="newTimelineMenuItem">
-              <accelerator>
-                <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-              </accelerator>
-            </MenuItem>
-            <MenuItem mnemonicParsing="false" onAction="#savePressed" text="Save" fx:id="saveMenuItem">
-              <accelerator>
-                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-              </accelerator>
-            </MenuItem>
-            <MenuItem disable="false" mnemonicParsing="false" onAction="#exitPressed" text="Exit" fx:id="exitMenuItem">
-              <accelerator>
-                <KeyCodeCombination alt="DOWN" code="F4" control="UP" meta="UP" shift="UP" shortcut="UP" />
-              </accelerator>
-            </MenuItem>
+            <VBox id="VBox" alignment="CENTER_LEFT" maxWidth="350.0" minWidth="-Infinity" prefHeight="546.0" prefWidth="172.0" spacing="5.0">
+              <children>
+                <Label fx:id="timelinesLabel" prefWidth="150.0" text="Timelines:">
+                  <font>
+                    <Font name="System Bold Italic" size="16.0" fx:id="x1" />
+                  </font>
+                </Label>
+                <ListView fx:id="timelinesListView" prefHeight="-1.0" prefWidth="172.0" />
+                <HBox id="HBox" alignment="CENTER" prefWidth="173.0" spacing="5.0">
+                  <children>
+                    <Button fx:id="addTimelineButton" mnemonicParsing="false" onAction="#addTimelinePressed" prefWidth="-1.0" text="Add" />
+                    <Button fx:id="deleteTimelineButton" mnemonicParsing="false" onAction="#deleteTimelinePressed" prefWidth="-1.0" text="Delete" />
+                    <Button fx:id="editTimelineButton" minWidth="26.0" mnemonicParsing="false" onAction="#editTimelinePressed" prefWidth="-1.0" text="Edit" />
+                  </children>
+                </HBox>
+                <Separator prefWidth="200.0" />
+                <Label fx:id="categoriesLabel" font="$x1" prefWidth="150.0" text="Categories:" />
+                <ListView fx:id="categoriesListView" prefHeight="-1.0" prefWidth="172.0" />
+                <HBox id="HBox" alignment="CENTER" prefWidth="173.0" spacing="5.0">
+                  <children>
+                    <Button fx:id="addCategoryButton" mnemonicParsing="false" onAction="#addCategoryPressed" prefWidth="-1.0" text="Add" />
+                    <Button fx:id="deleteCategoryButton" mnemonicParsing="false" onAction="#deleteCategoryPressed" prefWidth="-1.0" text="Delete" />
+                    <Button fx:id="editCategoryButton" minWidth="26.0" mnemonicParsing="false" onAction="#editCategoryPressed" prefWidth="-1.0" text="Edit" />
+                  </children>
+                </HBox>
+                <Separator prefWidth="200.0" />
+                <Label fx:id="eventsLabel" font="$x1" prefWidth="150.0" text="Events:" />
+                <HBox id="HBox" alignment="CENTER" prefWidth="173.0" spacing="5.0">
+                  <children>
+                    <Button fx:id="addEventButton" mnemonicParsing="false" onAction="#addEventPressed" prefWidth="-1.0" text="Add" />
+                    <Button fx:id="deleteEventButton" mnemonicParsing="false" onAction="#deleteEventPressed" prefWidth="-1.0" text="Delete" />
+                    <Button fx:id="editEventButton" minWidth="26.0" mnemonicParsing="false" onAction="#editEventPressed" prefWidth="-1.0" text="Edit" />
+                  </children>
+                </HBox>
+              </children>
+              <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+              </padding>
+            </VBox>
+            <AnchorPane fx:id="renderPaneContainer" minHeight="0.0" minWidth="0.0" prefHeight="572.0" prefWidth="715.0">
+              <children>
+                <ScrollPane id="renderScollPane" fx:id="renderScrollPane" content="$null" prefHeight="572.0" prefWidth="715.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+              </children>
+            </AnchorPane>
           </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Edit" fx:id="editMenu">
-          <items>
-            <MenuItem mnemonicParsing="false" onAction="#deletePressed" text="Delete" fx:id="deleteMenuItem">
-              <accelerator>
-                <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-              </accelerator>
-            </MenuItem>
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Insert" fx:id="insertMenu">
-          <items>
-            <MenuItem mnemonicParsing="false" onAction="#newEventPressed" text="New Event" fx:id="newEventMenuItem">
-              <accelerator>
-                <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-              </accelerator>
-            </MenuItem>
-            <MenuItem mnemonicParsing="false" onAction="#addCategoryPressed" text="New Category" fx:id="newCategoryMenuItem">
-              <accelerator>
-                <KeyCodeCombination alt="UP" code="T" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-              </accelerator>
-            </MenuItem>
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Info" fx:id="infoMenu">
-          <items>
-            <MenuItem id="aboutMenuItem" mnemonicParsing="false" onAction="#aboutPressed" text="About" fx:id="aboutMenuItem">
-              <accelerator>
-                <KeyCodeCombination alt="DOWN" code="A" control="UP" meta="UP" shift="UP" shortcut="UP" />
-              </accelerator>
-            </MenuItem>
-            <MenuItem mnemonicParsing="false" onAction="#helpPressed" text="Help" fx:id="helpMenuItem">
-              <accelerator>
-                <KeyCodeCombination alt="UP" code="H" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-              </accelerator>
-            </MenuItem>
-          </items>
-        </Menu>
-      </menus>
-    </MenuBar>
-    <SplitPane fx:id="splitPane" dividerPositions="0.2103225806451613" focusTraversable="true" prefHeight="479.0" prefWidth="634.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="166.0" AnchorPane.topAnchor="26.0">
-      <items>
-        <AnchorPane fx:id="toolbarPane" maxWidth="1.7976931348623157E308" minHeight="477.0" minWidth="160.0" prefHeight="160.0" prefWidth="160.0">
-          <children>
-            <Label id="eventLabel" fx:id="eventsLabel" layoutY="0.0" prefHeight="40.0" prefWidth="139.0" text="Events" textAlignment="LEFT" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="0.0">
-              <font>
-                <Font name="System Bold Italic" size="16.0" fx:id="x1" />
-              </font>
-            </Label>
-            <Button id="addEvent" fx:id="addEventButton" layoutY="40.0" mnemonicParsing="false" onAction="#newEventPressed" prefWidth="117.0" text="Add Event" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="21.0" />
-            <Button id="deleteEvent" fx:id="deleteEventButton" layoutY="71.0" mnemonicParsing="false" onAction="#deleteEventPressed" prefWidth="117.0" text="Delete Event" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="21.0" />
-            <Button id="editEvent" fx:id="editEventButton" layoutY="102.0" mnemonicParsing="false" onAction="#editEventPressed" prefWidth="117.0" text="Edit Event" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="21.0" />
-            <Separator id="s" fx:id="toolbarSeparator" layoutY="134.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-            <Label id="timelineLabel" fx:id="timelinesLabel" font="$x1" layoutY="134.0" prefHeight="40.0" prefWidth="139.0" text="Timelines" textAlignment="LEFT" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="-1.0" />
-            <ListView fx:id="timelinesListView" prefHeight="200.0" prefWidth="166.0" AnchorPane.bottomAnchor="103.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="174.0" />
-            <Button fx:id="addTimelineButton" mnemonicParsing="false" onAction="#newTimelinePressed" prefWidth="117.0" text="Add Timeline" AnchorPane.bottomAnchor="72.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="21.0" />
-            <Button fx:id="deleteTimelineButton" mnemonicParsing="false" onAction="#deleteTimelinePressed" prefWidth="117.0" text="Delete Timeline" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="21.0" />
-            <Button fx:id="editTimelineButton" mnemonicParsing="false" onAction="#editTimelinePressed" prefWidth="117.0" text="Edit Timeline" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="21.0" />
-          </children>
-        </AnchorPane>
-        <AnchorPane id="renderPane" fx:id="renderPaneContainer" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-          <children>
-            <ScrollPane fx:id="renderScrollPane" content="$null" prefHeight="477.0" prefWidth="319.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-          </children>
-        </AnchorPane>
-      </items>
-    </SplitPane>
-    <AnchorPane fx:id="categoriesPane" prefHeight="577.0" prefWidth="163.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="26.0">
-      <children>
-        <Label id="eventLabel" fx:id="categoriesLabel" font="$x1" prefHeight="40.0" prefWidth="149.0" text="Categories" textAlignment="LEFT" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="4.0" />
-        <ListView id="timelinesListView" fx:id="categoriesListView" prefHeight="145.0" prefWidth="134.0" AnchorPane.bottomAnchor="290.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="44.0" />
-        <Button id="deleteEvent" fx:id="deleteCategoryButton" mnemonicParsing="false" onAction="#deleteCategoryPressed" prefWidth="134.0" text="Delete Category" AnchorPane.bottomAnchor="228.0" AnchorPane.rightAnchor="15.0" />
-        <Button id="addEvent" fx:id="addCategoryButton" mnemonicParsing="false" onAction="#addCategoryPressed" prefWidth="134.0" text="Add Category" AnchorPane.bottomAnchor="259.0" AnchorPane.rightAnchor="15.0" />
-        <Button id="editEvent" fx:id="editCategoryButton" mnemonicParsing="false" onAction="#editCategoryPressed" prefWidth="134.0" text="Edit Category" AnchorPane.bottomAnchor="197.0" AnchorPane.rightAnchor="15.0" />
-        <Separator id="iconSeparator" fx:id="iconsSeparator" prefWidth="165.0" AnchorPane.bottomAnchor="183.0" AnchorPane.rightAnchor="-2.0" />
-        <Label id="eventLabel" fx:id="iconsLabel" font="$x1" prefHeight="40.0" prefWidth="149.0" text="Icons" textAlignment="LEFT" AnchorPane.bottomAnchor="147.0" AnchorPane.rightAnchor="0.0" />
-        <Button id="addEvent" fx:id="addIconImageButton" mnemonicParsing="false" onAction="#addIconImagePressed" prefWidth="134.0" text="Add Icon Image" AnchorPane.bottomAnchor="126.0" AnchorPane.rightAnchor="15.0" />
-        <Button id="deleteIcon" fx:id="deleteIcon" mnemonicParsing="false" text="Delete Icon Image" onAction="#deleteIconPressed" AnchorPane.bottomAnchor="100" AnchorPane.rightAnchor="15.0" prefWidth="134"/>
-        <ComboBox id="iconComboBox" fx:id="iconComboBox" AnchorPane.bottomAnchor="70" AnchorPane.rightAnchor="15.0" prefWidth="134.0"/>
-      </children>
-    </AnchorPane>
+        </SplitPane>
+      </center>
+      <top>
+        <MenuBar fx:id="menuBar" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="257.0">
+          <menus>
+            <Menu mnemonicParsing="false" text="File">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#addTimelinePressed" text="New Timeline" fx:id="addTimelineMenuItem">
+                  <accelerator>
+                    <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                  </accelerator>
+                </MenuItem>
+                <MenuItem mnemonicParsing="false" onAction="#savePressed" text="Save" fx:id="saveMenuItem">
+                  <accelerator>
+                    <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                  </accelerator>
+                </MenuItem>
+                <MenuItem disable="false" mnemonicParsing="false" onAction="#exitPressed" text="Exit" fx:id="exitMenuItem">
+                  <accelerator>
+                    <KeyCodeCombination alt="DOWN" code="F4" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                  </accelerator>
+                </MenuItem>
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Edit">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#deleteEventPressed" text="Delete" fx:id="deleteMenuItem">
+                  <accelerator>
+                    <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                  </accelerator>
+                </MenuItem>
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Insert">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#addEventPressed" text="New Event" fx:id="addEventMenuItem">
+                  <accelerator>
+                    <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                  </accelerator>
+                </MenuItem>
+                <MenuItem mnemonicParsing="false" onAction="#addCategoryPressed" text="New Category" fx:id="addCategoryMenuItem">
+                  <accelerator>
+                    <KeyCodeCombination alt="UP" code="T" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                  </accelerator>
+                </MenuItem>
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Info">
+              <items>
+                <MenuItem id="aboutMenuItem" mnemonicParsing="false" onAction="#aboutPressed" text="About" fx:id="aboutMenuItem">
+                  <accelerator>
+                    <KeyCodeCombination alt="DOWN" code="A" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                  </accelerator>
+                </MenuItem>
+                <MenuItem mnemonicParsing="false" onAction="#helpPressed" text="Help" fx:id="helpMenuItem">
+                  <accelerator>
+                    <KeyCodeCombination alt="UP" code="H" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                  </accelerator>
+                </MenuItem>
+              </items>
+            </Menu>
+          </menus>
+        </MenuBar>
+      </top>
+    </BorderPane>
   </children>
 </AnchorPane>
