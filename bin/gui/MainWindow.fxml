@@ -56,7 +56,28 @@
             </VBox>
             <AnchorPane fx:id="renderPaneContainer" minHeight="0.0" minWidth="0.0" prefHeight="572.0" prefWidth="715.0">
               <children>
-                <ScrollPane id="renderScollPane" fx:id="renderScrollPane" content="$null" prefHeight="572.0" prefWidth="715.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                <ScrollPane id="ScrollPane" fx:id="renderScrollPane" prefHeight="572.0" prefViewportHeight="200.0" prefViewportWidth="200.0" prefWidth="715.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <content>
+                    <Pane fx:id="blankPane" prefHeight="571.0" prefWidth="714.0">
+                      <children>
+                        <VBox id="VBox" alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="557.0" prefWidth="701.0" spacing="5.0">
+                          <children>
+                            <Label text="Welcome to Timelord!">
+                              <font>
+                                <Font name="System Bold Italic" size="36.0" />
+                              </font>
+                            </Label>
+                            <Label prefHeight="35.0" text="This is an application for creating, viewing, and editing timelines. To begin, please click &quot;Add&quot; in the Timelines section of the toolbar." textAlignment="CENTER" wrapText="true">
+                              <VBox.margin>
+                                <Insets left="70.0" right="70.0" />
+                              </VBox.margin>
+                            </Label>
+                          </children>
+                        </VBox>
+                      </children>
+                    </Pane>
+                  </content>
+                </ScrollPane>
               </children>
             </AnchorPane>
           </items>

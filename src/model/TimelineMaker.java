@@ -406,7 +406,8 @@ public class TimelineMaker {
 	 */
 	public void updateGraphics() {
 		graphics.clearScreen();
-		graphics.renderTimeline(selectedTimeline);
+		if (selectedTimeline != null)
+			graphics.renderTimeline(selectedTimeline);
 	}
 
 	/**

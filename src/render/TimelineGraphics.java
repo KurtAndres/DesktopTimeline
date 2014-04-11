@@ -1,11 +1,11 @@
 package render;
 
-import model.TimelineMaker;
-import javafx.application.Platform;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import model.Timeline;
+import model.TimelineMaker;
 
 /**
  * This is the object to represent all the graphics in the Timeline. It creates
@@ -27,6 +27,8 @@ public class TimelineGraphics {
 	 * TimelineRender objects.
 	 */
 	private TimelineMaker model;
+
+	private Pane blankPane;
 
 	/**
 	 * Constructor that instantiates group and sets the model
@@ -67,20 +69,18 @@ public class TimelineGraphics {
 	 * 
 	 */
 	public void clearScreen() {
-		Platform.runLater(new Runnable() {
-			public void run() {
-			}
-		});
+		scrollPane.setContent(blankPane);
 	}
-
+	
 	/**
 	 * Seter for fxPanel
 	 * 
 	 * @param fxPanel
 	 *            the panel to set
 	 */
-	public void setPanel(ScrollPane scrollPane) {
+	public void setPanel(ScrollPane scrollPane, Pane blankPane) {
 		this.scrollPane = scrollPane;
+		this.blankPane = blankPane;
 		renderTimeline(model.getSelectedTimeline());
 	}
 }

@@ -22,6 +22,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.Category;
@@ -129,6 +130,9 @@ public class MainWindowController {
 
     @FXML
     private ListView<String> timelinesListView;
+    
+    @FXML
+    private Pane blankPane;
 
     /**
 	 * Brings up a new unresizable JavaFX stage with the text in
@@ -192,17 +196,11 @@ public class MainWindowController {
     }
 
     @FXML
-    void deletePressed(ActionEvent event) {
-    	// TODO: Add delete functionality.
-    }
-    
-    @FXML
 	void deleteTimelinePressed(ActionEvent event) {
 		if (timelineMaker == null)
 			return;
 		timelineMaker.deleteTimeline();
 		timelineMaker.selectDefaultTimeline();
-		timelineMaker.updateGraphics();
 		populateListView();
 		if (timelineMaker.getSelectedTimeline() == null) {
 			ArrayList<String> x = new ArrayList<String>();
@@ -414,7 +412,7 @@ public class MainWindowController {
 		this.timelineMaker = timelineMaker;
 		timelineMaker.setMainWindow(this);
 		populateListView();
-		timelineMaker.graphics.setPanel(renderScrollPane);
+		timelineMaker.graphics.setPanel(renderScrollPane, blankPane);
 
 	}
 
