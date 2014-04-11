@@ -1,13 +1,14 @@
 package gui;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.Date;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
 
-import model.Duration;
-import model.TLEvent;
-import model.TimelineMaker;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -18,9 +19,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import model.*;
+import model.Category;
+import model.Duration;
+import model.Icon;
+import model.TLEvent;
+import model.TimelineMaker;
 
 /**
  * This class is the controller of the EventPropertiesWindow. This handles all
@@ -99,6 +106,15 @@ public class EventPropertiesWindowController {
 	@FXML
 	// fx:id="iconComboBox"
 	private ComboBox<String> iconComboBox; // Value injected by FXMLLoader
+	
+	@FXML
+	// fx:id="newIconButton"
+	private Button newIconButton; // Value injected by FXMLLoader
+	
+	/**
+	 * The file chooser for adding new icons.
+	 */
+	private FileChooser fileChooser;
 
 	@FXML
 	// fx:id="iconLabel"
@@ -120,6 +136,24 @@ public class EventPropertiesWindowController {
 	// fx:id="typeLabel"
 	private Label typeLabel; // Value injected by FXMLLoader
 
+	// Handler for Button[fx:id="newIconButton"] onAction
+	@FXML
+	void newIconPressed(ActionEvent event) throws FileNotFoundException {
+		fileChooser.setTitle("Open Icon");
+		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Images", "*.png", "*.jpg", "*.gif"),
+				new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+				new FileChooser.ExtensionFilter("PNG", "*.png"),
+				new FileChooser.ExtensionFilter("GIF", "*.gif"));
+		File file = fileChooser.showOpenDialog(new Stage());
+		if (file != null) {
+			InputStream is = new FileInputStream(file.getPath());
+			timelineMaker.addIcon(new Icon(file.getName(), new Image(is, 20, 20, true, true), file.getPath()));
+			iconComboBox.setItems(FXCollections.observableList(timelineMaker.getImageTitles()));
+			iconComboBox.getSelectionModel().select(file.getName());
+		}		
+	}
+	
 	// Handler for Button[fx:id="cancelButton"] onAction
 	@FXML
 	void cancelPressed(ActionEvent event) {
@@ -208,6 +242,7 @@ public class EventPropertiesWindowController {
 	 */
 	public void initData(TimelineMaker timelineMaker, TLEvent event) {
 		this.timelineMaker = timelineMaker;
+		fileChooser = new FileChooser();
 		this.oldEvent = event;
 		if (event != null)
 			loadEventInfo(event);
