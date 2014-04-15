@@ -15,15 +15,16 @@ $result = mysqli_query($db, "SELECT * FROM userAdmin WHERE name=".$name);
 $row = mysqli_fetch_array($result);
 if(" '".$row['password']."'" == $password){
 	//user and password in db so we return uid
-	
 	$uid = $row[uid];
-	echo "Welcome, your UID: ".$uid;
+	echo $uid;
 	}else {
 		//user password combo not in db so we add them
 		$sql="INSERT INTO userAdmin(name, password) VALUES (".$name.",".$password.")";
 		mysqli_query($db, $sql);
-		echo "added";
+		$result = mysqli_query($db, "SELECT * FROM userAdmin WHERE name=".$name);
+		$row = mysqli_fetch_array($result);
+		$uid = $row[uid];
+		echo $uid;
 		}
 mysqli_close($db);
 ?>
-		
