@@ -27,7 +27,7 @@ public class Driver extends Application {
 			MainWindowController controller = loader
 					.<MainWindowController> getController();
 			controller.initData(timelineMaker);
-			primaryStage.setTitle("Wow. This Timeline Maker Is So Cool!");
+			primaryStage.setTitle("Timelord");
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add("gui/MainWindow.css");
 			primaryStage.setScene(scene);

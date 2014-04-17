@@ -363,7 +363,7 @@ public class TimelineMaker {
 	public void deleteEvent() {
 		if (selectedEvent != null && selectedTimeline != null
 				&& selectedTimeline.contains(selectedEvent)) {
-			selectedTimeline.removeEvent(selectedEvent);
+			selectedTimeline.deleteEvent(selectedEvent);
 			database.removeEvent(selectedEvent, selectedTimeline.getName());
 			selectedEvent = null;
 			updateGraphics();
@@ -382,7 +382,7 @@ public class TimelineMaker {
 			Date endDate, Category category, String description, Icon icon) {
 		if (selectedEvent != null && selectedTimeline != null
 				&& selectedTimeline.contains(selectedEvent)) {
-			selectedTimeline.removeEvent(selectedEvent);
+			selectedTimeline.deleteEvent(selectedEvent);
 			TLEvent toAdd;
 			if (endDate != null)
 				toAdd = new Duration(title, category, startDate, endDate,
@@ -399,6 +399,46 @@ public class TimelineMaker {
 			updateGraphics();
 			database.editEvent(toAdd, selectedTimeline.getName());
 		}
+	}
+	
+
+	/**
+	 * Adds a category to the selected timeline and saves it.
+	 * 
+	 * @param category
+	 *            saves this category to the database.
+	 */
+	public void addCategory(Category category) {
+		selectedTimeline.addCategory(category);
+		database.saveCategory(category, selectedTimeline.getName());
+	}
+
+	/**
+	 * Deletes a category
+	 * 
+	 * @param category
+	 *            removes this category from the database.
+	 */
+	public void deleteCategory(Category category) {
+		//All events which belong to the category are also deleted.
+		for(TLEvent e : selectedTimeline.getEvents()){
+			if(e.getCategory().getName().equals(category.getName())){
+				selectedEvent = e;
+				deleteEvent();
+			}
+		}
+		selectedTimeline.deleteCategory(category);
+		database.removeCategory(category, selectedTimeline.getName());
+	}
+
+	/**
+	 * Edits a category
+	 * 
+	 * @param category
+	 *            edits this category in the database.
+	 */
+	public void editCategory(Category category) {
+		database.editCategory(category, selectedTimeline.getName());
 	}
 
 	/**
@@ -447,36 +487,6 @@ public class TimelineMaker {
 		return about_text;
 	}
 
-	/**
-	 * Adds a category to the selected timeline and saves it.
-	 * 
-	 * @param category
-	 *            saves this category to the database.
-	 */
-	public void addCategory(Category category) {
-		selectedTimeline.addCategory(category);
-		database.saveCategory(category, selectedTimeline.getName());
-	}
-
-	/**
-	 * Deletes a category
-	 * 
-	 * @param category
-	 *            removes this category from the database.
-	 */
-	public void deleteCategory(Category category) {
-		database.removeCategory(category, selectedTimeline.getName());
-	}
-
-	/**
-	 * Edits a category
-	 * 
-	 * @param category
-	 *            edits this category in the database.
-	 */
-	public void editCategory(Category category) {
-		database.editCategory(category, selectedTimeline.getName());
-	}
 
 	/**
 	 * An attempt at associating the events with their icons on start-up.

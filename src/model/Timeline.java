@@ -210,7 +210,7 @@ public class Timeline implements TimelineAPI {
 	 *            The event to delete.
 	 */
 	@Override
-	public boolean removeEvent(TLEvent event) {
+	public boolean deleteEvent(TLEvent event) {
 		if (events.contains(event)) {
 			events.remove(event);
 			setDirty(true);
@@ -378,12 +378,10 @@ public class Timeline implements TimelineAPI {
 	 * @return True if found and removed, False otherwise.
 	 */
 	public boolean deleteCategory(Category cat) {
-		// The user is not allowed to delete the only category!
+		// The user is not allowed to delete the only category
 		if (categories.size() <= 1)
 			return false;
-		for (TLEvent e : events)
-			if (e.getCategory().getName().equals(cat.getName()))
-				e.setCategory(getFirstCategory());
+		
 		selectCategory(getFirstCategory().getName());
 		return categories.remove(cat);
 	}

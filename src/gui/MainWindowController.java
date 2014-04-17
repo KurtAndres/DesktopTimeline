@@ -32,109 +32,109 @@ import model.TimelineMaker;
 
 
 public class MainWindowController {
-	
+
 	/**
 	 * The model of the program
 	 */
 	private TimelineMaker timelineMaker;
 
-    @FXML
-    private ResourceBundle resources;
+	@FXML
+	private ResourceBundle resources;
 
-    @FXML
-    private URL location;
-    
-    @FXML 
-    private MenuItem aboutMenuItem;
+	@FXML
+	private URL location;
 
-    @FXML
-    private Button addCategoryButton;
+	@FXML 
+	private MenuItem aboutMenuItem;
 
-    @FXML
-    private Button addEventButton;
+	@FXML
+	private Button addCategoryButton;
 
-    @FXML
-    private Button addTimelineButton;
+	@FXML
+	private Button addEventButton;
 
-    @FXML
-    private Label categoriesLabel;
+	@FXML
+	private Button addTimelineButton;
 
-    @FXML
-    private ListView<String> categoriesListView;
+	@FXML
+	private Label categoriesLabel;
 
-    @FXML
-    private Button deleteCategoryButton;
+	@FXML
+	private ListView<String> categoriesListView;
 
-    @FXML
-    private Button deleteEventButton;
-    
-    @FXML
-    private MenuItem deleteMenuItem;
+	@FXML
+	private Button deleteCategoryButton;
 
-    @FXML
-    private Button deleteTimelineButton;
+	@FXML
+	private Button deleteEventButton;
 
-    @FXML
-    private Button editCategoryButton;
+	@FXML
+	private MenuItem deleteMenuItem;
 
-    @FXML
-    private Button editEventButton;
-    
-    @FXML
-    private Menu editMenu;
+	@FXML
+	private Button deleteTimelineButton;
 
-    @FXML
-    private Button editTimelineButton;
+	@FXML
+	private Button editCategoryButton;
 
-    @FXML
-    private Label eventsLabel;
-    
-    @FXML
+	@FXML
+	private Button editEventButton;
+
+	@FXML
+	private Menu editMenu;
+
+	@FXML
+	private Button editTimelineButton;
+
+	@FXML
+	private Label eventsLabel;
+
+	@FXML
 	private MenuItem exitMenuItem; 
-    
+
 	@FXML
 	private Menu fileMenu;
 
 	@FXML
 	private MenuItem helpMenuItem;
-	
+
 	@FXML
 	private Menu infoMenu;
-	
+
 	@FXML
 	private Menu insertMenu;
 
-    @FXML
-    private AnchorPane mainWindowAnchor;
+	@FXML
+	private AnchorPane mainWindowAnchor;
 
-    @FXML
-    private MenuBar menuBar;
-    
-    @FXML
-    private MenuItem addCategoryMenuItem;
-    
-    @FXML
-    private MenuItem addEventMenuItem;
-    
-    @FXML
-    private MenuItem addTimelineMenuItem;
-    
-    @FXML
-    private ScrollPane renderScrollPane;
-    
-    @FXML
-    private MenuItem saveMenuItem;
+	@FXML
+	private MenuBar menuBar;
 
-    @FXML
-    private Label timelinesLabel;
+	@FXML
+	private MenuItem addCategoryMenuItem;
 
-    @FXML
-    private ListView<String> timelinesListView;
-    
-    @FXML
-    private Pane blankPane;
+	@FXML
+	private MenuItem addEventMenuItem;
 
-    /**
+	@FXML
+	private MenuItem addTimelineMenuItem;
+
+	@FXML
+	private ScrollPane renderScrollPane;
+
+	@FXML
+	private MenuItem saveMenuItem;
+
+	@FXML
+	private Label timelinesLabel;
+
+	@FXML
+	private ListView<String> timelinesListView;
+
+	@FXML
+	private Pane blankPane;
+
+	/**
 	 * Brings up a new unresizable JavaFX stage with the text in
 	 * 
 	 * @param String
@@ -153,15 +153,15 @@ public class MainWindowController {
 		dialog.setResizable(false);
 		dialog.show();
 	}
-    
-    @FXML
-    void aboutPressed(ActionEvent event) {
-    	showDialog(timelineMaker.getAboutText());
-    }
 
-    @FXML
-    void addCategoryPressed(ActionEvent event) {
-    	try {
+	@FXML
+	void aboutPressed(ActionEvent event) {
+		showDialog(timelineMaker.getAboutText());
+	}
+
+	@FXML
+	void addCategoryPressed(ActionEvent event) {
+		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(
 					"CategoryPropertiesWindow.fxml"));
 			Parent root = (Parent) loader.load();
@@ -177,25 +177,36 @@ public class MainWindowController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-    }
+	}
 
-    @FXML
-    void deleteCategoryPressed(ActionEvent event) {
-    	if (timelineMaker.getSelectedTimeline() == null)
+	@FXML
+	void deleteCategoryPressed(ActionEvent event) {
+		if (timelineMaker.getSelectedTimeline() == null)
 			return;
-		Category selectedCategory = timelineMaker.getSelectedTimeline()
-				.getSelectedCategory();
-		timelineMaker.getSelectedTimeline().deleteCategory(selectedCategory);
-		timelineMaker.deleteCategory(selectedCategory);
-		populateListView();
-    }
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(
+					"DeleteCategoryConfirmation.fxml"));
+			Parent root = (Parent) loader.load();
+			DeleteCategoryConfirmationController controller = loader
+					.<DeleteCategoryConfirmationController> getController();
+			controller.initData(timelineMaker, this);
+			Stage stage = new Stage();
+			stage.setTitle("Confirm Deletion");
+			Scene scene = new Scene(root);
+			scene.getStylesheets().add("gui/DeleteCategoryConfirmation.css");
+			stage.setScene(scene);
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-    @FXML
-    void deleteEventPressed(ActionEvent event) {
-    	timelineMaker.deleteEvent();
-    }
+	@FXML
+	void deleteEventPressed(ActionEvent event) {
+		timelineMaker.deleteEvent();
+	}
 
-    @FXML
+	@FXML
 	void deleteTimelinePressed(ActionEvent event) {
 		if (timelineMaker == null)
 			return;
@@ -210,9 +221,9 @@ public class MainWindowController {
 
 	}
 
-    @FXML
-    void editCategoryPressed(ActionEvent event) {
-    	if (timelineMaker.getSelectedTimeline() == null)
+	@FXML
+	void editCategoryPressed(ActionEvent event) {
+		if (timelineMaker.getSelectedTimeline() == null)
 			return;
 		Category selectedCategory = timelineMaker.getSelectedTimeline()
 				.getSelectedCategory();
@@ -234,11 +245,11 @@ public class MainWindowController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-    }
+	}
 
-    @FXML
-    void editEventPressed(ActionEvent event) {
-    	TLEvent selectedEvent = timelineMaker.getSelectedEvent();
+	@FXML
+	void editEventPressed(ActionEvent event) {
+		TLEvent selectedEvent = timelineMaker.getSelectedEvent();
 		if (selectedEvent == null)
 			return;
 		try {
@@ -259,11 +270,11 @@ public class MainWindowController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-    }
+	}
 
-    @FXML
-    void editTimelinePressed(ActionEvent event) {
-    	Timeline selectedTimeline = timelineMaker.getSelectedTimeline();
+	@FXML
+	void editTimelinePressed(ActionEvent event) {
+		Timeline selectedTimeline = timelineMaker.getSelectedTimeline();
 		if (selectedTimeline == null)
 			return;
 		try {
@@ -284,21 +295,21 @@ public class MainWindowController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-    }
+	}
 
-    @FXML
-    void exitPressed(ActionEvent event) {
-    	System.exit(0);
-    }
+	@FXML
+	void exitPressed(ActionEvent event) {
+		System.exit(0);
+	}
 
-    @FXML
-    void helpPressed(ActionEvent event) {
-    	showDialog(timelineMaker.getHelpText());
-    }
+	@FXML
+	void helpPressed(ActionEvent event) {
+		showDialog(timelineMaker.getHelpText());
+	}
 
-    @FXML
-    void addEventPressed(ActionEvent event) {
-    	if (timelineMaker.getSelectedTimeline() == null)
+	@FXML
+	void addEventPressed(ActionEvent event) {
+		if (timelineMaker.getSelectedTimeline() == null)
 			return;
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(
@@ -318,11 +329,11 @@ public class MainWindowController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-    }
+	}
 
-    @FXML
-    void addTimelinePressed(ActionEvent event) {
-    	try {
+	@FXML
+	void addTimelinePressed(ActionEvent event) {
+		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(
 					"TimelinePropertiesWindow.fxml"));
 			Parent root = (Parent) loader.load();
@@ -340,31 +351,31 @@ public class MainWindowController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-    }
+	}
 
-    @FXML
-    void savePressed(ActionEvent event) {
-    }
+	@FXML
+	void savePressed(ActionEvent event) {
+	}
 
-    @FXML
-    void initialize() {
-    	timelinesListView.addEventHandler(MouseEvent.MOUSE_CLICKED,
+	@FXML
+	void initialize() {
+		timelinesListView.addEventHandler(MouseEvent.MOUSE_CLICKED,
 				new EventHandler<MouseEvent>() {
-					@Override
-					public void handle(MouseEvent arg0) {
-						timelineListViewClicked();
-					}
-				});
+			@Override
+			public void handle(MouseEvent arg0) {
+				timelineListViewClicked();
+			}
+		});
 		categoriesListView.addEventHandler(MouseEvent.MOUSE_CLICKED,
 				new EventHandler<MouseEvent>() {
-					@Override
-					public void handle(MouseEvent arg0) {
-						categoriesListViewClicked();
-					}
-				});
-    }
-    
-    /**
+			@Override
+			public void handle(MouseEvent arg0) {
+				categoriesListViewClicked();
+			}
+		});
+	}
+
+	/**
 	 * What happens when the timelineListView is clicked. It renders that
 	 * timeline.
 	 */
@@ -384,8 +395,8 @@ public class MainWindowController {
 		timelineMaker.getSelectedTimeline().selectCategory(
 				categoriesListView.getSelectionModel().getSelectedItem());
 	}
-    
-    /**
+
+	/**
 	 * Populates the list view with the timelines and categories.
 	 */
 	public void populateListView() {
@@ -401,8 +412,8 @@ public class MainWindowController {
 		}
 
 	}
-    
-    /**
+
+	/**
 	 * Initializes the Main window.
 	 * 
 	 * @param timelineMaker
