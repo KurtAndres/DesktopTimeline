@@ -55,13 +55,13 @@ public class TimelineMaker {
 			+ "*Use the buttons on the left to create, edit, or delete timelines. Timelines may have titles and background colors, and they may be displayed in a number of different units.\n"
 			+ "*IMPORTANT: Timeline dates are in year-month-day form. You have to include the dashes.\n"
 			+ "*Each timeline has a set of events. Create events with the \"add\" button.\n"
-			+ "*To edit and delete events, select them on the rendered timeline and then proceed to delete them.\"\n"
+			+ "*To edit and delete events, select them on the rendered timeline and then proceed to edit or delete them.\"\n"
 			+ "*Each timeline also has a set of categories. There must be at least one category, the default category, which may be edited. Each category has a name and a color associated with it.\"\n"
 			+ "*Image icons may be added to timeline events. Upload images using the right side-bar and set them in the event editing window.\n"
 			+ "*Double click events for surprises!";
 
 	private final String about_text = "\tCredits: \n\n"
-			+ "@Authors Andrew.Sutton, Josh Wright, Kayley Lane, Conner Vick, Brian Williamson\n\n"
+			+ "@Authors Andrew Sutton, Josh Wright, Kayley Lane, Conner Vick, Brian Williamson\n\n"
 			+ "\tSoftware Dev 2014";
 
 	/**
@@ -339,10 +339,10 @@ public class TimelineMaker {
 			Object category, String description, Icon icon) {
 		TLEvent event;
 		if (endDate != null) {
-			event = new Duration(title, selectedTimeline.getDefaultCategory(),
+			event = new Duration(title, selectedTimeline.getFirstCategory(),
 					startDate, endDate, icon.getId(), description);
 		} else {
-			event = new Atomic(title, selectedTimeline.getDefaultCategory(),
+			event = new Atomic(title, selectedTimeline.getFirstCategory(),
 					startDate, icon.getId(), description);
 		}
 		if (!icon.getName().equals("None") || event.getIcon() == null) {
@@ -448,12 +448,13 @@ public class TimelineMaker {
 	}
 
 	/**
-	 * Saves a category
+	 * Adds a category to the selected timeline and saves it.
 	 * 
 	 * @param category
 	 *            saves this category to the database.
 	 */
 	public void addCategory(Category category) {
+		selectedTimeline.addCategory(category);
 		database.saveCategory(category, selectedTimeline.getName());
 	}
 

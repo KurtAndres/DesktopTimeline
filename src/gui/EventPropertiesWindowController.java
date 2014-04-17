@@ -217,7 +217,7 @@ public class EventPropertiesWindowController {
 			else
 				categoryComboBox.getSelectionModel().select(
 						timelineMaker.getSelectedTimeline()
-								.getDefaultCategory().getName());
+								.getFirstCategory().getName());
 		}
 
 		iconComboBox.setItems(FXCollections.observableList(timelineMaker

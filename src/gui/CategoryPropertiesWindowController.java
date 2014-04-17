@@ -85,11 +85,11 @@ public class CategoryPropertiesWindowController {
 		String title = categoryNameTextField.getText();
 		Color color = renderColorColorPicker.getValue();
 		if (!title.equals("")) {
-			if (category == null) {
+			if (category == null) { //Add Category
 				category = new Category(title, color);
 				if (timelineMaker.getSelectedTimeline().addCategory(category))
 					timelineMaker.addCategory(category);
-			} else {
+			} else { //Edit Category
 				timelineMaker.getSelectedTimeline().editCategory(
 						category.getName(), title, color);
 				timelineMaker.editCategory(category);

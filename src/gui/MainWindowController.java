@@ -138,7 +138,7 @@ public class MainWindowController {
 	 * Brings up a new unresizable JavaFX stage with the text in
 	 * 
 	 * @param String
-	 *            the string to show
+	 *      	 the string to show
 	 */
 	private void showDialog(String show) {
 		Stage dialog = new Stage();
@@ -167,9 +167,9 @@ public class MainWindowController {
 			Parent root = (Parent) loader.load();
 			CategoryPropertiesWindowController controller = loader
 					.<CategoryPropertiesWindowController> getController();
-			controller.initData(timelineMaker, new Category("DEFAULT"));
+			controller.initData(timelineMaker, null);
 			Stage stage = new Stage();
-			stage.setTitle("Edit Category");
+			stage.setTitle("Add Category");
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add("gui/CategoryPropertiesWindow.css");
 			stage.setScene(scene);
