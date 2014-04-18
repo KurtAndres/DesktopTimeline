@@ -10,32 +10,38 @@ $uid = "'".$_GET['uid']."'";
 $name = "'".$_GET['name']."'";
 //echo $name;
 
-if($uid!= "''" | $name != "''"){
-	$result = mysqli_query($db, "SELECT * FROM timelines WHERE uid=".$uid);
-	$row = mysqli_fetch_array($result);
-	if("'".$row['name']."'" == $name){
-		//echo "Duplicate Timeline";		
-		}else{
-			$sql="INSERT INTO timelines(uid, name) VALUES (".$uid.",".$name.")";
-			mysqli_query($db, $sql);
-			//echo "added";			
-			}
-		}
-	
+if($uid!= "''" & $name != "''"){
+        $result = mysqli_query($db, "SELECT * FROM timelines WHERE uid=".$uid);
+        $found = false;
+        while($row = mysqli_fetch_assoc($result)){
+                if("'".$row['name']."'" == $name){
+                //echo "Duplicate Timeline";
+                $found = true;
+                 }else{
+                        //echo " Not Duplicate ";
+                        }
+        }
+if($found){
+                //echo "Not Added";
+                }else{
+                        $sql="INSERT INTO timelines(uid, name) VALUES (".$uid.",".$name.")";
+                        mysqli_query($db, $sql);
+                        //echo "added";
+                        }
+                }
+
 if($uid!= "''"){
-	$result = mysqli_query($db, "SELECT * FROM timelines WHERE uid=".$uid);
-	$row = mysqli_fetch_array($result);
-	echo json_encode($row);	
-	//$row = mysqli_fetch_array($result);
-	//$tid = $row[tid];
-	//echo $tid;
-$sql="INSERT INTO userAdmin(name, password) VALUES (".$name.",".$password.")";
-		mysqli_query($db, $sql);
-		$result = mysqli_query($db, "SELECT * FROM userAdmin WHERE name=".$name);
-		$row = mysqli_fetch_array($result);
-		$uid = $row[uid];
-		echo $uid;	
-	}
+        $result = mysqli_query($db, "SELECT * FROM timelines WHERE uid=".$uid);
+        while($row = mysqli_fetch_assoc($result)){
+                $json[] = $row;
+                }
+        echo json_encode($json);
+        //$row = mysqli_fetch_assoc($result);
+        //echo json_encode($row);
+        //$row = mysqli_fetch_array($result);
+        //$tid = $row[tid];
+        //echo $tid;
+        }
 mysqli_close($db);
 
 ?>
