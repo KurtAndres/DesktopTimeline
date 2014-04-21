@@ -1,11 +1,11 @@
 package gui;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
-import model.Timeline;
-import model.Timeline.AxisLabel;
-import model.TimelineMaker;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -19,6 +19,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import model.Timeline;
+import model.Timeline.AxisLabel;
+import model.TimelineMaker;
 
 /**
  * This class is the controller of the TimelinePropertiesWindow. This handles
@@ -174,10 +177,25 @@ public class TimelinePropertiesWindowController {
 	 */
 	public void initData(TimelineMaker timelineMaker, Timeline timeline) {
 		this.timelineMaker = timelineMaker;
+		HashMap<String, String> errorStrings = new HashMap<String, String>();
+		errorStrings.put("", "Title cannot be blank.");
 		if (timeline != null) {
 			loadTimelineInfo(timeline);
 			this.timeline = timeline;
-		}
+			for (String title : timelineMaker.getTimelineTitles())
+				if (!title.equals(timeline.getName()))
+					errorStrings.put(title, "Timeline already exists.");
+		} else
+			for (String title : timelineMaker.getTimelineTitles())
+				errorStrings.put(title, "Timeline already exists.");
+		
+		titleTextField.focusedProperty().addListener(new TextFieldChecker(titleTextField, "Enter a title.", errorStrings) {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				if (!newValue)
+					validate();
+			}
+		});
 	}
 
 	/**
