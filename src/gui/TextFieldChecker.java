@@ -12,6 +12,7 @@ abstract class TextFieldChecker implements ChangeListener<Boolean> {
 	private TextField field;
 	private String prompt;
 	private HashMap<String, String> errorStrings;
+	private boolean valid;
 	
 	public TextFieldChecker(TextField field, String prompt, HashMap<String, String> errorStrings) {
 		this.field = field;
@@ -20,13 +21,17 @@ abstract class TextFieldChecker implements ChangeListener<Boolean> {
 		field.setPromptText(prompt);
 	}
 	
-	public boolean validate() {
+	protected void validate() {
+		valid = true;
 		for (String s: errorStrings.keySet())
 			if (field.getText().equals(s)) {
 				field.setText("");
 				field.setPromptText(errorStrings.get(s));
-				return false;
+				valid = false;
 			}
-		return true;
+	}
+	
+	public boolean isValid() {
+		return valid;
 	}
 }
