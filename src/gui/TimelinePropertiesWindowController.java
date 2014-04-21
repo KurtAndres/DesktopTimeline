@@ -1,11 +1,10 @@
 package gui;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
-import model.Timeline;
-import model.Timeline.AxisLabel;
-import model.TimelineMaker;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -19,6 +18,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import model.Timeline;
+import model.Timeline.AxisLabel;
+import model.TimelineMaker;
 
 /**
  * This class is the controller of the TimelinePropertiesWindow. This handles
@@ -114,6 +116,8 @@ public class TimelinePropertiesWindowController {
 	@FXML
 	// fx:id="titleTextField"
 	private TextField titleTextField; // Value injected by FXMLLoader
+	
+	private TextFieldChecker titleChecker;
 
 	// Handler for Button[fx:id="cancelButton"] onAction
 	@FXML
@@ -126,25 +130,23 @@ public class TimelinePropertiesWindowController {
 	// Handler for Button[fx:id="createButton"] onAction
 	@FXML
 	void createButtonPressed(ActionEvent event) {
-		String title = titleTextField.getText();
-		if (title.equals("")) {
-			// TODO title missing alert
-			return;
-		}
-		Color backgroundColor = colorBackgroundChooser.getValue();
-		Color timelineColor = colorTimelineChooser.getValue();
-		AxisLabel axisUnit = axisUnitComboBox.getValue();
-		Font font = null; // TODO set font?
-		if (timeline != null)
-			timelineMaker.editTimeline(timeline, title, timelineColor,
-					backgroundColor, axisUnit, font);
-		else
-			timelineMaker.addTimeline(title, timelineColor, backgroundColor,
-					axisUnit, font);
+		if (titleChecker.isValid()) {
+			String title = titleTextField.getText();
+			Color backgroundColor = colorBackgroundChooser.getValue();
+			Color timelineColor = colorTimelineChooser.getValue();
+			AxisLabel axisUnit = axisUnitComboBox.getValue();
+			Font font = null; // TODO set font?
+			if (timeline != null)
+				timelineMaker.editTimeline(timeline, title, timelineColor,
+						backgroundColor, axisUnit, font);
+			else
+				timelineMaker.addTimeline(title, timelineColor, backgroundColor,
+						axisUnit, font);
 
-		Node source = (Node) event.getSource();
-		Stage stage = (Stage) source.getScene().getWindow();
-		stage.close();
+			Node source = (Node) event.getSource();
+			Stage stage = (Stage) source.getScene().getWindow();
+			stage.close();
+		}
 	}
 
 	@FXML
@@ -174,10 +176,26 @@ public class TimelinePropertiesWindowController {
 	 */
 	public void initData(TimelineMaker timelineMaker, Timeline timeline) {
 		this.timelineMaker = timelineMaker;
+		HashMap<String, String> errorStrings = new HashMap<String, String>();
+		errorStrings.put("", "Timeline title cannot be blank.");
 		if (timeline != null) {
 			loadTimelineInfo(timeline);
 			this.timeline = timeline;
-		}
+			for (String title : timelineMaker.getTimelineTitles())
+				if (!title.equals(timeline.getName()))
+					errorStrings.put(title, "Timeline already exists.");
+		} else
+			for (String title : timelineMaker.getTimelineTitles())
+				errorStrings.put(title, "Timeline already exists.");
+		
+		titleChecker = new TextFieldChecker(titleTextField, "Enter a title.", errorStrings) {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				if (!newValue)
+					validate();
+			}
+		};
+		titleTextField.focusedProperty().addListener(titleChecker);
 	}
 
 	/**

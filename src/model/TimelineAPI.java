@@ -36,7 +36,7 @@ public interface TimelineAPI {
 	 *            the event to remove
 	 * @return whether the event was removed correctly
 	 */
-	public boolean removeEvent(TLEvent event);
+	public boolean deleteEvent(TLEvent event);
 
 	/**
 	 * Swap an oldTLEvent out for a newTLEvent. Useful for updating an event

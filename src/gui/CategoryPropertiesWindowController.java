@@ -1,11 +1,14 @@
 package gui;
 
 import javafx.scene.paint.*;
+
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import model.Category;
 import model.TimelineMaker;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -70,6 +73,8 @@ public class CategoryPropertiesWindowController {
 	@FXML
 	// fx:id="renderColorLabel"
 	private Label renderColorLabel; // Value injected by FXMLLoader
+	
+	private TextFieldChecker titleChecker;
 
 	// Handler for Button[fx:id="cancelButton"] onAction
 	@FXML
@@ -84,12 +89,12 @@ public class CategoryPropertiesWindowController {
 	void createButtonPressed(ActionEvent event) {
 		String title = categoryNameTextField.getText();
 		Color color = renderColorColorPicker.getValue();
-		if (!title.equals("")) {
-			if (category == null) {
+		if (titleChecker.isValid()) {
+			if (category == null) { //Add Category
 				category = new Category(title, color);
 				if (timelineMaker.getSelectedTimeline().addCategory(category))
 					timelineMaker.addCategory(category);
-			} else {
+			} else { //Edit Category
 				timelineMaker.getSelectedTimeline().editCategory(
 						category.getName(), title, color);
 				timelineMaker.editCategory(category);
@@ -121,11 +126,28 @@ public class CategoryPropertiesWindowController {
 	 */
 	public void initData(TimelineMaker timelineMaker, Category category) {
 		this.timelineMaker = timelineMaker;
+		HashMap<String, String> errorStrings = new HashMap<String, String>();
+		errorStrings.put("", "Cannot be blank.");
 		if (category != null) {
 			this.category = category;
 			loadCategoryInfo();
-		} else
+			for (String title : timelineMaker.getSelectedTimeline().getCategoryTitles())
+				if (!title.equals(category.getName()))
+					errorStrings.put(title, "Already exists.");
+		} else {
 			this.category = null;
+			for (String title : timelineMaker.getSelectedTimeline().getCategoryTitles())
+				errorStrings.put(title, "Already exists.");
+		}
+		
+		titleChecker = new TextFieldChecker(categoryNameTextField, "Enter a title.", errorStrings) {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				if (!newValue)
+					validate();
+			}
+		};
+		categoryNameTextField.focusedProperty().addListener(titleChecker);
 	}
 
 	/**

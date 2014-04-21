@@ -38,7 +38,7 @@ public class Timeline implements TimelineAPI {
 	private ArrayList<Category> categories;
 
 	/**
-	 * The selected Category of this timein
+	 * The selected Category of this timeline
 	 */
 	private Category selectedCategory;
 
@@ -60,8 +60,8 @@ public class Timeline implements TimelineAPI {
 	 * Array of the AxisLabels, for getting the value based on an index
 	 */
 	private static final AxisLabel[] AXIS_LABELS = { AxisLabel.DAYS,
-			AxisLabel.WEEKS, AxisLabel.MONTHS, AxisLabel.YEARS,
-			AxisLabel.DECADES, AxisLabel.CENTURIES, AxisLabel.MILLENNIA };
+		AxisLabel.WEEKS, AxisLabel.MONTHS, AxisLabel.YEARS,
+		AxisLabel.DECADES, AxisLabel.CENTURIES, AxisLabel.MILLENNIA };
 
 	/**
 	 * The units to render the timeline in
@@ -81,7 +81,7 @@ public class Timeline implements TimelineAPI {
 	private boolean dirty;
 
 	/**
-	 * Constructor for name and axisLabel
+	 * Constructor for name
 	 * 
 	 * @param name
 	 *            Timeline name
@@ -210,7 +210,7 @@ public class Timeline implements TimelineAPI {
 	 *            The event to delete.
 	 */
 	@Override
-	public boolean removeEvent(TLEvent event) {
+	public boolean deleteEvent(TLEvent event) {
 		if (events.contains(event)) {
 			events.remove(event);
 			setDirty(true);
@@ -350,13 +350,8 @@ public class Timeline implements TimelineAPI {
 	public boolean addCategory(Category c) {
 		if (containsTitle(c))
 			return false;
-		// Replace the default category if it wasn't edited.
-		else if (categories.size() == 1
-				&& getDefaultCategory().getName().equals("DEFAULT")) {
-			categories.add(c);
-			deleteCategory(getDefaultCategory());
-		} else
-			categories.add(c);
+		
+		categories.add(c);
 		return true;
 	}
 
@@ -383,22 +378,20 @@ public class Timeline implements TimelineAPI {
 	 * @return True if found and removed, False otherwise.
 	 */
 	public boolean deleteCategory(Category cat) {
-		// The user is not allowed to delete the only category!
+		// The user is not allowed to delete the only category
 		if (categories.size() <= 1)
 			return false;
-		for (TLEvent e : events)
-			if (e.getCategory().getName().equals(cat.getName()))
-				e.setCategory(getDefaultCategory());
-		selectCategory(getDefaultCategory().getName());
+		
+		selectCategory(getFirstCategory().getName());
 		return categories.remove(cat);
 	}
 
 	/**
-	 * Method to get the default category.
+	 * Method to get the first category.
 	 * 
-	 * @return The default Category.
+	 * @return The First Category.
 	 */
-	public Category getDefaultCategory() {
+	public Category getFirstCategory() {
 		return categories.get(0);
 	}
 
@@ -428,7 +421,7 @@ public class Timeline implements TimelineAPI {
 	 */
 	public Category getSelectedCategory() {
 		if (selectedCategory == null)
-			selectedCategory = getDefaultCategory();
+			selectedCategory = getFirstCategory();
 		return selectedCategory;
 	}
 
@@ -443,7 +436,7 @@ public class Timeline implements TimelineAPI {
 		for (Category c : categories)
 			if (c.getName().equals(title))
 				return c;
-		return getDefaultCategory();
+		return getFirstCategory();
 	}
 
 	/**

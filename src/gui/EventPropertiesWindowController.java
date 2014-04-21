@@ -6,8 +6,10 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.URL;
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -101,16 +103,16 @@ public class EventPropertiesWindowController {
 	@FXML
 	// fx:id="eventPropertiesWindowAnchor"
 	private AnchorPane eventPropertiesWindowAnchor; // Value injected by
-													// FXMLLoader
+	// FXMLLoader
 
 	@FXML
 	// fx:id="iconComboBox"
 	private ComboBox<String> iconComboBox; // Value injected by FXMLLoader
-	
+
 	@FXML
 	// fx:id="newIconButton"
 	private Button newIconButton; // Value injected by FXMLLoader
-	
+
 	/**
 	 * The file chooser for adding new icons.
 	 */
@@ -136,6 +138,8 @@ public class EventPropertiesWindowController {
 	// fx:id="typeLabel"
 	private Label typeLabel; // Value injected by FXMLLoader
 
+	private TextFieldChecker titleChecker;
+
 	// Handler for Button[fx:id="newIconButton"] onAction
 	@FXML
 	void newIconPressed(ActionEvent event) throws FileNotFoundException {
@@ -153,7 +157,7 @@ public class EventPropertiesWindowController {
 			iconComboBox.getSelectionModel().select(file.getName());
 		}		
 	}
-	
+
 	// Handler for Button[fx:id="cancelButton"] onAction
 	@FXML
 	void cancelPressed(ActionEvent event) {
@@ -171,21 +175,23 @@ public class EventPropertiesWindowController {
 		Icon icon = timelineMaker.getIcon(iconComboBox.getSelectionModel()
 				.getSelectedItem());
 		String title = titleTextField.getText();
-		Date startDate = Date.valueOf(startDateTextField.getText());
-		Date endDate = null;
-		String description = descriptionTextArea.getText();
-		if (durationCheckBox.isSelected()) {
-			endDate = Date.valueOf(endDateTextField.getText());
+		if (titleChecker.isValid()) {
+			Date startDate = Date.valueOf(startDateTextField.getText());
+			Date endDate = null;
+			String description = descriptionTextArea.getText();
+			if (durationCheckBox.isSelected()) {
+				endDate = Date.valueOf(endDateTextField.getText());
+			}
+			if (oldEvent != null)
+				timelineMaker.editEvent(oldEvent, title, startDate, endDate,
+						selectedCategory, description, icon);
+			else
+				timelineMaker.addEvent(title, startDate, endDate, selectedCategory,
+						description, icon);
+			Node source = (Node) event.getSource();
+			Stage stage = (Stage) source.getScene().getWindow();
+			stage.close();
 		}
-		if (oldEvent != null)
-			timelineMaker.editEvent(oldEvent, title, startDate, endDate,
-					selectedCategory, description, icon);
-		else
-			timelineMaker.addEvent(title, startDate, endDate, selectedCategory,
-					description, icon);
-		Node source = (Node) event.getSource();
-		Stage stage = (Stage) source.getScene().getWindow();
-		stage.close();
 	}
 
 	// Handler for CheckBox[fx:id="durationCheckBox"] onAction
@@ -217,7 +223,7 @@ public class EventPropertiesWindowController {
 			else
 				categoryComboBox.getSelectionModel().select(
 						timelineMaker.getSelectedTimeline()
-								.getDefaultCategory().getName());
+						.getFirstCategory().getName());
 		}
 
 		iconComboBox.setItems(FXCollections.observableList(timelineMaker
@@ -242,10 +248,29 @@ public class EventPropertiesWindowController {
 	 */
 	public void initData(TimelineMaker timelineMaker, TLEvent event) {
 		this.timelineMaker = timelineMaker;
+
+		HashMap<String, String> errorStrings = new HashMap<String, String>();
+		errorStrings.put("", "Event title cannot be blank.");
 		fileChooser = new FileChooser();
 		this.oldEvent = event;
-		if (event != null)
+		if (event != null) {
 			loadEventInfo(event);
+			for (TLEvent e : timelineMaker.getSelectedTimeline().getEvents())
+				if (!oldEvent.getName().equals(e.getName()))
+					errorStrings.put(e.getName(), "Event already exists.");
+		} else 
+			for (TLEvent e : timelineMaker.getSelectedTimeline().getEvents())
+				errorStrings.put(e.getName(), "Event already exists.");
+
+		titleChecker = new TextFieldChecker(titleTextField, "Enter a title.", errorStrings) {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				if (!newValue)
+					validate();
+			}
+		};
+		titleTextField.focusedProperty().addListener(titleChecker);
+
 		initComboBox();
 	}
 
@@ -262,7 +287,7 @@ public class EventPropertiesWindowController {
 			endDateTextField.setVisible(!endDateTextField.isVisible());
 			dateToLabel.setVisible(!dateToLabel.isVisible());
 			endDateTextField
-					.setText(((Duration) event).getEndDate().toString());
+			.setText(((Duration) event).getEndDate().toString());
 		}
 		startDateTextField.setText(event.getStartDate().toString());
 		categoryComboBox.setValue(event.getCategory().getName());
