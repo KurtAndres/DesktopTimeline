@@ -39,7 +39,7 @@ if($uid!= "''" & $name != "''"){
 			if($axis_color == "''"){
 				$axis_color = "'0x000000ff'";
 				}
-			if($background_color"''"){
+			if($background_color == "''"){
 				$background_color = "'0x999999ff'";
 				}
 			
