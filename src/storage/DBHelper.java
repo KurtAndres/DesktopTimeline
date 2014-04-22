@@ -225,6 +225,7 @@ public class DBHelper implements DBHelperAPI {
 							+ "category TEXT, icon INTEGER, description TEXT);");
 			writeTimelineInfo(timeline);
 			setTimelineID(timeline);
+			
 		} catch (SQLException e) {
 			if (e.getMessage().contains("already exists")) {
 				System.out.println("A timeline with that name already exists!");

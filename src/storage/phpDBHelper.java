@@ -7,8 +7,11 @@ import java.net.URL;
 import java.sql.Date;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import javafx.scene.paint.Color;
 
@@ -32,16 +35,29 @@ public class phpDBHelper {
 
 	private static DBHelper database;
 	private static HashMap<String,Timeline> tlMap;
+	private static HashMap<String,String> tlNameIdMap;
+	private static HashMap<Category, String> catMap;
 
 
 	public void doit(){
 		database = new DBHelper("timeline.db");
 		tlMap = new HashMap<String,Timeline>();
+		tlNameIdMap = new HashMap<String,String>();
+		catMap = new HashMap<Category, String>();
+		
 		try{
+			
 		parse();
 		} catch (ParseException e){
 			System.out.println("json parsing fail");
+		} 
+		
+		
+		Set<Category> s = catMap.keySet();
+		for(Category c: s){
+			database.saveCategory(c,tlNameIdMap.get(catMap.get(c)));
 		}
+		
 		Collection<Timeline> c = tlMap.values();
 		for (Timeline t : c){
 			
@@ -134,6 +150,7 @@ public class phpDBHelper {
 			tl = new Timeline((String) jobj.get("name"), AxisLabel.valueOf((String) jobj.get("axis_label")), 
 					Color.web((String) jobj.get("axis_color")), Color.web((String) jobj.get("background_color")));
 			tlMap.put((String) jobj.get("tid"), tl);
+			tlNameIdMap.put((String) jobj.get("tid"),(String) jobj.get("name"));
 		}while(it.hasNext());
 		
 		Iterator it2 = array.iterator();
@@ -141,14 +158,18 @@ public class phpDBHelper {
 		do{
 			jobj2 = (JSONObject)it2.next();
 			TLEvent event;
+			Category cat = new Category((String)jobj2.get("category"));
+			cat.setColor(Color.web("0xffffffff"));
+			catMap.put(cat,(String)jobj2.get("tid"));
 			if (jobj2.get("type").equals("duration") ) {
-				event = new Duration((String)jobj2.get("eventName"), new Category((String)jobj2.get("category")),
+				event = new Duration((String)jobj2.get("eventName"),  cat,
 						Date.valueOf((String) jobj2.get("startDate")), Date.valueOf((String) jobj2.get("endDate")), Integer.parseInt((String) jobj2.get("iconid")), (String) jobj2.get("description"));
 			} else {
-				event = new Atomic((String)jobj2.get("eventName"), new Category((String)jobj2.get("category")),
+				event = new Atomic((String)jobj2.get("eventName"), cat,
 						Date.valueOf((String) jobj2.get("startDate")), Integer.parseInt((String) jobj2.get("iconid")), (String) jobj2.get("description"));
 			}
 			tlMap.get((String) jobj2.get("tid")).addEvent(event);
+			
 		}while(it2.hasNext());
 		
 	}
