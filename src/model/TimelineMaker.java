@@ -7,21 +7,16 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import model.Timeline.AxisLabel;
 
-import java.awt.GridLayout;
+
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import java.awt.GridLayout;
+import javax.swing.*;
 
 import org.json.simple.parser.ParseException;
-import com.sun.javafx.event.EventQueue;
 
 /**
  * TimelineMaker.java
@@ -43,6 +38,7 @@ public class TimelineMaker {
 	 * The timeline selected in this application.
 	 */
 	private Timeline selectedTimeline;
+	private String user, pass;
 	/**
 	 * The event selected in this application.
 	 */
@@ -80,7 +76,8 @@ public class TimelineMaker {
 	 * graphics, and GUI components. 
 	 */
 	public TimelineMaker() {
-        getCredentials(); 
+		getCredentials();
+		
 		database = new DBHelper("timeline.db");
 		graphics = new TimelineGraphics(this);
 		timelines = new ArrayList<Timeline>();
@@ -505,7 +502,29 @@ public class TimelineMaker {
 	public String getAboutText() {
 		return about_text;
 	}
+	
+	private static void getCredentials() {
+		
+	      JTextField xField = new JTextField(5);
+	      JTextField yField = new JTextField(5);
 
+	      JPanel myPanel = new JPanel();
+	      myPanel.add(new JLabel("x:"));
+	      myPanel.add(xField);
+	      myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+	      myPanel.add(new JLabel("y:"));
+	      myPanel.add(yField);
+
+	      int result = JOptionPane.showConfirmDialog(null, myPanel, 
+	               "Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
+	      if (result == JOptionPane.OK_OPTION) {
+	         System.out.println("x value: " + xField.getText());
+	         System.out.println("y value: " + yField.getText());
+	      }
+
+	   
+        
+    }
 
 	/**
 	 * An attempt at associating the events with their icons on start-up.
@@ -526,15 +545,5 @@ public class TimelineMaker {
 			}
 		}
 	}
-	private static void getCredentials() {
-		JTextField field1 = new JTextField("Username");
-        JTextField field2 = new JTextField("Password");
-        JPanel panel = new JPanel(new GridLayout(0, 1));
-        panel.add(new JLabel("Username:"));
-        panel.add(field1);
-        panel.add(new JLabel("Password"));
-        panel.add(field2);
-    }
-	 
 
 }
