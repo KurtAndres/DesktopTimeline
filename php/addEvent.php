@@ -68,6 +68,24 @@ if($eid!="''"){
 //NOTICE a time-line is only added if the below conditions are met
 //ALSO notice you can add the same exact thing multiple times which obviously i dont know why youd want to add the same event but we allow it
 if($tid!= "''" & $name != "''" & $eid == "''"){
+			if($type == "''"){
+				$type = "'"."atomic"."'";
+				}
+			if($startdate == "''"){
+				$startdate = "'". date('Y-m-d')."'";
+				}
+			if($enddate == "''"){
+				$enddate = "'" . date('Y-m-d')."'";
+				}
+			if($category == "''"){
+				$category = "'"."DEFAULT"."'";				
+				}
+			if($description == "''"){
+				$description = "'"."No Description"."'";				
+				}
+			if($iconid == "''"){
+				$iconid = "'"."0"."'";
+				}
 	$sql="INSERT INTO events(tid, eventName, type, startDate, endDate, category, description, iconid) VALUES (".$tid.",".$name.",".$type.",".$startdate.",".$enddate.",".$category.",".$description.",".$iconid.")";
         mysqli_query($db, $sql);
         }
