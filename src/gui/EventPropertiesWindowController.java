@@ -258,9 +258,11 @@ public class EventPropertiesWindowController {
 			for (TLEvent e : timelineMaker.getSelectedTimeline().getEvents())
 				if (!oldEvent.getName().equals(e.getName()))
 					errorStrings.put(e.getName(), "Event already exists.");
-		} else 
-			for (TLEvent e : timelineMaker.getSelectedTimeline().getEvents())
-				errorStrings.put(e.getName(), "Event already exists.");
+		} else {
+			if(timelineMaker.getSelectedTimeline().getEvents() != null)
+				for (TLEvent e : timelineMaker.getSelectedTimeline().getEvents())
+					errorStrings.put(e.getName(), "Event already exists.");
+		}
 
 		titleChecker = new TextFieldChecker(titleTextField, "Enter a title.", errorStrings) {
 			@Override

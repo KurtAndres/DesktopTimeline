@@ -33,6 +33,6 @@
     <Label fx:id="fontLabel" font="$x2" layoutY="214.0" prefHeight="22.0" text="Font" AnchorPane.leftAnchor="14.0" />
     <Separator fx:id="buttonSeparator" prefWidth="426.000244140625" AnchorPane.bottomAnchor="39.7" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-1.0" />
     <ColorPicker id="colorP" fx:id="colorTimelineChooser" layoutY="144.0" AnchorPane.rightAnchor="13.0" />
-    <Label id="colorLabel" fx:id="colorLabelTimeline" alignment="TOP_LEFT" font="$x2" layoutY="144.0" prefHeight="25.0" text="Timeline Color" AnchorPane.leftAnchor="13.0" />
+    <Label id="colorLabel" fx:id="colorLabelTimeline" alignment="TOP_LEFT" font="$x2" layoutY="144.0" prefHeight="25.0" text="Title Color" AnchorPane.leftAnchor="13.0" />
   </children>
 </AnchorPane>

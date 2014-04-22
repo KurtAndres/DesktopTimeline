@@ -197,7 +197,7 @@ public class MainWindowController {
 			Stage stage = new Stage();
 			stage.setTitle("Confirm Deletion");
 			Scene scene = new Scene(root);
-			scene.getStylesheets().add("gui/DeleteCategoryConfirmation.css");
+			scene.getStylesheets().add("gui/DeleteConfirmation.css");
 			stage.setScene(scene);
 			stage.show();
 		} catch (Exception e) {
@@ -214,15 +214,23 @@ public class MainWindowController {
 	void deleteTimelinePressed(ActionEvent event) {
 		if (timelineMaker == null)
 			return;
-		timelineMaker.deleteTimeline();
-		timelineMaker.selectDefaultTimeline();
-		populateListView();
-		if (timelineMaker.getSelectedTimeline() == null) {
-			ArrayList<String> x = new ArrayList<String>();
-			categoriesListView.setItems(FXCollections.observableList(x));
-			return;
+		try{
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(
+					"DeleteTimelineConfirmation.fxml"));
+			Parent root = (Parent) loader.load();
+			DeleteTimelineConfirmationController controller = loader
+					.<DeleteTimelineConfirmationController> getController();
+			controller.initData(timelineMaker, this);
+			Stage stage = new Stage();
+			stage.setTitle("Confirm Deletion");
+			Scene scene = new Scene(root);
+			scene.getStylesheets().add("gui/DeleteConfirmation.css");
+			stage.setScene(scene);
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
+		
 	}
 
 	@FXML
@@ -387,6 +395,18 @@ public class MainWindowController {
 				categoriesListViewClicked();
 			}
 		});
+	}
+	
+	/**
+	 * Helper method for DeleteTimelineConfirmationController. Updates the categoryListView if the timeline is deleted.
+	 */
+	void updateCategoryView(){
+		if (timelineMaker.getSelectedTimeline() == null) {
+			ArrayList<String> x = new ArrayList<String>();
+			categoriesListView.setItems(FXCollections.observableList(x));
+			return;
+		}
+
 	}
 
 	/**

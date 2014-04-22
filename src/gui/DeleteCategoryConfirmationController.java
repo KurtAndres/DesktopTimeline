@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -35,6 +36,9 @@ public class DeleteCategoryConfirmationController {
     @FXML
     private Button yesButton;
     
+    @FXML
+    private Label confirmLabel;
+    
     private TimelineMaker timelineMaker;
     
     private MainWindowController mainWindowController;
@@ -51,7 +55,6 @@ public class DeleteCategoryConfirmationController {
     void yesPressed(ActionEvent event) {
     	Category selectedCategory = timelineMaker.getSelectedTimeline()
 				.getSelectedCategory();
-		//timelineMaker.getSelectedTimeline().deleteCategory(selectedCategory);
 		timelineMaker.deleteCategory(selectedCategory);
 		mainWindowController.populateListView();
     	
