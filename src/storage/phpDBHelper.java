@@ -64,11 +64,32 @@ public class phpDBHelper {
 		System.out.println("First Timeline");
 		System.out.println(arrayT.get(0)); // events start at 0
 		System.out.println();
+		System.out.println("2nd Timeline");
+		System.out.println(arrayT.get(1)); // events start at 0
+		System.out.println();
 
 		System.out.println("First Event");
 		System.out.println(array.get(0)); // events start at 0
 		System.out.println();
+		
+		System.out.println("2nd Event");
+		System.out.println(array.get(1)); // events start at 0
+		System.out.println();
+		
+		System.out.println("3rd Event");
+		System.out.println(array.get(2)); // events start at 0
+		System.out.println();
 
+		System.out.println("4th Event");
+		System.out.println(array.get(3)); // events start at 0
+		System.out.println();
+
+		System.out.println("5th Event");
+		System.out.println(array.get(4)); // events start at 0
+		System.out.println();
+
+
+/*
 		JSONObject obj1 = (JSONObject)array.get(0);
 		System.out.println("eid:"); //event id (unique)
 		System.out.println(obj1.get("eid"));
@@ -100,34 +121,35 @@ public class phpDBHelper {
 		System.out.println("First Event Again"); // this one has a different tid, so it has a different timeline.
 		System.out.println(array.get(0)); 
 		System.out.println();
-
+*/
 
 		Iterator it = arrayT.iterator();
 		JSONObject jobj;
 		Timeline tl;
 		String tid;
 
-		while(it.hasNext()){
+		do{
 			jobj = (JSONObject)it.next();
 			tid = (String) jobj.get("tid");
 			tl = new Timeline((String) jobj.get("name"), AxisLabel.valueOf((String) jobj.get("axis_label")), 
 					Color.web((String) jobj.get("axis_color")), Color.web((String) jobj.get("background_color")));
 			tlMap.put((String) jobj.get("tid"), tl);
-		}
+		}while(it.hasNext());
+		
 		Iterator it2 = array.iterator();
 		JSONObject jobj2;
-		while(it2.hasNext()){
+		do{
 			jobj2 = (JSONObject)it2.next();
 			TLEvent event;
-			if (obj1.get("type").equals("duration") ) {
+			if (jobj2.get("type").equals("duration") ) {
 				event = new Duration((String)jobj2.get("eventName"), new Category((String)jobj2.get("category")),
-						Date.valueOf((String) jobj2.get("startDate")), Date.valueOf((String) jobj2.get("EndDate")), Integer.parseInt((String) jobj2.get("iconid")), (String) jobj2.get("description"));
+						Date.valueOf((String) jobj2.get("startDate")), Date.valueOf((String) jobj2.get("endDate")), Integer.parseInt((String) jobj2.get("iconid")), (String) jobj2.get("description"));
 			} else {
 				event = new Atomic((String)jobj2.get("eventName"), new Category((String)jobj2.get("category")),
 						Date.valueOf((String) jobj2.get("startDate")), Integer.parseInt((String) jobj2.get("iconid")), (String) jobj2.get("description"));
 			}
 			tlMap.get((String) jobj2.get("tid")).addEvent(event);
-		}
+		}while(it2.hasNext());
 		
 	}
 		
