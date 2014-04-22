@@ -1,9 +1,13 @@
 package gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import org.json.simple.parser.ParseException;
+
+import storage.phpPushHelper;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -298,7 +302,12 @@ public class MainWindowController {
 	}
 
 	@FXML
-	void exitPressed(ActionEvent event) {
+	void exitPressed(ActionEvent event) throws IOException {
+		try {
+			phpPushHelper.send(timelineMaker);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		System.exit(0);
 	}
 
@@ -354,7 +363,12 @@ public class MainWindowController {
 	}
 
 	@FXML
-	void savePressed(ActionEvent event) {
+	void savePressed(ActionEvent event) throws IOException {
+		try {
+			phpPushHelper.send(timelineMaker);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML

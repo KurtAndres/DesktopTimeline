@@ -100,9 +100,8 @@ public class TimelineMaker {
 		for (Timeline t : database.getTimelines())
 			database.removeTimeline(t);
 		
-		System.out.println("here");
 		p.doit();
-		System.out.println("here2");
+		
 		try {
 			for (Timeline t : database.getTimelines())
 				timelines.add(t);
@@ -229,7 +228,7 @@ public class TimelineMaker {
 	 *            The name of the timeline to be found
 	 * @return The timeline with the correct name; null otherwise.
 	 */
-	private Timeline getTimeline(String title) {
+	public Timeline getTimeline(String title) {
 		for (Timeline t : timelines)
 			if (t.getName().equals(title))
 				return t;

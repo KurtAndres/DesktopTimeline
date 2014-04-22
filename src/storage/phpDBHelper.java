@@ -24,7 +24,7 @@ import model.*;
 /**
  * phpDBHelper.java
  * 
- * Updates online database with newest data from the online database.
+ * Updates offline database with newest data from the online database.
  * 
  * 
  * @author Conner Vick Wheaton College, CS 335, Spring 2014
@@ -38,11 +38,12 @@ public class phpDBHelper {
 	private static HashMap<String,String> tlNameIdMap;
 	private static HashMap<Category, String> catMap;
 	private static String user, pass;
+	public static String uid;
 
 	public phpDBHelper(String u, String p){
 		user = u;
 		pass = p;
-		
+
 	}
 	public void doit(){
 		database = new DBHelper("timeline.db");
@@ -51,99 +52,39 @@ public class phpDBHelper {
 		catMap = new HashMap<Category, String>();
 		System.out.println("u:"+user+" p:"+pass);
 		try{
-			
-		parse();
+
+			parse();
 		} catch (ParseException e){
 			System.out.println("json parsing fail");
 		} 
-		
-		
+
+
 		Set<Category> s = catMap.keySet();
 		for(Category c: s){
 			database.saveCategory(c,tlNameIdMap.get(catMap.get(c)));
 		}
-		
+
 		Collection<Timeline> c = tlMap.values();
 		for (Timeline t : c){
-			
+
 			if(!database.saveTimeline(t)){
 				System.out.println("php save timeline fail");
 			}
 		}
-		
+
 	}
 	public static void parse() throws ParseException{
-		//parse example:
+		
 
 		JSONParser parser=new JSONParser(); //parser
-		
+
 		Object obj = parser.parse(getEvents()); //get json string and parse it
 		JSONArray array = (JSONArray)obj; //turn parsed object into array
 
 		Object objT = parser.parse(getTimelines()); //get json string and parse it
 		JSONArray arrayT = (JSONArray)objT; //turn parsed object into array
-/*
-		System.out.println("First Timeline");
-		System.out.println(arrayT.get(0)); // events start at 0
-		System.out.println();
-		System.out.println("2nd Timeline");
-		System.out.println(arrayT.get(1)); // events start at 0
-		System.out.println();
-
-		System.out.println("First Event");
-		System.out.println(array.get(0)); // events start at 0
-		System.out.println();
+		if(arrayT==null) return;
 		
-		System.out.println("2nd Event");
-		System.out.println(array.get(1)); // events start at 0
-		System.out.println();
-		
-		System.out.println("3rd Event");
-		System.out.println(array.get(2)); // events start at 0
-		System.out.println();
-
-		System.out.println("4th Event");
-		System.out.println(array.get(3)); // events start at 0
-		System.out.println();
-
-		System.out.println("5th Event");
-		System.out.println(array.get(4)); // events start at 0
-		System.out.println();
-*/
-
-/*
-		JSONObject obj1 = (JSONObject)array.get(0);
-		System.out.println("eid:"); //event id (unique)
-		System.out.println(obj1.get("eid"));
-
-		System.out.println("endDate:");
-		System.out.println(obj1.get("endDate"));
-
-		System.out.println("eventName:");
-		System.out.println(obj1.get("eventName"));
-
-		System.out.println("type:"); // atomic or duration
-		System.out.println(obj1.get("type"));
-
-		System.out.println("category:");
-		System.out.println(obj1.get("category"));
-
-		System.out.println("startDate:");
-		System.out.println(obj1.get("startDate"));
-
-		System.out.println("iconid");
-		System.out.println(obj1.get("iconid"));
-
-		System.out.println("description");
-		System.out.println(obj1.get("description"));
-
-		System.out.println("tid:"); // timeline ID all events for a timeline have this same id.
-		System.out.println(obj1.get("tid"));
-
-		System.out.println("First Event Again"); // this one has a different tid, so it has a different timeline.
-		System.out.println(array.get(0)); 
-		System.out.println();
-*/
 
 		Iterator it = arrayT.iterator();
 		JSONObject jobj;
@@ -158,7 +99,7 @@ public class phpDBHelper {
 			tlMap.put((String) jobj.get("tid"), tl);
 			tlNameIdMap.put((String) jobj.get("tid"),(String) jobj.get("name"));
 		}while(it.hasNext());
-		
+
 		Iterator it2 = array.iterator();
 		JSONObject jobj2;
 		do{
@@ -175,55 +116,59 @@ public class phpDBHelper {
 						Date.valueOf((String) jobj2.get("startDate")), Integer.parseInt((String) jobj2.get("iconid")), (String) jobj2.get("description"));
 			}
 			tlMap.get((String) jobj2.get("tid")).addEvent(event);
-			
+
 		}while(it2.hasNext());
-		
+
 	}
-		
 
-	
-		public static String getEvents(){ 
-			try {
 
-				//getting json string from database
-				URL internet = new URL("http://cs.wheaton.edu/~kurt.andres/userTimelineEvent.php?name="+user+"&password="+pass);
 
-				Scanner sc = new Scanner(internet.openStream());
-				return sc.nextLine();
-			} catch (Exception e){
-				return e.getMessage();
-			}
+	public static String getEvents(){ 
+		try {
+
+			//getting json string from database
+			URL internet = new URL("http://cs.wheaton.edu/~kurt.andres/userTimelineEvent.php?name="+user+"&password="+pass);
+
+			Scanner sc = new Scanner(internet.openStream());
+			return sc.nextLine();
+		} catch (Exception e){
+			return e.getMessage();
 		}
-		public static String getUid(){ 
-			try {
+	}
+	public static String getUid(){ 
+		try {
 
-				//getting json string from database
-				URL internet = new URL("http://cs.wheaton.edu/~kurt.andres/addUser.php?name="+user+"&password="+pass);
+			//getting json string from database
+			URL internet = new URL("http://cs.wheaton.edu/~kurt.andres/addUser.php?name="+user+"&password="+pass);
 
-				Scanner sc = new Scanner(internet.openStream());
-				
-				JSONParser parser=new JSONParser(); //parser
-				Object obj = parser.parse(sc.nextLine()); //get json string and parse it
-				JSONArray array = (JSONArray)obj; //turn parsed object into array
-				JSONObject obj1 = (JSONObject)array.get(0);
-				System.out.println(obj1.get("uid"));
-				return (String)obj1.get("uid");
-				
-			} catch (Exception e){
-				return e.getMessage();
-			}
+			Scanner sc = new Scanner(internet.openStream());
+
+			JSONParser parser=new JSONParser(); //parser
+			Object obj = parser.parse(sc.nextLine()); //get json string and parse it
+			JSONArray array = (JSONArray)obj; //turn parsed object into array
+			JSONObject obj1 = (JSONObject)array.get(0);
+			sc.close();
+			System.out.println(obj1.get("uid"));
+			uid = (String)obj1.get("uid");
+			return (String)obj1.get("uid");
+
+		} catch (Exception e){
+			System.out.println("here4");
+			System.out.println(e.getMessage());
+			return null;
 		}
-		
-		public static String getTimelines(){ 
-			try {
+	}
 
-				//getting json string from database
-				URL internet = new URL("http://cs.wheaton.edu/~kurt.andres/addTimeline.php?uid="+getUid());
+	public static String getTimelines(){ 
+		try {
 
-				Scanner sc = new Scanner(internet.openStream());
-				return sc.nextLine();
-			} catch (Exception e){
-				return e.getMessage();
-			}
+			//getting json string from database
+			URL internet = new URL("http://cs.wheaton.edu/~kurt.andres/addTimeline.php?uid="+getUid());
+
+			Scanner sc = new Scanner(internet.openStream());
+			return sc.nextLine();
+		} catch (Exception e){
+			return e.getMessage();
 		}
+	}
 }

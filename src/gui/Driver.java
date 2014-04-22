@@ -67,6 +67,9 @@ public class Driver extends Application {
 	         TimelineMaker.user = xField.getText();
 	         TimelineMaker.pass = yField.getText();
 	      }
+	      if (result == JOptionPane.CANCEL_OPTION) {
+		        System.exit(0);
+		      }
 
 	   }
 }
