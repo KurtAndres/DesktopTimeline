@@ -90,8 +90,9 @@ public class TimelineMaker {
 		for (Timeline t : database.getTimelines())
 			database.removeTimeline(t);
 		
+		System.out.println("here");
 		p.doit();
-		
+		System.out.println("here2");
 		try {
 			for (Timeline t : database.getTimelines())
 				timelines.add(t);
