@@ -163,7 +163,7 @@ public class TimelinePropertiesWindowController {
 		AxisLabel[] labels = Timeline.AxisLabel.values();
 		for (AxisLabel label : labels)
 			axisUnitComboBox.getItems().addAll(label);
-		axisUnitComboBox.setValue(labels[0]);
+		axisUnitComboBox.setValue(Timeline.AxisLabel.YEARS);
 	}
 
 	/**

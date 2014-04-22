@@ -26,7 +26,7 @@
     <ColorPicker id="colorColorChooser" fx:id="colorBackgroundChooser" layoutY="114.0" AnchorPane.rightAnchor="13.0" />
     <TextField fx:id="titleTextField" layoutY="37.0" prefWidth="199.99991689452872" AnchorPane.leftAnchor="213.0" AnchorPane.rightAnchor="13.0" />
     <ComboBox fx:id="fontComboBox" layoutY="215.0" AnchorPane.rightAnchor="14.0" />
-    <Button fx:id="createButton" mnemonicParsing="false" onAction="#createButtonPressed" text="Create" AnchorPane.bottomAnchor="13.7" AnchorPane.rightAnchor="97.0" />
+    <Button fx:id="createButton" mnemonicParsing="false" onAction="#createButtonPressed" text="Ok" AnchorPane.bottomAnchor="13.7" AnchorPane.rightAnchor="97.0" />
     <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelButtonPressed" text="Cancel" AnchorPane.bottomAnchor="13.7" AnchorPane.rightAnchor="27.0" />
     <ComboBox fx:id="axisUnitComboBox" layoutY="187.0" AnchorPane.rightAnchor="14.0" />
     <Separator fx:id="appearanceSeparator" layoutY="70.0" prefWidth="426.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />

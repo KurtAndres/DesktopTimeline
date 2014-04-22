@@ -139,6 +139,8 @@ public class EventPropertiesWindowController {
 	private Label typeLabel; // Value injected by FXMLLoader
 
 	private TextFieldChecker titleChecker;
+	
+	private TextFieldChecker startDateChecker, endDateChecker;
 
 	// Handler for Button[fx:id="newIconButton"] onAction
 	@FXML

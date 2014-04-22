@@ -29,7 +29,7 @@
     <ComboBox fx:id="categoryComboBox" layoutY="101.0" prefWidth="161.0" AnchorPane.rightAnchor="15.0" />
     <Separator fx:id="buttonSeparator" prefWidth="286.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
     <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelPressed" text="Cancel" AnchorPane.bottomAnchor="9.13" AnchorPane.rightAnchor="14.0" />
-    <Button fx:id="createButton" mnemonicParsing="false" onAction="#createPressed" text="Create" AnchorPane.bottomAnchor="9.13" AnchorPane.rightAnchor="94.0" />
+    <Button fx:id="createButton" mnemonicParsing="false" onAction="#createPressed" text="Ok" AnchorPane.bottomAnchor="9.13" AnchorPane.rightAnchor="94.0" />
     <Label id="descriptionLabel" fx:id="iconLabel" font="$x1" layoutY="138.0" prefHeight="22.0" text="Icon" AnchorPane.leftAnchor="14.0" />
     <ComboBox id="categoryComboBox" fx:id="iconComboBox" layoutY="138.0" prefHeight="21.0" prefWidth="161.0" AnchorPane.rightAnchor="82.0" />
     <Button fx:id="newIconButton" layoutY="138.0" mnemonicParsing="false" onAction="#newIconPressed" text="New..." AnchorPane.rightAnchor="15.0" />
