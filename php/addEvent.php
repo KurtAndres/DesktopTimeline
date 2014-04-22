@@ -1,4 +1,4 @@
-?php
+<?php
 //connecting to the db
 $db = mysqli_connect('csdb.wheaton.edu', 'TimelineAdmin', 'kurtconner',"Timeline");
 
@@ -25,36 +25,50 @@ $enddate = "'".$_GET['enddate']."'";
 //event category
 $category = "'".$_GET['category']."'";
 
+//event description
+$description = "'".$_GET['description']."'";
+
+//iconid - to keep track of icon on the local sql lite database
+$iconid = "'".$_GET['iconid']."'";
+
 if($eid!="''"){
-        $result = mysqli_query($db, "SELECT * FROM events WHERE eid=".$eid);
-        if(mysqli_num_rows($result)>0){
-                        if($name!="''"){
-                        $sql="UPDATE events SET eventName=".$name."WHERE eid=".$eid;
+	$result = mysqli_query($db, "SELECT * FROM events WHERE eid=".$eid);
+	if(mysqli_num_rows($result)>0){
+			if($name!="''"){
+			$sql="UPDATE events SET eventName=".$name."WHERE eid=".$eid;
+			$result=mysqli_query($db, $sql);
+			}
+			if($type!="''"){
+			$sql="UPDATE events SET type=".$type."WHERE eid=".$eid;
                         $result=mysqli_query($db, $sql);
-                        }
-                        if($type!="''"){
-                        $sql="UPDATE events SET type=".$type."WHERE eid=".$eid;
-                        $result=mysqli_query($db, $sql);
-                        }
-                        if($startdate!="''"){
+			}
+			if($startdate!="''"){
                         $sql="UPDATE events SET startDate=".$startdate."WHERE eid=".$eid;
                         $result=mysqli_query($db, $sql);
-                       }
-                        if($enddate!="''"){
+                        }
+			if($enddate!="''"){
                         $sql="UPDATE events SET endDate=".$enddate."WHERE eid=".$eid;
                         $result=mysqli_query($db, $sql);
                         }
-                        if($category!="''"){
+			if($category!="''"){
                         $sql="UPDATE events SET category=".$category."WHERE eid=".$eid;
                         $result=mysqli_query($db, $sql);
                         }
 
+			if($description!="''"){
+                        $sql="UPDATE events SET description=".$description."WHERE eid=".$eid;
+                        $result=mysqli_query($db, $sql);
                         }
-        }
-//NOTICAE a timeline is only added if the below conditions are met
-//ALSO notice you can add the same exact thing multiple times which obviously i dont know why youd want to
+         if($iconid!="''"){
+                        $sql="UPDATE events SET iconid=".$iconid."WHERE eid=".$eid;
+                        $result=mysqli_query($db, $sql);
+                        }
+			}
+	}
+//NOTICE a time-line is only added if the below conditions are met
+//ALSO notice you can add the same exact thing multiple times which obviously i dont know why youd want to add the same event but we allow it
 if($tid!= "''" & $name != "''" & $eid == "''"){
-        $sql="INSERT INTO events(tid, eventName, type, startDate, endDate, category) VALUES (".$tid.",".$name.",".$type.",".$startdate.",".$enddate.",".$category.")";
+	$sql="INSERT INTO events(tid, eventName, type, startDate, endDate, category, description, iconid) VALUES (".$tid.",".$name.",".$type.",".$startdate.",".$enddate.",".$category.",".$description.",".$iconid.")";
         mysqli_query($db, $sql);
         }
 
