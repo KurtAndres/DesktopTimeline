@@ -1,4 +1,3 @@
-
 <?php
 //connecting to the db
 $db = mysqli_connect('csdb.wheaton.edu', 'TimelineAdmin', 'kurtconner',"Timeline");
@@ -34,6 +33,16 @@ if($uid!= "''" & $name != "''"){
 	if($found){
 		//echo "Not Added";		
 		}else{
+			if($axis_label == "''"){
+				$axis_label = "'YEARS'";
+				}
+			if($axis_color == "''"){
+				$axis_color = "'0x000000ff'";
+				}
+			if($background_color"''"){
+				$background_color = "'0x999999ff'";
+				}
+			
 			$sql="INSERT INTO timelines(uid, name, axis_label, background_color, axis_color) VALUES (".$uid.",".$name.",".$axis_label.",".$background_color.",".$axis_color.")";
 			mysqli_query($db, $sql);
 			//echo "added";			
