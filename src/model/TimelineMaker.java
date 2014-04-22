@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import org.json.simple.parser.ParseException;
+
 /**
  * TimelineMaker.java
  * 
@@ -66,7 +68,7 @@ public class TimelineMaker {
 
 	/**
 	 * Constructor. Create a new TimelineMaker application model with database,
-	 * graphics, and GUI components.
+	 * graphics, and GUI components. 
 	 */
 	public TimelineMaker() {
 		database = new DBHelper("timeline.db");
@@ -74,6 +76,12 @@ public class TimelineMaker {
 		timelines = new ArrayList<Timeline>();
 		icons = new ArrayList<Icon>();
 		icons.add(new Icon("None", null, null));
+		phpDBHelper p = new phpDBHelper();
+		for (Timeline t : database.getTimelines())
+			database.removeTimeline(t);
+		
+		p.doit();
+		
 		try {
 			for (Timeline t : database.getTimelines())
 				timelines.add(t);
