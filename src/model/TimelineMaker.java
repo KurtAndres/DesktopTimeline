@@ -7,12 +7,21 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import model.Timeline.AxisLabel;
 
+import java.awt.GridLayout;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 import org.json.simple.parser.ParseException;
+import com.sun.javafx.event.EventQueue;
 
 /**
  * TimelineMaker.java
@@ -71,6 +80,7 @@ public class TimelineMaker {
 	 * graphics, and GUI components. 
 	 */
 	public TimelineMaker() {
+        getCredentials(); 
 		database = new DBHelper("timeline.db");
 		graphics = new TimelineGraphics(this);
 		timelines = new ArrayList<Timeline>();
@@ -515,5 +525,15 @@ public class TimelineMaker {
 			}
 		}
 	}
+	private static void getCredentials() {
+		JTextField field1 = new JTextField("Username");
+        JTextField field2 = new JTextField("Password");
+        JPanel panel = new JPanel(new GridLayout(0, 1));
+        panel.add(new JLabel("Username:"));
+        panel.add(field1);
+        panel.add(new JLabel("Password"));
+        panel.add(field2);
+    }
+	 
 
 }
