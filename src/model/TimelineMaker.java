@@ -3,18 +3,27 @@ package model;
 import render.*;
 import gui.*;
 import storage.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 import model.Timeline.AxisLabel;
-
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-
+import java.util.Scanner;
 import java.awt.GridLayout;
+
 import javax.swing.*;
+
+import java.awt.event.*;
 
 import org.json.simple.parser.ParseException;
 
@@ -38,7 +47,10 @@ public class TimelineMaker {
 	 * The timeline selected in this application.
 	 */
 	private Timeline selectedTimeline;
-	private String user, pass;
+	public static String user;
+	public static String pass;
+	
+	
 	/**
 	 * The event selected in this application.
 	 */
@@ -76,14 +88,15 @@ public class TimelineMaker {
 	 * graphics, and GUI components. 
 	 */
 	public TimelineMaker() {
-		getCredentials();
+		System.out.println(pass+" "+user);
+		
 		
 		database = new DBHelper("timeline.db");
 		graphics = new TimelineGraphics(this);
 		timelines = new ArrayList<Timeline>();
 		icons = new ArrayList<Icon>();
 		icons.add(new Icon("None", null, null));
-		phpDBHelper p = new phpDBHelper();
+		phpDBHelper p = new phpDBHelper(user, pass);
 		for (Timeline t : database.getTimelines())
 			database.removeTimeline(t);
 		
@@ -503,28 +516,10 @@ public class TimelineMaker {
 		return about_text;
 	}
 	
-	private static void getCredentials() {
 		
-	      JTextField xField = new JTextField(5);
-	      JTextField yField = new JTextField(5);
-
-	      JPanel myPanel = new JPanel();
-	      myPanel.add(new JLabel("x:"));
-	      myPanel.add(xField);
-	      myPanel.add(Box.createHorizontalStrut(15)); // a spacer
-	      myPanel.add(new JLabel("y:"));
-	      myPanel.add(yField);
-
-	      int result = JOptionPane.showConfirmDialog(null, myPanel, 
-	               "Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
-	      if (result == JOptionPane.OK_OPTION) {
-	         System.out.println("x value: " + xField.getText());
-	         System.out.println("y value: " + yField.getText());
-	      }
-
 	   
         
-    }
+    
 
 	/**
 	 * An attempt at associating the events with their icons on start-up.

@@ -37,14 +37,19 @@ public class phpDBHelper {
 	private static HashMap<String,Timeline> tlMap;
 	private static HashMap<String,String> tlNameIdMap;
 	private static HashMap<Category, String> catMap;
+	private static String user, pass;
 
-
+	public phpDBHelper(String u, String p){
+		user = u;
+		pass = p;
+		
+	}
 	public void doit(){
 		database = new DBHelper("timeline.db");
 		tlMap = new HashMap<String,Timeline>();
 		tlNameIdMap = new HashMap<String,String>();
 		catMap = new HashMap<Category, String>();
-		
+		System.out.println("u:"+user+" p:"+pass);
 		try{
 			
 		parse();
@@ -71,12 +76,13 @@ public class phpDBHelper {
 		//parse example:
 
 		JSONParser parser=new JSONParser(); //parser
+		
 		Object obj = parser.parse(getEvents()); //get json string and parse it
 		JSONArray array = (JSONArray)obj; //turn parsed object into array
 
 		Object objT = parser.parse(getTimelines()); //get json string and parse it
 		JSONArray arrayT = (JSONArray)objT; //turn parsed object into array
-
+/*
 		System.out.println("First Timeline");
 		System.out.println(arrayT.get(0)); // events start at 0
 		System.out.println();
@@ -103,7 +109,7 @@ public class phpDBHelper {
 		System.out.println("5th Event");
 		System.out.println(array.get(4)); // events start at 0
 		System.out.println();
-
+*/
 
 /*
 		JSONObject obj1 = (JSONObject)array.get(0);
@@ -180,7 +186,7 @@ public class phpDBHelper {
 			try {
 
 				//getting json string from database
-				URL internet = new URL("http://cs.wheaton.edu/~kurt.andres/userTimelineEvent.php?name=kurt&password=password");
+				URL internet = new URL("http://cs.wheaton.edu/~kurt.andres/userTimelineEvent.php?name="+user+"&password="+pass);
 
 				Scanner sc = new Scanner(internet.openStream());
 				return sc.nextLine();
@@ -192,7 +198,7 @@ public class phpDBHelper {
 			try {
 
 				//getting json string from database
-				URL internet = new URL("http://cs.wheaton.edu/~kurt.andres/addUser.php?name=kurt&password=password");
+				URL internet = new URL("http://cs.wheaton.edu/~kurt.andres/addUser.php?name="+user+"&password="+pass);
 
 				Scanner sc = new Scanner(internet.openStream());
 				

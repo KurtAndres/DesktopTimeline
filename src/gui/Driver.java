@@ -1,5 +1,11 @@
 package gui;
 
+import javax.swing.Box;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 import model.TimelineMaker;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +25,7 @@ public class Driver extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
+		
 		TimelineMaker timelineMaker = new TimelineMaker();
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(
@@ -40,6 +47,26 @@ public class Driver extends Application {
 	}
 
 	public static void main(String[] args) {
+		pop();
 		launch(args);
 	}
+	public static void pop() {
+	      JTextField xField = new JTextField(5);
+	      JTextField yField = new JTextField(5);
+
+	      JPanel myPanel = new JPanel();
+	      myPanel.add(new JLabel("User:"));
+	      myPanel.add(xField);
+	      myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+	      myPanel.add(new JLabel("Password:"));
+	      myPanel.add(yField);
+
+	      int result = JOptionPane.showConfirmDialog(null, myPanel, 
+	               "Please Enter User and Password", JOptionPane.OK_CANCEL_OPTION);
+	      if (result == JOptionPane.OK_OPTION) {
+	         TimelineMaker.user = xField.getText();
+	         TimelineMaker.pass = yField.getText();
+	      }
+
+	   }
 }
