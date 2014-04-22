@@ -3,14 +3,29 @@ package model;
 import render.*;
 import gui.*;
 import storage.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 import model.Timeline.AxisLabel;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Scanner;
+import java.awt.GridLayout;
+
+import javax.swing.*;
+
+import java.awt.event.*;
+
+import org.json.simple.parser.ParseException;
 
 /**
  * TimelineMaker.java
@@ -32,6 +47,10 @@ public class TimelineMaker {
 	 * The timeline selected in this application.
 	 */
 	private Timeline selectedTimeline;
+	public static String user;
+	public static String pass;
+	
+	
 	/**
 	 * The event selected in this application.
 	 */
@@ -66,14 +85,23 @@ public class TimelineMaker {
 
 	/**
 	 * Constructor. Create a new TimelineMaker application model with database,
-	 * graphics, and GUI components.
+	 * graphics, and GUI components. 
 	 */
 	public TimelineMaker() {
+		System.out.println(pass+" "+user);
+		
+		
 		database = new DBHelper("timeline.db");
 		graphics = new TimelineGraphics(this);
 		timelines = new ArrayList<Timeline>();
 		icons = new ArrayList<Icon>();
 		icons.add(new Icon("None", null, null));
+		phpDBHelper p = new phpDBHelper(user, pass);
+		for (Timeline t : database.getTimelines())
+			database.removeTimeline(t);
+		
+		p.doit();
+		
 		try {
 			for (Timeline t : database.getTimelines())
 				timelines.add(t);
@@ -200,7 +228,7 @@ public class TimelineMaker {
 	 *            The name of the timeline to be found
 	 * @return The timeline with the correct name; null otherwise.
 	 */
-	private Timeline getTimeline(String title) {
+	public Timeline getTimeline(String title) {
 		for (Timeline t : timelines)
 			if (t.getName().equals(title))
 				return t;
@@ -486,7 +514,11 @@ public class TimelineMaker {
 	public String getAboutText() {
 		return about_text;
 	}
-
+	
+		
+	   
+        
+    
 
 	/**
 	 * An attempt at associating the events with their icons on start-up.
