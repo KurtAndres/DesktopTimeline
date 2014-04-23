@@ -2,6 +2,7 @@ package render;
 
 import java.util.ArrayList;
 
+import model.TLEvent;
 import model.TimelineMaker;
 import model.Atomic;
 
@@ -33,21 +34,25 @@ public class AtomicLabel extends TLEventLabel {
 	}
 
 	@Override
-	public void uniqueHandlers() {
-	}
-
-	@Override
 	public void updateDesign() {
-		if (isSelected()) {
-			setId("event-selected");
-		} else {
+		if (isSelected())
+			setId("atomic-label-selected");
+		else if (isHovered())
+			setId("atomic-label-hover");
+		else 
 			setId("atomic-label");
-		}
 	}
 
 	@Override
-	public void uniqueDesign() {
+	public void initUniqueDesign() {
 		setId("atomic-label");
 	}
 
+	@Override
+	public String tooltipText() {
+		return "Title: " + event.getName()
+				+ "\nCategory: " + event.getCategory().getName()
+				+ "\nDate: " + TLEvent.getFormattedDate(event.getStartDate())
+				+ "\nDescription: " + event.getDescription();
+	}
 }

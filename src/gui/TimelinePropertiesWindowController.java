@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -117,7 +116,7 @@ public class TimelinePropertiesWindowController {
 	// fx:id="titleTextField"
 	private TextField titleTextField; // Value injected by FXMLLoader
 	
-	private TextFieldChecker titleChecker;
+	private TextFieldValidator titleValidator;
 
 	// Handler for Button[fx:id="cancelButton"] onAction
 	@FXML
@@ -130,7 +129,7 @@ public class TimelinePropertiesWindowController {
 	// Handler for Button[fx:id="createButton"] onAction
 	@FXML
 	void createButtonPressed(ActionEvent event) {
-		if (titleChecker.isValid()) {
+		if (titleValidator.isValid()) {
 			String title = titleTextField.getText();
 			Color backgroundColor = colorBackgroundChooser.getValue();
 			Color timelineColor = colorTimelineChooser.getValue();
@@ -153,6 +152,8 @@ public class TimelinePropertiesWindowController {
 	// This method is called by the FXMLLoader when initialization is complete
 	void initialize() {
 		timeline = null;
+		fontLabel.setVisible(false);
+		fontComboBox.setVisible(false);
 		initComboBox();
 	}
 
@@ -162,8 +163,9 @@ public class TimelinePropertiesWindowController {
 	private void initComboBox() {
 		AxisLabel[] labels = Timeline.AxisLabel.values();
 		for (AxisLabel label : labels)
-			axisUnitComboBox.getItems().addAll(label);
-		axisUnitComboBox.setValue(labels[0]);
+			if (label == AxisLabel.DAYS || label == AxisLabel.MONTHS || label == AxisLabel.YEARS)
+				axisUnitComboBox.getItems().addAll(label);
+		axisUnitComboBox.setValue(Timeline.AxisLabel.YEARS);
 	}
 
 	/**
@@ -188,14 +190,8 @@ public class TimelinePropertiesWindowController {
 			for (String title : timelineMaker.getTimelineTitles())
 				errorStrings.put(title, "Timeline already exists.");
 		
-		titleChecker = new TextFieldChecker(titleTextField, "Enter a title.", errorStrings) {
-			@Override
-			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				if (!newValue)
-					validate();
-			}
-		};
-		titleTextField.focusedProperty().addListener(titleChecker);
+		titleValidator = new TextFieldValidator(titleTextField, "Enter a title.", errorStrings, "[! \\w]*$", "Only alphanumeric characters.");
+		titleTextField.focusedProperty().addListener(titleValidator);
 	}
 
 	/**

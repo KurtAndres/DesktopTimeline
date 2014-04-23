@@ -1,34 +1,63 @@
 /* Applies to everything */
 .root{
     -fx-font-family: "Liberation Sans Narrow";
-    -fx-font-weight: bold;
     -fx-base: rgb(80, 90, 100);
+    -fx-accent: rgb(10, 90, 255);
+    -fx-background-color: linear-gradient(-fx-base, white, -fx-base);
 }
 
 /* Applies to all labels */
-.label{
-    
-}
+//.label{
+//	-fx-font-weight: bold;
+//	-fx-effect: dropshadow(gaussian, -fx-accent, 3, 0, 0, 0);
+//}
+
+/* Applies to all buttons */
+//.button{
+//	-fx-font-weight: bold;
+//	-fx-background-color: linear-gradient(-fx-base, -fx-accent);
+//}
+//.button:hover {
+//	-fx-effect: dropshadow(gaussian, white, 10, 0, 0, 0);
+//}
+//.button:hover:focused {
+//	-fx-background-color: linear-gradient(derive(-fx-accent, 40%), derive(-fx-base, 30%));
+//}
+
+/* Applies to default textfields */
+//.text-field {
+//	-fx-background-color:
+//        -fx-base,
+//        #FFFFFF;
+//    -fx-background-insets: 0, 2;
+//    -fx-background-radius: 0, 0;
+//}
+//.text-field:hover {
+//	-fx-background-color: -fx-accent, #FFFFFF;
+//}
+//.text-field:focused {
+//	-fx-background-color: -fx-accent, #FFFFFF;
+//}
+
+
 
 /* Applies to id = render-pane
  * this should only be the pane which the timeline is rendered on
  * (an instance ) */
-#render-pane{
+#render-pane {
 }
 
 /* Applies to id = renderScrollPane
  * this should only be the pane which the timeline is rendered on
  * (an instance ) */
-#renderScrollPane{
+#renderScrollPane {
     -fx-background-color: gray;
 }
 
 /* Applies to id = axis-unit-label
  * this should be all unselected axis unit labels */
 #axis-unit-label{
-	-fx-border-style: none;
-    
-   	
+	-fx-border-style: none;   	
 }
 
 /* Applies to id = axis-unit-label
@@ -37,45 +66,57 @@
     /* nothing yet */
 }
 
-/* Applies to id = atomic-label
- * this should be all unselected atomic labels */
+/* Applies to AtomicLabels */
 #atomic-label{
 	-fx-border-radius: 5 5 5 5;
+	-fx-border-style: solid;
+	-fx-border-color: black;
+	-fx-background-color: -fx-event-color;
     -fx-background-radius: 5 5 5 5;
-    -fx-background-color: green;
-    -fx-border-style: solid;
-    -fx-border-width: 3;
-    -fx-border-color: green;
+    -fx-effect: null;
 }
-
-/* Applies to id = duration-label
- * this should be all unselected duration labels */
-#duration-label{	-fx-border-radius: 5 5 5 5;
-    -fx-background-radius: 5 5 5 5;
-    -fx-background-color: red;
-    -fx-border-style: solid;
-    -fx-border-width: 3;
-    -fx-border-color: red;
-}
-
-/* Applies to id = event-selected
- * this should be all selected events */
-#event-selected{
+#atomic-label-hover {
 	-fx-border-radius: 5 5 5 5;
-    -fx-background-radius: 5 5 5 5;
-    -fx-border-style: solid;
-    -fx-border-width: 3;
-    -fx-border-color: black;
+	-fx-border-style: solid;
+	-fx-border-color: black;
+	-fx-background-radius: 5 5 5 5;
+	-fx-background-color: -fx-event-color;
+	-fx-effect: dropshadow(gaussian, -fx-event-color, 10, 0.5, 0, 0);
+}
+#atomic-label-selected {
+	-fx-border-radius: 5 5 5 5;
+	-fx-border-style: solid;
+	-fx-border-color: black;
+	-fx-background-color: derive(-fx-event-color, 50%);
+	-fx-background-radius: 5 5 5 5;
+	-fx-effect: dropshadow(gaussian, -fx-event-color, 10, 0.5, 0, 0);
 }
 
-/* Applies to id = label-highlighted
- * this should be all events that have the mouse over them 
- * (a :hover selector might make more sense) */
-#label-highlighted{
-	-fx-border-radius: 5 5 5 5;
-    -fx-background-radius: 5 5 5 5;
-    -fx-border-style: solid;
-    -fx-border-width: 3;
-    -fx-border-color: black;
-    -fx-background-color: rgb(0, 109, 204);
+/* Applies to DurationLabels */
+#duration-label {
+	-fx-border-style: solid;
+	-fx-border-color: black;
+	-fx-background-color: -fx-event-color;
+	-fx-effect: null;
+}
+#duration-label-hover {
+	-fx-border-style: solid;
+	-fx-border-color: black;
+	-fx-background-color: -fx-event-color;
+	-fx-effect: dropshadow(gaussian, -fx-event-color, 10, 0.5, 0, 0);
+}
+#duration-label-selected {-fx-border-style: solid;
+	-fx-border-style: solid;
+	-fx-border-color: black;
+	-fx-background-color: derive(-fx-event-color, 50%);
+	-fx-effect: dropshadow(gaussian, -fx-event-color, 10, 0.5, 0, 0);
+}
+
+/* Applies to Tooltips displayed when hovering over events */
+.tooltip {
+	-fx-background-color: white;
+	-fx-background-radius: 0 0 0 0;
+}
+.page-corner {
+	-fx-background-color: transparent;
 }

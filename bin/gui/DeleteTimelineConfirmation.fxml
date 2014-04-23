@@ -7,14 +7,14 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" fx:id="deleteTimelineConfirmAnchor" maxHeight="-1.0" maxWidth="-1.0" minHeight="-Infinity" minWidth="-1.0" prefHeight="161.00009999999747" prefWidth="421.000022070315" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="gui.DeleteTimelineConfirmationController">
+<AnchorPane id="AnchorPane" fx:id="deleteTimelineConfirmAnchor" maxHeight="-1.0" maxWidth="-1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="gui.DeleteTimelineConfirmationController">
   <children>
-    <Label fx:id="confirmLabel" layoutX="65.0" layoutY="26.0" prefHeight="55.0" prefWidth="291.0" text="Are you sure you want to delete this timeline?">
+    <Label fx:id="confirmLabel" prefHeight="-1.0" prefWidth="-1.0" text="Are you sure you want to delete this Timeline?&#10;&#10;All categories and events in it will be deleted." wrapText="true" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
       <font>
         <Font size="14.0" />
       </font>
     </Label>
-    <Button fx:id="yesButton" layoutX="127.0" layoutY="106.0" minWidth="38.0" mnemonicParsing="false" onAction="#yesPressed" text="Yes" />
-    <Button fx:id="noButton" layoutX="243.0" layoutY="106.0" minWidth="38.0" mnemonicParsing="false" onAction="#noPressed" text="No" />
+    <Button fx:id="yesButton" minWidth="38.0" mnemonicParsing="false" onAction="#yesPressed" text="Yes" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="70.0" />
+    <Button fx:id="noButton" minWidth="38.0" mnemonicParsing="false" onAction="#noPressed" text="No" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
   </children>
 </AnchorPane>

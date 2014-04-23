@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" fx:id="signInAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="gui.SignInWindowController">
+  <children>
+    <Label text="Welcome!" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+      <font>
+        <Font name="System Bold Italic" size="16.0" />
+      </font>
+    </Label>
+    <Label text="Username:" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="45.0">
+      <font>
+        <Font name="System Bold" size="12.0" fx:id="x1" />
+      </font>
+    </Label>
+    <TextField fx:id="usernameField" prefWidth="150.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="45.0" />
+    <Label font="$x1" text="Password:" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="80.0" />
+    <PasswordField fx:id="passwordField" prefWidth="150.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="80.0" />
+    <Button fx:id="signInButton" mnemonicParsing="false" onAction="#signInPressed" text="Sign in" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="14.0" />
+  </children>
+</AnchorPane>

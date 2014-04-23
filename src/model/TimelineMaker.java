@@ -77,19 +77,6 @@ public class TimelineMaker {
 	 */
 	public TimelineGraphics graphics;
 
-	private final String help_text = "\tHow to use this Timeline Maker:  \n"
-			+ "*Use the buttons on the left to create, edit, or delete timelines. Timelines may have titles and background colors, and they may be displayed in a number of different units.\n"
-			+ "*IMPORTANT: Timeline dates are in year-month-day form. You have to include the dashes.\n"
-			+ "*Each timeline has a set of events. Create events with the \"add\" button.\n"
-			+ "*To edit and delete events, select them on the rendered timeline and then proceed to edit or delete them.\"\n"
-			+ "*Each timeline also has a set of categories. There must be at least one category, the default category, which may be edited. Each category has a name and a color associated with it.\"\n"
-			+ "*Image icons may be added to timeline events. Upload images using the right side-bar and set them in the event editing window.\n"
-			+ "*Double click events for surprises!";
-
-	private final String about_text = "\tCredits: \n\n"
-			+ "@Authors Andrew Sutton, Josh Wright, Kayley Lane, Conner Vick, Brian Williamson\n\n"
-			+ "\tSoftware Dev 2014";
-
 	/**
 	 * Constructor. Create a new TimelineMaker application model with database,
 	 * graphics, and GUI components. 
@@ -188,7 +175,6 @@ public class TimelineMaker {
 	 * @return success
 	 */
 	public boolean deleteIcon(String icon) {
-		// TODO GET THIS WORKING
 		if (icons.size() <= 1)
 			return false;
 		Icon ico = new Icon(null, null, null);
@@ -448,7 +434,7 @@ public class TimelineMaker {
 	 */
 	public void deleteCategory(Category category) {
 		//All events which belong to the category are also deleted.
-		for(TLEvent e : selectedTimeline.getEvents()){
+		for(TLEvent e : selectedTimeline.getEvents()) {
 			if(e.getCategory().getName().equals(category.getName())){
 				selectedEvent = e;
 				deleteEvent();
@@ -495,26 +481,7 @@ public class TimelineMaker {
 	public int timeSize() {
 		return timelines.size();
 	}
-
-	/**
-	 * Gets the help text
-	 * 
-	 * @return the final string help_text.
-	 */
-	public String getHelpText() {
-		return help_text;
-	}
-
-	/**
-	 * Gets the about text
-	 * 
-	 * @return the final string about_text.
-	 */
-	public String getAboutText() {
-		return about_text;
-	}
-	        
-
+	
 	/**
 	 * An attempt at associating the events with their icons on start-up.
 	 * Intended to load the events with their icons from the database.

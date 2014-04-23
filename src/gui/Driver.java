@@ -19,7 +19,6 @@ import javafx.scene.Scene;
  * This is the driver for the program. Main launches start.
  */
 public class Driver extends Application {
-
 	/**
 	 * The model of the program
 	 */
@@ -33,24 +32,22 @@ public class Driver extends Application {
 	 */
 	private static int currentMemento;
 
+
 	@Override
 	public void start(Stage primaryStage) {
-
-		TimelineMaker timelineMaker = new TimelineMaker();
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(
-					"MainWindow.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("SignInWindow.fxml"));
 			Parent root = (Parent) loader.load();
-			MainWindowController controller = loader
-					.<MainWindowController> getController();
-			controller.initData(timelineMaker);
-			primaryStage.setTitle("Timelord");
+			SignInWindowController controller = loader.<SignInWindowController> getController();
+			controller.initValidators();
+			primaryStage.setTitle("Welcome");
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add("gui/MainWindow.css");
 			primaryStage.setScene(scene);
-			primaryStage.setMinWidth(326);
-			primaryStage.setMinHeight(580);
+			primaryStage.setMinWidth(300);
+			primaryStage.setMinHeight(150);
 			primaryStage.show();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -64,34 +61,7 @@ public class Driver extends Application {
 		currentMemento = 0;
 		Mementos = new ArrayList<TimelineMaker.Memento>();
 			
-		pop();
 		launch(args);
-	}
-
-	/**
-	 * Initializes the username and password.
-	 */
-	public static void pop() {
-		JTextField xField = new JTextField(5);
-		JTextField yField = new JTextField(5);
-
-		JPanel myPanel = new JPanel();
-		myPanel.add(new JLabel("User:"));
-		myPanel.add(xField);
-		myPanel.add(Box.createHorizontalStrut(15)); // a spacer
-		myPanel.add(new JLabel("Password:"));
-		myPanel.add(yField);
-
-		int result = JOptionPane.showConfirmDialog(null, myPanel, 
-				"Please Enter User and Password", JOptionPane.OK_CANCEL_OPTION);
-		if (result == JOptionPane.OK_OPTION) {
-			TimelineMaker.user = xField.getText();
-			TimelineMaker.pass = yField.getText();
-		}
-		if (result == JOptionPane.CANCEL_OPTION) {
-			System.exit(0);
-		}
-
 	}
 
 	/**
@@ -121,7 +91,4 @@ public class Driver extends Application {
 		else
 			return null;
 	}
-
-
-
 }

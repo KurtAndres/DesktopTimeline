@@ -5,6 +5,7 @@ package render;
 
 import java.util.ArrayList;
 
+import model.TLEvent;
 import model.TimelineMaker;
 import model.Duration;
 import javafx.geometry.Pos;
@@ -41,27 +42,32 @@ public class DurationLabel extends TLEventLabel {
 			TimelineMaker model, ArrayList<TLEventLabel> eventLabels) {
 		super(xPos, yPos, event, model, eventLabels);
 		this.width = width;
-		uniqueDesign(); // yeah this is kludgy
-	}
-
-	@Override
-	public void uniqueHandlers() {
+		initUniqueDesign(); // yeah this is kludgy
 	}
 
 	@Override
 	public void updateDesign() {
-		if (isSelected()) {
-			setId("event-selected");
-		} else {
+		if (isSelected())
+			setId("duration-label-selected");
+		else if (isHovered())
+			setId("duration-label-hover");
+		else 
 			setId("duration-label");
-		}
 	}
 
 	@Override
-	public void uniqueDesign() {
+	public void initUniqueDesign() {
 		setPrefWidth(width);
 		setAlignment(Pos.CENTER);
 		setId("duration-label");
+	}
+	
+	@Override
+	public String tooltipText() {
+		return "Title: " + event.getName()
+				+ "\nCategory: " + event.getCategory().getName()
+				+ "\nDate: " + TLEvent.getFormattedDate(event.getStartDate()) + " to " + TLEvent.getFormattedDate(((Duration) event).getEndDate())
+				+ "\nDescription: " + event.getDescription();
 	}
 
 }

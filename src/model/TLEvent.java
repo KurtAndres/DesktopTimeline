@@ -1,6 +1,3 @@
-/**
- * 
- */
 package model;
 
 import java.sql.Date;
@@ -124,6 +121,20 @@ public abstract class TLEvent {
 	 */
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
+	}
+	/**
+	 * Formats a Date into the correct version for the display
+	 * @param date The date to format
+	 * @return
+	 */
+	public static String getFormattedDate(Date date) {
+		String dateString = date.toString();
+		int firstDash = dateString.indexOf("-");
+		int secondDash = dateString.lastIndexOf("-");
+		String year = dateString.substring(0, firstDash);
+		String month = dateString.substring(firstDash + 1, secondDash);
+		String day = dateString.substring(secondDash + 1, dateString.length());
+		return month + "/" + day + "/" + year;
 	}
 	/**
 	 * Sets the category.

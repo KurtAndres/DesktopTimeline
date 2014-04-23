@@ -144,6 +144,8 @@ public class TimelineRender extends Pane {
 
 		eventLabels = new ArrayList<TLEventLabel>();
 		if (!initRange()) {
+			getChildren().clear();
+			getChildren().add(createTitle());
 			return;
 		}
 		init();
@@ -195,9 +197,7 @@ public class TimelineRender extends Pane {
 	 */
 
 	private boolean initRange() {
-		if (timeline.getEvents() == null) { // Initializes the variables, super
-											// kludgy but we can make it better
-											// later if there is time
+		if (timeline.getEvents() == null) {
 			return false;
 		}
 		if (timeline.getEvents()[0] instanceof Duration) {
@@ -378,6 +378,7 @@ public class TimelineRender extends Pane {
 		label.setPrefHeight(40);
 		label.setAlignment(Pos.CENTER);
 		label.setId("axis-unit-label");
+		label.setStyle("-fx-text-fill: #" + color.toString().substring(2)); // TODO
 
 		label.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {

@@ -9,7 +9,6 @@ import java.sql.Date;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -138,7 +137,9 @@ public class EventPropertiesWindowController {
 	// fx:id="typeLabel"
 	private Label typeLabel; // Value injected by FXMLLoader
 
-	private TextFieldChecker titleChecker;
+	private TextFieldValidator titleValidator;
+
+	private TextFieldValidator startDateValidator, endDateValidator;
 
 	// Handler for Button[fx:id="newIconButton"] onAction
 	@FXML
@@ -174,12 +175,12 @@ public class EventPropertiesWindowController {
 		Icon icon = timelineMaker.getIcon(iconComboBox.getSelectionModel()
 				.getSelectedItem());
 		String title = titleTextField.getText();
-		if (titleChecker.isValid()) {
-			Date startDate = Date.valueOf(startDateTextField.getText());
+		if (titleValidator.isValid() && (startDateValidator.isValid()) && (!endDateTextField.isVisible() || endDateValidator.isValid())) {
+			Date startDate = processDate(startDateTextField.getText());
 			Date endDate = null;
 			String description = descriptionTextArea.getText();
 			if (durationCheckBox.isSelected()) {
-				endDate = Date.valueOf(endDateTextField.getText());
+				endDate = processDate(endDateTextField.getText());
 			}
 			if (oldEvent != null)
 				timelineMaker.editEvent(oldEvent, title, startDate, endDate,
@@ -252,27 +253,32 @@ public class EventPropertiesWindowController {
 		errorStrings.put("", "Event title cannot be blank.");
 		fileChooser = new FileChooser();
 		this.oldEvent = event;
-		if (event != null) {
-			loadEventInfo(event);
-			for (TLEvent e : timelineMaker.getSelectedTimeline().getEvents())
-				if (!oldEvent.getName().equals(e.getName()))
-					errorStrings.put(e.getName(), "Event already exists.");
-		} else {
-			if(timelineMaker.getSelectedTimeline().getEvents() != null)
+		if (timelineMaker.getSelectedTimeline() != null) {
+			if (event != null) {
+				loadEventInfo(event);
+				for (TLEvent e : timelineMaker.getSelectedTimeline().getEvents())
+					if (!oldEvent.getName().equals(e.getName()))
+						errorStrings.put(e.getName(), "Event already exists.");
+			} else if (timelineMaker.getSelectedTimeline().getEvents() != null)
 				for (TLEvent e : timelineMaker.getSelectedTimeline().getEvents())
 					errorStrings.put(e.getName(), "Event already exists.");
 		}
 
-		titleChecker = new TextFieldChecker(titleTextField, "Enter a title.", errorStrings) {
-			@Override
-			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				if (!newValue)
-					validate();
-			}
-		};
-		titleTextField.focusedProperty().addListener(titleChecker);
+		titleValidator = new TextFieldValidator(titleTextField, "Enter a title.", errorStrings, "[! \\w]*$", "Only alphanumeric characters.");
+		titleTextField.focusedProperty().addListener(titleValidator);
 
+		initDateCheckers();
 		initComboBox();
+	}
+
+	private void initDateCheckers() {
+		HashMap<String, String> errorStrings = new HashMap<String, String>();
+		errorStrings.put("", "Cannot be blank.");
+		startDateValidator = new TextFieldValidator(startDateTextField, "mm/dd/yyyy", errorStrings, "(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/((19|20)\\d\\d)", "mm/dd/yyyy");
+		endDateValidator = new TextFieldValidator(endDateTextField, "mm/dd/yyyy", errorStrings, "(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/((19|20)\\d\\d)", "mm/dd/yyyy");
+		startDateTextField.focusedProperty().addListener(startDateValidator);
+		endDateTextField.focusedProperty().addListener(endDateValidator);
+
 	}
 
 	/**
@@ -288,11 +294,19 @@ public class EventPropertiesWindowController {
 			endDateTextField.setVisible(!endDateTextField.isVisible());
 			dateToLabel.setVisible(!dateToLabel.isVisible());
 			endDateTextField
-			.setText(((Duration) event).getEndDate().toString());
+			.setText(TLEvent.getFormattedDate(((Duration) event).getEndDate()));
 		}
-		startDateTextField.setText(event.getStartDate().toString());
+		startDateTextField.setText(TLEvent.getFormattedDate(event.getStartDate()));
 		categoryComboBox.setValue(event.getCategory().getName());
 		descriptionTextArea.setText(event.getDescription());
 	}
 
+	private Date processDate(String date) {
+		String month = date.substring(0,2);
+		String day = date.substring(3,5);
+		String year = date.substring(6, date.length());
+		return Date.valueOf(year + "-" + month + "-" + day);
+	}
+
 }
+
