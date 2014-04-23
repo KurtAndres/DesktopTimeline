@@ -70,18 +70,20 @@ public class TimelineMaker {
 	public TimelineGraphics graphics;
 	int idCounter;
 
-	private final String help_text = "\tHow to use this Timeline Maker:  \n"
-			+ "*Use the buttons on the left to create, edit, or delete timelines. Timelines may have titles and background colors, and they may be displayed in a number of different units.\n"
-			+ "*IMPORTANT: Timeline dates are in year-month-day form. You have to include the dashes.\n"
-			+ "*Each timeline has a set of events. Create events with the \"add\" button.\n"
-			+ "*To edit and delete events, select them on the rendered timeline and then proceed to edit or delete them.\"\n"
-			+ "*Each timeline also has a set of categories. There must be at least one category, the default category, which may be edited. Each category has a name and a color associated with it.\"\n"
-			+ "*Image icons may be added to timeline events. Upload images using the right side-bar and set them in the event editing window.\n"
-			+ "*Double click events for surprises!";
+	private final String help_text = "HELP: How to use this software\n\n"
+			+ "This software is used to create, edit, and view Timelines.\n"
+			+ "\tUse the buttons on the left in the Timeline section of the toolbar to add, edit, or delete a timeline.\n"
+			+ "Each timeline has a set of categories.\n"
+			+ "\tThere must be at least one category, the default category.\n"
+			+ "\tYou may add categories by clicking the \"add\" button in the Category section.\n"
+			+ "Each timeline also has a set of events.\n"
+			+ "\tCreate events with the \"add\" button on the bottom\n"
+			+ "\tTo edit and delete events, select them on the rendered timeline and then proceed to edit or delete them.";
 
-	private final String about_text = "\tCredits: \n\n"
-			+ "@Authors Andrew Sutton, Josh Wright, Kayley Lane, Conner Vick, Brian Williamson\n\n"
-			+ "\tSoftware Dev 2014";
+	private final String about_text = "Credits: \n\n"
+			+ "Authors: Andrew Sutton, Josh Wright, Kayley Lane, Conner Vick, Brian Williamson, Andrew Thompson, Kurt Andres, Daniel Conroy, and Leanne Miller\n"
+			+ "\tCSCI 335: Software Development\n"
+			+ "\tSpring 2014";
 
 	/**
 	 * Constructor. Create a new TimelineMaker application model with database,
