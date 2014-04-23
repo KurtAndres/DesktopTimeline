@@ -67,7 +67,8 @@ public class phpPushHelper {
 				category = someEvent.getCategory().getName();
 				startDate = someEvent.getStartDate().toString();
 				description = someEvent.getDescription();
-				description.replaceAll("\\s+", "%20");
+				while (description.contains(" "))
+					description.replaceFirst(" ", "%20");
 				
 				iconid = Integer.toString(someEvent.getIconIndex());
 				internet = new URL("http://cs.wheaton.edu/~kurt.andres/addEvent.php?tid="+tid+"&name="+eName+"&type="
