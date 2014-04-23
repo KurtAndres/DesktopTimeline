@@ -8,7 +8,6 @@ import java.util.ResourceBundle;
 
 import model.Category;
 import model.TimelineMaker;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -73,7 +72,7 @@ public class CategoryPropertiesWindowController {
 	@FXML
 	// fx:id="renderColorLabel"
 	private Label renderColorLabel; // Value injected by FXMLLoader
-	
+
 	private TextFieldChecker titleChecker;
 
 	// Handler for Button[fx:id="cancelButton"] onAction
@@ -128,25 +127,21 @@ public class CategoryPropertiesWindowController {
 		this.timelineMaker = timelineMaker;
 		HashMap<String, String> errorStrings = new HashMap<String, String>();
 		errorStrings.put("", "Cannot be blank.");
-		if (category != null) {
-			this.category = category;
-			loadCategoryInfo();
-			for (String title : timelineMaker.getSelectedTimeline().getCategoryTitles())
-				if (!title.equals(category.getName()))
+		if (timelineMaker.getSelectedTimeline() != null) {
+			if (category != null) {
+				this.category = category;
+				loadCategoryInfo();
+				for (String title : timelineMaker.getSelectedTimeline().getCategoryTitles())
+					if (!title.equals(category.getName()))
+						errorStrings.put(title, "Already exists.");
+			} else {
+				this.category = null;
+				for (String title : timelineMaker.getSelectedTimeline().getCategoryTitles())
 					errorStrings.put(title, "Already exists.");
-		} else {
-			this.category = null;
-			for (String title : timelineMaker.getSelectedTimeline().getCategoryTitles())
-				errorStrings.put(title, "Already exists.");
-		}
-		
-		titleChecker = new TextFieldChecker(categoryNameTextField, "Enter a title.", errorStrings) {
-			@Override
-			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				if (!newValue)
-					validate();
 			}
-		};
+		}
+
+		titleChecker = new TextFieldChecker(categoryNameTextField, "Enter a title.", errorStrings, "[ \\w]*$", "Only alphanumerics characters.");
 		categoryNameTextField.focusedProperty().addListener(titleChecker);
 	}
 

@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -188,13 +187,7 @@ public class TimelinePropertiesWindowController {
 			for (String title : timelineMaker.getTimelineTitles())
 				errorStrings.put(title, "Timeline already exists.");
 		
-		titleChecker = new TextFieldChecker(titleTextField, "Enter a title.", errorStrings) {
-			@Override
-			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				if (!newValue)
-					validate();
-			}
-		};
+		titleChecker = new TextFieldChecker(titleTextField, "Enter a title.", errorStrings, "[ \\w]*$", "Only alphanumeric characters.");
 		titleTextField.focusedProperty().addListener(titleChecker);
 	}
 
