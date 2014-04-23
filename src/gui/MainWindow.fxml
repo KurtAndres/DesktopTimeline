@@ -67,7 +67,7 @@
                                 <Font name="System Bold Italic" size="36.0" />
                               </font>
                             </Label>
-                            <Label prefHeight="35.0" text="This is an application for creating, viewing, and editing timelines. To begin, please click &quot;Add&quot; in the Timelines section of the toolbar." textAlignment="CENTER" wrapText="true">
+                            <Label prefHeight="35.0" text="This is an application for creating, viewing, and editing timelines. To begin, please click &quot;Help&quot; in the &quot;Info&quot; menu or click &quot;Add&quot; in the Timelines section of the toolbar." textAlignment="CENTER" wrapText="true">
                               <VBox.margin>
                                 <Insets left="70.0" right="70.0" />
                               </VBox.margin>
