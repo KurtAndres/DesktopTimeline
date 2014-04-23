@@ -228,6 +228,9 @@ public class MainWindowController {
 		TimelineMaker.Memento m = Driver.redo();
 		if(m != null)
 			timelineMaker.loadMemento(m);
+		
+		timelineMaker.updateGraphics();
+		populateListView();
 	}
 
 	@FXML

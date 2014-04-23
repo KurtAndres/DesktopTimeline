@@ -144,54 +144,6 @@ public class TimelineMaker {
 	}
 	
 	/**
-	 * Second constructor for constructing a timelineMaker from a Memento.
-	 * @param m The Memento to construct the TimelineMaker from.
-	 * @throws IOException 
-	 */
-	public TimelineMaker(Memento m) throws IOException{
-		database = new DBHelper("timeline.db");
-		graphics = m.graphics;
-		mainWindow = m.mainWindow;
-		timelines = new ArrayList<Timeline>();
-		icons = new ArrayList<Icon>();
-		icons.add(new Icon("None", null, null));
-		
-		for (Timeline t : m.timelines)
-			timelines.add(t);
-		HashMap<Category, String> categories = m.categories;
-		for (Timeline t : timelines) {
-			for (Category c : categories.keySet()) {
-				if (t.getName().equals(categories.get(c))) {
-					t.addCategory(c);
-				}
-			}
-		}
-		for (Timeline t : timelines) { // sets categories.
-			if (t.getEvents() == null)
-				continue;
-			for (TLEvent e : t.getEvents()) {
-				Category toSet = t.getCategory(e.getCategory().getName());
-				if (toSet != null) {
-					e.setCategory(toSet);
-				}
-			}
-		}
-		for (Icon icon : m.icons) {
-			icons.add(icon);
-		}
-		populateEventIcons();
-		selectedTimeline = m.selectedTimeline;
-		selectedEvent = m.selectedEvent;
-		
-		try {
-			phpPushHelper.send(this);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		
-	}
-
-	/**
 	 * 
 	 * @param t
 	 *            The icon to be returned
@@ -219,8 +171,7 @@ public class TimelineMaker {
 
 	/**
 	 * 
-	 * @param i
-	 *            Icon to be added to the list of icons and to the database.
+	 * @param i Icon to be added to the list of icons and to the database.
 	 */
 	public void addIcon(Icon i) {
 		if (i != null) {
@@ -334,7 +285,6 @@ public class TimelineMaker {
 
 		database.saveTimeline(selectedTimeline);
 		mainWindow.populateListView();
-		// gui.updateTimelines(getTimelineTitles(), selectedTimeline.getName());
 		updateGraphics();
 	}
 
@@ -361,8 +311,7 @@ public class TimelineMaker {
 	 * with the parameterized one. Update selectedTimeline, selectedTLEvent,
 	 * graphics, and database.
 	 * 
-	 * @param t
-	 *            the new timeline
+	 * @param t The new timeline
 	 */
 
 	public void editTimeline(Timeline t, String title, Color colorTL,
@@ -592,27 +541,12 @@ public class TimelineMaker {
 	public TimelineMaker.Memento createMemento(){
 		System.out.println("Creating Memento");
 		Memento m = new Memento();
-		//m.timelines = this.timelines;
-		//m.icons = this.icons;
-		//m.selectedTimeline = this.selectedTimeline;
-		//m.selectedEvent = this.selectedEvent;
-		//m.database = this.database;
-		//m.mainWindow = this.mainWindow;
-		//m.graphics = this.graphics;
 		
 		//Deep copy the timelines
 		m.timelines = new ArrayList<Timeline>();
 		for (Timeline t : this.timelines){
 			m.timelines.add(t.clone());
 		}
-		
-		/*HashMap<Category, String> categories = new HashMap<Category, String>();
-		for(Timeline t : timelines){
-			Iterator<Category> it = t.getCategoryIterator();
-			while(it.hasNext())
-				categories.put(it.next(), t.getName());
-		}
-		m.categories = categories;*/
 		
 		//Deep copy the icons
 		m.icons = new ArrayList<Icon>();
@@ -641,52 +575,17 @@ public class TimelineMaker {
 	 * @return The updated TimelineMaker object
 	 */
 	public void loadMemento(Memento m){
-		/*try {
-			return new TimelineMaker(m);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return this;
-		}*/
-		
-		/*this.timelines = m.timelines;
-		this.icons = m.icons;
-		this.selectedTimeline = m.selectedTimeline;
-		this.selectedEvent = m.selectedEvent;
-		this.database = m.database;
-		this.mainWindow = m.mainWindow;
-		this.graphics = m.graphics;
-		populateEventIcons();*/
-		
 		this.timelines = new ArrayList<Timeline>();
 		for (Timeline t : m.timelines)
 			this.timelines.add(t.clone());
 		
-		/*for (Timeline t : this.timelines) {
-			for (Category c : m.categories.keySet()) {
-				if (t.getName().equals(m.categories.get(c))) {
-					t.addCategory(c);
-				}
-			}
-		}*/
-		/*for (Timeline t : this.timelines) { // Sets categories to events.
-			if (t.getEvents() == null)
-				continue;
-			for (TLEvent e : t.getEvents()) {
-				Category toSet = t.getCategory(e.getCategory().getName());
-				if (toSet != null) {
-					e.setCategory(toSet);
-				}
-			}
-		}*/
 		for (Icon icon : m.icons) {
 			icons.add(icon);
 		}
 		populateEventIcons();
+		
 		selectedTimeline = m.selectedTimeline;
-		selectedEvent = m.selectedEvent;
-		
-		//return this;
-		
+		selectedEvent = m.selectedEvent;		
 	}
 	
 	/**
@@ -711,21 +610,6 @@ public class TimelineMaker {
 		 * The event selected in this application.
 		 */
 		private TLEvent selectedEvent;
-		/**
-		 * The database for storing timelines of this application.
-		 */
-		private DBHelper database;
-		/**
-		 * The main GUI window for this application.
-		 */
-		private MainWindowController mainWindow;
-		/**
-		 * The graphics object for displaying timelines in this application.
-		 */
-		private TimelineGraphics graphics;
-		
-		private HashMap<Category, String> categories;
-
 		
 	}
 
