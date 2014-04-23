@@ -7,15 +7,14 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<fx:root type="javafx.scene.layout.AnchorPane" id="deleteCategoryConfirmation" fx:id="deleteCategoryConfirmationAnchor" maxHeight="-1.0" maxWidth="-1.0" minHeight="-Infinity" minWidth="-1.0" prefHeight="199.99983378905745" prefWidth="299.99977792969" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="gui.DeleteCategoryConfirmationController">
+<fx:root type="javafx.scene.layout.AnchorPane" id="deleteCategoryConfirmation" fx:id="deleteCategoryConfirmationAnchor" maxHeight="-1.0" maxWidth="-1.0" minHeight="-Infinity" minWidth="-1.0" prefHeight="149.99983378905745" prefWidth="299.99977792969" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="gui.DeleteCategoryConfirmationController">
   <children>
-    <Label fx:id="confirmLabel" layoutX="42.0" layoutY="24.0" text="Are you sure you want to delete this category?&#10;&#10;All events in this category will be deleted." textAlignment="CENTER">
-    <Label layoutX="14.0" layoutY="14.0" prefWidth="271.999755859375" text="Are you sure you want to delete this Category?&#10;&#10;All events in this Category will be deleted." textAlignment="LEFT" wrapText="true">
+    <Label prefWidth="271.999755859375" text="Are you sure you want to delete this Category?&#10;&#10;All events in this Category will be deleted." textAlignment="LEFT" wrapText="true" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
       <font>
         <Font size="14.0" />
       </font>
     </Label>
-    <Button fx:id="yesButton" layoutX="199.0" layoutY="165.0" minWidth="38.0" mnemonicParsing="false" onAction="#yesPressed" text="Yes" />
-    <Button fx:id="noButton" layoutX="248.0" layoutY="165.0" minWidth="38.0" mnemonicParsing="false" onAction="#noPressed" text="No" />
+    <Button fx:id="yesButton" minWidth="38.0" mnemonicParsing="false" onAction="#yesPressed" text="Yes" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="70.0" />
+    <Button fx:id="noButton" minWidth="38.0" mnemonicParsing="false" onAction="#noPressed" text="No" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="15.0" />
   </children>
 </fx:root>
