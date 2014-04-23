@@ -126,6 +126,8 @@ public abstract class TLEventLabel extends Label {
 	private void initTooltip() {
 		tooltip = new Tooltip(tooltipText());
 		tooltip.setGraphic(new ImageView(icon));
+		tooltip.setPrefWidth(250);
+		tooltip.setWrapText(true);
 		setTooltip(tooltip);
 	}
 

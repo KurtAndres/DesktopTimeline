@@ -56,13 +56,12 @@
 
 /* Applies to id = axis-unit-label
  * this should be all unselected axis unit labels */
-#axis-unit-label{
-	-fx-border-style: none;   	
+#axis-unit-label {
 }
 
 /* Applies to id = axis-unit-label
  * this should be all selected unit labels */
-#axis-unit-label-selected{
+#axis-unit-label-selected {
     /* nothing yet */
 }
 
