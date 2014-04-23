@@ -295,9 +295,9 @@ public class EventPropertiesWindowController {
 			endDateTextField.setVisible(!endDateTextField.isVisible());
 			dateToLabel.setVisible(!dateToLabel.isVisible());
 			endDateTextField
-			.setText(((Duration) event).getEndDate().toString());
+			.setText(TLEvent.getFormattedDate(((Duration) event).getEndDate()));
 		}
-		startDateTextField.setText(event.getStartDate().toString());
+		startDateTextField.setText(TLEvent.getFormattedDate(event.getStartDate()));
 		categoryComboBox.setValue(event.getCategory().getName());
 		descriptionTextArea.setText(event.getDescription());
 	}

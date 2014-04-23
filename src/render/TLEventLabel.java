@@ -1,5 +1,7 @@
 package render;
 
+import gui.EventPropertiesWindowController;
+
 import java.awt.MouseInfo;
 import java.util.ArrayList;
 
@@ -8,6 +10,9 @@ import model.TLEvent;
 import model.TimelineMaker;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Label;
@@ -20,6 +25,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 /**
@@ -34,37 +40,37 @@ import javafx.stage.WindowEvent;
  * Some ContextMenu code ripped from Oracle's documentation on ContextMenus
  */
 public abstract class TLEventLabel extends Label {
-	
+
 	/**
 	 * Whether this is the selected event or not
 	 */
 	private boolean selected;
-	
+
 	/**
 	 * The event associated with this label
 	 */
-	private TLEvent event;
-	
+	protected TLEvent event;
+
 	/**
 	 * ArrayList of all other eventLabels, used for clearing previous selection
 	 */
 	private ArrayList<TLEventLabel> eventLabels;
-	
+
 	/**
 	 * The model of the program to update selected event
 	 */
 	private TimelineMaker model;
-	
+
 	/**
 	 * The x and y position of this event
 	 */
 	private int xPos;
 	private int yPos;
-        
-        private Image icon;
-	
+
+	private Image icon;
+
 	private ContextMenu contextMenu;
-	
+
 	/**
 	 * Set the text of the label to text
 	 * 
@@ -77,15 +83,15 @@ public abstract class TLEventLabel extends Label {
 		this.model = model;
 		this.xPos = xPos;
 		this.yPos = yPos;
-                if(event.getIcon()!=null)
-                    this.icon = event.getIcon().getImage();
+		if(event.getIcon()!=null)
+			this.icon = event.getIcon().getImage();
 		contextMenu = new ContextMenu();
 		init();
 	}
-        
-        public Image getIcon(){
-            return icon;
-        }
+
+	public Image getIcon(){
+		return icon;
+	}
 
 	/**
 	 * Getter for selected
@@ -105,7 +111,7 @@ public abstract class TLEventLabel extends Label {
 		this.selected = selected;
 		updateDesign();
 	}
-	
+
 	/**
 	 * Initializes generic parts of TLEventLabel
 	 */
@@ -120,31 +126,31 @@ public abstract class TLEventLabel extends Label {
 	 */
 	private void initContextMenu() {
 		contextMenu.setOnShowing(new EventHandler<WindowEvent>() {
-		    public void handle(WindowEvent e) {
-		        //System.out.println("showing");
-		    }
+			public void handle(WindowEvent e) {
+				//System.out.println("showing");
+			}
 		});
-		
+
 		Text t = new Text();
 		t.setText(event.getName());
 		t.setFont(Font.font("Verdana",20));
 		t.setFill(Color.BLACK);
 		CustomMenuItem name = new CustomMenuItem(t);
-		
+
 		TextArea test = new TextArea();
 		test.setText(event.getDescription());
 		test.setPrefWidth(200);
 		test.setEditable(false);
 		test.setWrapText(true);
-		
-		
+
+
 		if(event.getCategory() != null){
 			MenuItem category = new MenuItem("Category: "+event.getCategory().getName());
 			CustomMenuItem text = new CustomMenuItem(test);
 			contextMenu.getItems().addAll(name, category, text);
 			setContextMenu(contextMenu);
 		}
-		
+
 	}
 
 	/**
@@ -167,7 +173,7 @@ public abstract class TLEventLabel extends Label {
 	 */
 	private void initHandlers(){
 		final Label label = this;
-		setTooltip(new Tooltip("Double click to show info!"));
+		setTooltip(new Tooltip(tooltipText()));
 		setOnMouseEntered(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {
 				Platform.runLater(new Thread(new Runnable() {
@@ -188,15 +194,35 @@ public abstract class TLEventLabel extends Label {
 		});
 		setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {
-		        if(e.getButton().equals(MouseButton.PRIMARY)){
-		        	if(e.getClickCount() == 2){
+				if(e.getButton().equals(MouseButton.PRIMARY)){
+					if(e.getClickCount() == 2){
 						Platform.runLater(new Thread(new Runnable() {
 							public void run() {
-								contextMenu.show(label, MouseInfo.getPointerInfo().getLocation().getX(), MouseInfo.getPointerInfo().getLocation().getY());	
+								//								contextMenu.show(label, MouseInfo.getPointerInfo().getLocation().getX(), MouseInfo.getPointerInfo().getLocation().getY());
+								// TODO Replace with editing.
+								try {
+									FXMLLoader loader = new FXMLLoader(getClass().getResource(
+											"../gui/EventPropertiesWindow.fxml"));
+									Parent root = (Parent) loader.load();
+									EventPropertiesWindowController controller = loader
+											.<EventPropertiesWindowController> getController();
+									controller.initData(model, event);
+									Stage stage = new Stage();
+									stage.setTitle("Edit Event");
+									Scene scene = new Scene(root);
+									scene.getStylesheets().add("gui/EventPropertiesWindow.css");
+									stage.setScene(scene);
+									stage.setMinWidth(311);
+									stage.setMinHeight(376);
+									stage.show();
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+
 							}
 						}));
-		            }
-		        }
+					}
+				}
 				for(TLEventLabel label : eventLabels){
 					label.setSelected(false);
 				}
@@ -206,7 +232,7 @@ public abstract class TLEventLabel extends Label {
 		});
 		uniqueHandlers();
 	}
-	
+
 	/**
 	 * Abstract method where unique design code can go. 
 	 */
@@ -216,9 +242,15 @@ public abstract class TLEventLabel extends Label {
 	 * Initialize handlers unique to Duration or Atomic
 	 */
 	public abstract void uniqueHandlers();
-	
+
 	/**
 	 * How the label will update itself
 	 */
 	public abstract void updateDesign();
+	
+	/**
+	 * Retrieve the text to display when hovering over the event.
+	 * @return the text
+	 */
+	public abstract String tooltipText();
 }

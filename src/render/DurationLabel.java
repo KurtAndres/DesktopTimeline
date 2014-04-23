@@ -5,6 +5,7 @@ package render;
 
 import java.util.ArrayList;
 
+import model.TLEvent;
 import model.TimelineMaker;
 import model.Duration;
 import javafx.geometry.Pos;
@@ -62,6 +63,14 @@ public class DurationLabel extends TLEventLabel {
 		setPrefWidth(width);
 		setAlignment(Pos.CENTER);
 		setId("duration-label");
+	}
+	
+	@Override
+	public String tooltipText() {
+		return "Title: " + event.getName()
+				+ "\nCategory: " + event.getCategory().getName()
+				+ "\nDate: " + TLEvent.getFormattedDate(event.getStartDate()) + " to " + TLEvent.getFormattedDate(((Duration) event).getEndDate())
+				+ "\nDescription: " + event.getDescription();
 	}
 
 }
