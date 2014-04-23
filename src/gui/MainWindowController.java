@@ -41,7 +41,7 @@ public class MainWindowController {
 	 * The model of the program
 	 */
 	private TimelineMaker timelineMaker;
-
+	
 	@FXML
 	private ResourceBundle resources;
 
@@ -130,6 +130,12 @@ public class MainWindowController {
 	private MenuItem saveMenuItem;
 
 	@FXML
+	private MenuItem undoMenuItem;
+
+	@FXML
+	private MenuItem redoMenuItem;
+
+	@FXML
 	private Label timelinesLabel;
 
 	@FXML
@@ -206,6 +212,25 @@ public class MainWindowController {
 	}
 
 	@FXML
+	void undoPressed(ActionEvent event){
+		System.out.println("Undo");
+		TimelineMaker.Memento m = Driver.undo();
+		if(m != null)
+			timelineMaker.loadMemento(m);	
+		
+		timelineMaker.updateGraphics();
+		
+	}
+
+	@FXML
+	void redoPressed(ActionEvent event){
+		System.out.println("Redo");
+		TimelineMaker.Memento m = Driver.redo();
+		if(m != null)
+			timelineMaker.loadMemento(m);
+	}
+
+	@FXML
 	void deleteEventPressed(ActionEvent event) {
 		timelineMaker.deleteEvent();
 	}
@@ -230,7 +255,7 @@ public class MainWindowController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	@FXML
@@ -372,6 +397,7 @@ public class MainWindowController {
 
 	@FXML
 	void savePressed(ActionEvent event) throws IOException {
+		Driver.addMemento(timelineMaker);
 		try {
 			phpPushHelper.send(timelineMaker);
 		} catch (ParseException e) {
@@ -396,7 +422,7 @@ public class MainWindowController {
 			}
 		});
 	}
-	
+
 	/**
 	 * Helper method for DeleteTimelineConfirmationController. Updates the categoryListView if the timeline is deleted.
 	 */
@@ -459,6 +485,10 @@ public class MainWindowController {
 		populateListView();
 		timelineMaker.graphics.setPanel(renderScrollPane, blankPane);
 
+	}
+	
+	public MainWindowController clone(){
+		MainWindowController toReturn = new MainWindowController();
 	}
 
 }

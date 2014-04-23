@@ -6,7 +6,7 @@
 
 package model;
 
-import javafx.scene.paint.*;
+import javafx.scene.paint.Color;
 
 /**
  * Datatype in which to categories.
@@ -105,5 +105,16 @@ public class Category {
 	 */
 	public int getID() {
 		return id;
+	}
+	
+	/**
+	 * Clones the category.
+	 */
+	public Category clone(){
+		Category toReturn = new Category(this.name);
+		toReturn.catColor = new Color(catColor.getRed(), catColor.getGreen(), catColor.getBlue(), catColor.getOpacity());
+		toReturn.id = this.id;
+		
+		return toReturn;
 	}
 }

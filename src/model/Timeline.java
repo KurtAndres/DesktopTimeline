@@ -33,7 +33,7 @@ public class Timeline implements TimelineAPI {
 	private String name;
 
 	/**
-	 * A list of all the categories in this application.
+	 * A list of all the categories in this timeline.
 	 */
 	private ArrayList<Category> categories;
 
@@ -350,7 +350,7 @@ public class Timeline implements TimelineAPI {
 	public boolean addCategory(Category c) {
 		if (containsTitle(c))
 			return false;
-		
+
 		categories.add(c);
 		return true;
 	}
@@ -381,7 +381,7 @@ public class Timeline implements TimelineAPI {
 		// The user is not allowed to delete the only category
 		if (categories.size() <= 1)
 			return false;
-		
+
 		selectCategory(getFirstCategory().getName());
 		return categories.remove(cat);
 	}
@@ -463,6 +463,30 @@ public class Timeline implements TimelineAPI {
 	 */
 	public void selectCategory(String title) {
 		selectedCategory = getCategory(title);
+	}
+
+	/**
+	 * Returns a deep copy of the Timeline.
+	 * @return A deep copy of the Timeline.
+	 */
+	public Timeline clone(){
+		Timeline toReturn = new Timeline(this.name);
+		//Copy Categories
+		toReturn.categories = new ArrayList<Category>();
+		for(Category c : this.categories)
+			toReturn.categories.add(c.clone());
+		
+		//Copy Events
+		toReturn.events = new ArrayList<TLEvent>();
+		for(TLEvent e : this.events)
+			toReturn.events.add(e.clone());
+		
+		toReturn.axisLabel = this.axisLabel;
+		toReturn.colorBG = new Color(this.colorBG.getRed(), this.colorBG.getGreen(), this.colorBG.getBlue(), this.colorBG.getOpacity());
+		toReturn.colorTL = new Color(this.colorTL.getRed(), this.colorTL.getGreen(), this.colorTL.getBlue(), this.colorTL.getOpacity());
+		toReturn.dirty = true;
+		
+		return toReturn;
 	}
 
 }

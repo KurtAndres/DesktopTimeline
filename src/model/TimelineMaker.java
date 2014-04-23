@@ -24,6 +24,7 @@ import java.awt.GridLayout;
 import javax.swing.*;
 
 import java.awt.event.*;
+import java.io.IOException;
 
 import org.json.simple.parser.ParseException;
 
@@ -42,15 +43,22 @@ public class TimelineMaker {
 	 * A list of all the timelines in this application.
 	 */
 	private ArrayList<Timeline> timelines;
+	/**
+	 * A list of all the icons in this application.
+	 */
 	private ArrayList<Icon> icons;
 	/**
 	 * The timeline selected in this application.
 	 */
 	private Timeline selectedTimeline;
+	/**
+	 * The username of the application's user. Used for database interaction.
+	 */
 	public static String user;
-	public static String pass;
-	
-	
+	/**
+	 * The password for the application's user. Used for database interaction.
+	 */
+	public static String pass;	
 	/**
 	 * The event selected in this application.
 	 */
@@ -68,7 +76,6 @@ public class TimelineMaker {
 	 * The graphics object for displaying timelines in this application.
 	 */
 	public TimelineGraphics graphics;
-	int idCounter;
 
 	private final String help_text = "\tHow to use this Timeline Maker:  \n"
 			+ "*Use the buttons on the left to create, edit, or delete timelines. Timelines may have titles and background colors, and they may be displayed in a number of different units.\n"
@@ -88,8 +95,7 @@ public class TimelineMaker {
 	 * graphics, and GUI components. 
 	 */
 	public TimelineMaker() {
-		System.out.println(pass+" "+user);
-		
+		System.out.println(pass+" "+user);		
 		
 		database = new DBHelper("timeline.db");
 		graphics = new TimelineGraphics(this);
@@ -106,9 +112,7 @@ public class TimelineMaker {
 			for (Timeline t : database.getTimelines())
 				timelines.add(t);
 			HashMap<Category, String> categories = database.getCategories();
-			for (Timeline t : timelines) { // Very lame. Should have better
-											// implementation but don't have
-											// time.
+			for (Timeline t : timelines) { // Very lame. Should have better implementation but don't have time.
 				for (Category c : categories.keySet()) {
 					if (t.getName().equals(categories.get(c))) {
 						t.addCategory(c);
@@ -137,7 +141,54 @@ public class TimelineMaker {
 			e.printStackTrace();
 			System.out.println("Error loading from Database.");
 		}
-
+	}
+	
+	/**
+	 * Second constructor for constructing a timelineMaker from a Memento.
+	 * @param m The Memento to construct the TimelineMaker from.
+	 * @throws IOException 
+	 */
+	public TimelineMaker(Memento m) throws IOException{
+		database = new DBHelper("timeline.db");
+		graphics = m.graphics;
+		mainWindow = m.mainWindow;
+		timelines = new ArrayList<Timeline>();
+		icons = new ArrayList<Icon>();
+		icons.add(new Icon("None", null, null));
+		
+		for (Timeline t : m.timelines)
+			timelines.add(t);
+		HashMap<Category, String> categories = m.categories;
+		for (Timeline t : timelines) {
+			for (Category c : categories.keySet()) {
+				if (t.getName().equals(categories.get(c))) {
+					t.addCategory(c);
+				}
+			}
+		}
+		for (Timeline t : timelines) { // sets categories.
+			if (t.getEvents() == null)
+				continue;
+			for (TLEvent e : t.getEvents()) {
+				Category toSet = t.getCategory(e.getCategory().getName());
+				if (toSet != null) {
+					e.setCategory(toSet);
+				}
+			}
+		}
+		for (Icon icon : m.icons) {
+			icons.add(icon);
+		}
+		populateEventIcons();
+		selectedTimeline = m.selectedTimeline;
+		selectedEvent = m.selectedEvent;
+		
+		try {
+			phpPushHelper.send(this);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	/**
@@ -187,7 +238,6 @@ public class TimelineMaker {
 	 */
 	public boolean deleteIcon(String icon) {
 		// TODO GET THIS WORKING
-		// The user is not allowed to delete the only category!
 		if (icons.size() <= 1)
 			return false;
 		Icon ico = new Icon(null, null, null);
@@ -364,13 +414,13 @@ public class TimelineMaker {
 	 */
 
 	public void addEvent(String title, Date startDate, Date endDate,
-			Object category, String description, Icon icon) {
+			Category category, String description, Icon icon) {
 		TLEvent event;
 		if (endDate != null) {
-			event = new Duration(title, selectedTimeline.getFirstCategory(),
+			event = new Duration(title, category,
 					startDate, endDate, icon.getId(), description);
 		} else {
-			event = new Atomic(title, selectedTimeline.getFirstCategory(),
+			event = new Atomic(title, category,
 					startDate, icon.getId(), description);
 		}
 		if (!icon.getName().equals("None") || event.getIcon() == null) {
@@ -514,11 +564,7 @@ public class TimelineMaker {
 	public String getAboutText() {
 		return about_text;
 	}
-	
-		
-	   
-        
-    
+	        
 
 	/**
 	 * An attempt at associating the events with their icons on start-up.
@@ -539,5 +585,142 @@ public class TimelineMaker {
 			}
 		}
 	}
+	
+	/**
+	 * Creates a Memento object storing the current state of the TimelineMaker.
+	 */
+	public TimelineMaker.Memento createMemento(){
+		System.out.println("Creating Memento");
+		Memento m = new Memento();
+		//m.timelines = this.timelines;
+		//m.icons = this.icons;
+		//m.selectedTimeline = this.selectedTimeline;
+		//m.selectedEvent = this.selectedEvent;
+		m.database = this.database;
+		m.mainWindow = this.mainWindow;
+		m.graphics = this.graphics;
+		
+		//Deep copy the timelines
+		for (Timeline t : this.timelines)
+			m.timelines.add(t.clone()); //Performs a deep copy each timeline
+		
+		/*HashMap<Category, String> categories = new HashMap<Category, String>();
+		for(Timeline t : timelines){
+			Iterator<Category> it = t.getCategoryIterator();
+			while(it.hasNext())
+				categories.put(it.next(), t.getName());
+		}
+		m.categories = categories;*/
+		
+		//Deep copy the icons
+		for (Icon icon : this.icons) {
+			m.icons.add(new Icon(icon.getName(), icon.getImage(), icon.getPath()));
+		}
+		
+		m.selectedTimeline = this.selectedTimeline.clone();
+		m.selectedEvent = this.selectedEvent.clone();
+		
+		m.mainWindow = this.mainWindow.clone();
+		
+		return m;
+	}
+	
+	/**
+	 * Restores the state of the TimelineMaker to the given Memento.
+	 * 
+	 * @param m The Memento to load into the TimelineMaker.
+	 * @return The updated TimelineMaker object
+	 */
+	public void loadMemento(Memento m){
+		/*try {
+			return new TimelineMaker(m);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return this;
+		}*/
+		
+		/*this.timelines = m.timelines;
+		this.icons = m.icons;
+		this.selectedTimeline = m.selectedTimeline;
+		this.selectedEvent = m.selectedEvent;
+		this.database = m.database;
+		this.mainWindow = m.mainWindow;
+		this.graphics = m.graphics;
+		populateEventIcons();*/
+		
+		for (Timeline t : m.timelines)
+			this.timelines.add(t.clone());
+		
+		for (Timeline t : this.timelines) {
+			for (Category c : m.categories.keySet()) {
+				if (t.getName().equals(m.categories.get(c))) {
+					t.addCategory(c);
+				}
+			}
+		}
+		for (Timeline t : this.timelines) { // Sets categories to events.
+			if (t.getEvents() == null)
+				continue;
+			for (TLEvent e : t.getEvents()) {
+				Category toSet = t.getCategory(e.getCategory().getName());
+				if (toSet != null) {
+					e.setCategory(toSet);
+				}
+			}
+		}
+		for (Icon icon : m.icons) {
+			icons.add(icon);
+		}
+		populateEventIcons();
+		selectedTimeline = m.selectedTimeline;
+		selectedEvent = m.selectedEvent;
+		
+		//return this;
+		
+	}
+	
+	/**
+	 * Memento class for the purpose of supporting undo and redo. Stores the state of the TimelineMaker.
+	 * @author Leanne
+	 *
+	 */
+	public class Memento{
+		/**
+		 * A list of all the timelines in this application.
+		 */
+		private ArrayList<Timeline> timelines;
+		/**
+		 * A list of all the icons in this application.
+		 */
+		private ArrayList<Icon> icons;
+		/**
+		 * The timeline selected in this application.
+		 */
+		private Timeline selectedTimeline;		
+		/**
+		 * The event selected in this application.
+		 */
+		private TLEvent selectedEvent;
+		/**
+		 * The database for storing timelines of this application.
+		 */
+		private DBHelper database;
+		/**
+		 * The main GUI window for this application.
+		 */
+		private MainWindowController mainWindow;
+		/**
+		 * The graphics object for displaying timelines in this application.
+		 */
+		private TimelineGraphics graphics;
+		
+		private HashMap<Category, String> categories;
+
+		
+	}
 
 }
+
+
+

@@ -67,7 +67,7 @@ public class TLEvent {
 		this.startDate = startDate;
 		this.category = category;
 		this.description = description;
-		this.icon = new Icon("None", null, null); // TODO this is kludgy
+		this.icon = new Icon("None", null, null);
 		this.iconIndex = iconIndex;
 	}
 
@@ -210,4 +210,17 @@ public class TLEvent {
 	public void setIconIndex(int iconIndex) {
 		this.iconIndex = iconIndex;
 	}
+	
+	public TLEvent clone(){
+		TLEvent toReturn = new TLEvent(this.name);	
+		toReturn.startDate = (Date) this.startDate.clone();
+		toReturn.category = this.category.clone();
+		toReturn.description = this.description; //Strings are immutable, no need to clone
+		toReturn.id = this.id;
+		toReturn.iconIndex = this.iconIndex;
+		toReturn.icon = new Icon(icon.getName(), icon.getImage(), icon.getPath());
+		
+		return toReturn;
+	}
+	
 }
