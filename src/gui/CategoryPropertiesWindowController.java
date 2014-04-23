@@ -141,7 +141,7 @@ public class CategoryPropertiesWindowController {
 			}
 		}
 
-		titleValidator = new TextFieldValidator(categoryNameTextField, "Enter a title.", errorStrings, "[ \\w]*$", "Only alphanumerics characters.");
+		titleValidator = new TextFieldValidator(categoryNameTextField, "Enter a title.", errorStrings, "[! \\w]*$", "Only alphanumerics characters.");
 		categoryNameTextField.focusedProperty().addListener(titleValidator);
 	}
 

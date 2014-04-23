@@ -17,6 +17,7 @@ public class Driver extends Application {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("SignInWindow.fxml"));
 			Parent root = (Parent) loader.load();
 			SignInWindowController controller = loader.<SignInWindowController> getController();
+			controller.initValidators();
 			primaryStage.setTitle("Welcome");
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add("gui/MainWindow.css");

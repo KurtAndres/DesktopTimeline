@@ -265,7 +265,7 @@ public class EventPropertiesWindowController {
 					errorStrings.put(e.getName(), "Event already exists.");
 		}
 
-		titleValidator = new TextFieldValidator(titleTextField, "Enter a title.", errorStrings, "[ \\w]*$", "Only alphanumeric characters.");
+		titleValidator = new TextFieldValidator(titleTextField, "Enter a title.", errorStrings, "[! \\w]*$", "Only alphanumeric characters.");
 		titleTextField.focusedProperty().addListener(titleValidator);
 
 		initDateCheckers();
