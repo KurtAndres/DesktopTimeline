@@ -137,9 +137,9 @@ public class EventPropertiesWindowController {
 	// fx:id="typeLabel"
 	private Label typeLabel; // Value injected by FXMLLoader
 
-	private TextFieldValidator titleChecker;
+	private TextFieldValidator titleValidator;
 
-	private TextFieldValidator startDateChecker, endDateChecker;
+	private TextFieldValidator startDateValidator, endDateValidator;
 
 	// Handler for Button[fx:id="newIconButton"] onAction
 	@FXML
@@ -176,7 +176,7 @@ public class EventPropertiesWindowController {
 		Icon icon = timelineMaker.getIcon(iconComboBox.getSelectionModel()
 				.getSelectedItem());
 		String title = titleTextField.getText();
-		if (titleChecker.isValid() && (startDateChecker.isValid()) && (!endDateTextField.isVisible() || endDateChecker.isValid())) {
+		if (titleValidator.isValid() && (startDateValidator.isValid()) && (!endDateTextField.isVisible() || endDateValidator.isValid())) {
 			Date startDate = processDate(startDateTextField.getText());
 			Date endDate = null;
 			String description = descriptionTextArea.getText();
@@ -265,8 +265,8 @@ public class EventPropertiesWindowController {
 					errorStrings.put(e.getName(), "Event already exists.");
 		}
 
-		titleChecker = new TextFieldValidator(titleTextField, "Enter a title.", errorStrings, "[ \\w]*$", "Only alphanumeric characters.");
-		titleTextField.focusedProperty().addListener(titleChecker);
+		titleValidator = new TextFieldValidator(titleTextField, "Enter a title.", errorStrings, "[ \\w]*$", "Only alphanumeric characters.");
+		titleTextField.focusedProperty().addListener(titleValidator);
 
 		initDateCheckers();
 		initComboBox();
@@ -275,10 +275,10 @@ public class EventPropertiesWindowController {
 	private void initDateCheckers() {
 		HashMap<String, String> errorStrings = new HashMap<String, String>();
 		errorStrings.put("", "Cannot be blank.");
-		startDateChecker = new TextFieldValidator(startDateTextField, "mm/dd/yyyy", errorStrings, "(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/((19|20)\\d\\d)", "mm/dd/yyyy");
-		endDateChecker = new TextFieldValidator(endDateTextField, "mm/dd/yyyy", errorStrings, "(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/((19|20)\\d\\d)", "mm/dd/yyyy");
-		startDateTextField.focusedProperty().addListener(startDateChecker);
-		endDateTextField.focusedProperty().addListener(endDateChecker);
+		startDateValidator = new TextFieldValidator(startDateTextField, "mm/dd/yyyy", errorStrings, "(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/((19|20)\\d\\d)", "mm/dd/yyyy");
+		endDateValidator = new TextFieldValidator(endDateTextField, "mm/dd/yyyy", errorStrings, "(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/((19|20)\\d\\d)", "mm/dd/yyyy");
+		startDateTextField.focusedProperty().addListener(startDateValidator);
+		endDateTextField.focusedProperty().addListener(endDateValidator);
 
 	}
 

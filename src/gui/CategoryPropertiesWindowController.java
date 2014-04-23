@@ -73,7 +73,7 @@ public class CategoryPropertiesWindowController {
 	// fx:id="renderColorLabel"
 	private Label renderColorLabel; // Value injected by FXMLLoader
 
-	private TextFieldValidator titleChecker;
+	private TextFieldValidator titleValidator;
 
 	// Handler for Button[fx:id="cancelButton"] onAction
 	@FXML
@@ -88,7 +88,7 @@ public class CategoryPropertiesWindowController {
 	void createButtonPressed(ActionEvent event) {
 		String title = categoryNameTextField.getText();
 		Color color = renderColorColorPicker.getValue();
-		if (titleChecker.isValid()) {
+		if (titleValidator.isValid()) {
 			if (category == null) { //Add Category
 				category = new Category(title, color);
 				if (timelineMaker.getSelectedTimeline().addCategory(category))
@@ -141,8 +141,8 @@ public class CategoryPropertiesWindowController {
 			}
 		}
 
-		titleChecker = new TextFieldValidator(categoryNameTextField, "Enter a title.", errorStrings, "[ \\w]*$", "Only alphanumerics characters.");
-		categoryNameTextField.focusedProperty().addListener(titleChecker);
+		titleValidator = new TextFieldValidator(categoryNameTextField, "Enter a title.", errorStrings, "[ \\w]*$", "Only alphanumerics characters.");
+		categoryNameTextField.focusedProperty().addListener(titleValidator);
 	}
 
 	/**

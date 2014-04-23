@@ -116,7 +116,7 @@ public class TimelinePropertiesWindowController {
 	// fx:id="titleTextField"
 	private TextField titleTextField; // Value injected by FXMLLoader
 	
-	private TextFieldValidator titleChecker;
+	private TextFieldValidator titleValidator;
 
 	// Handler for Button[fx:id="cancelButton"] onAction
 	@FXML
@@ -129,7 +129,7 @@ public class TimelinePropertiesWindowController {
 	// Handler for Button[fx:id="createButton"] onAction
 	@FXML
 	void createButtonPressed(ActionEvent event) {
-		if (titleChecker.isValid()) {
+		if (titleValidator.isValid()) {
 			String title = titleTextField.getText();
 			Color backgroundColor = colorBackgroundChooser.getValue();
 			Color timelineColor = colorTimelineChooser.getValue();
@@ -152,6 +152,8 @@ public class TimelinePropertiesWindowController {
 	// This method is called by the FXMLLoader when initialization is complete
 	void initialize() {
 		timeline = null;
+		fontLabel.setVisible(false);
+		fontComboBox.setVisible(false);
 		initComboBox();
 	}
 
@@ -187,8 +189,8 @@ public class TimelinePropertiesWindowController {
 			for (String title : timelineMaker.getTimelineTitles())
 				errorStrings.put(title, "Timeline already exists.");
 		
-		titleChecker = new TextFieldValidator(titleTextField, "Enter a title.", errorStrings, "[ \\w]*$", "Only alphanumeric characters.");
-		titleTextField.focusedProperty().addListener(titleChecker);
+		titleValidator = new TextFieldValidator(titleTextField, "Enter a title.", errorStrings, "[ \\w]*$", "Only alphanumeric characters.");
+		titleTextField.focusedProperty().addListener(titleValidator);
 	}
 
 	/**
