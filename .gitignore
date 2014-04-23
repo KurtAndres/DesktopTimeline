@@ -1,4 +1,9 @@
 *.db
 *.class
+bin/*.class
+bin/gui/*.class
+bin/model/*.class
+bin/render/*.class
+bin/storage/*.class
 bin/gui/DeleteCategoryConfirmation.fxml
 bin/gui/EventPropertiesWindowController$1.class
