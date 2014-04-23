@@ -173,8 +173,6 @@ public class TimelineMaker {
 	 * @return success
 	 */
 	public boolean deleteIcon(String icon) {
-		// TODO GET THIS WORKING
-		// The user is not allowed to delete the only category!
 		if (icons.size() <= 1)
 			return false;
 		Icon ico = new Icon(null, null, null);
@@ -436,7 +434,7 @@ public class TimelineMaker {
 	 */
 	public void deleteCategory(Category category) {
 		//All events which belong to the category are also deleted.
-		for(TLEvent e : selectedTimeline.getEvents()){
+		for(TLEvent e : selectedTimeline.getEvents()) {
 			if(e.getCategory().getName().equals(category.getName())){
 				selectedEvent = e;
 				deleteEvent();
