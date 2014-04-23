@@ -70,7 +70,7 @@ public class TimelineGraphics {
 	 */
 	public void clearScreen() {
 		scrollPane.setContent(blankPane);
-		scrollPane.setStyle("-fx-background-color: gray");
+		scrollPane.setStyle("-fx-background-color: #f4f4f4");
 	}
 	
 	/**
