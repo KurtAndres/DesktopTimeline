@@ -190,7 +190,7 @@ public class TimelinePropertiesWindowController {
 			for (String title : timelineMaker.getTimelineTitles())
 				errorStrings.put(title, "Timeline already exists.");
 		
-		titleValidator = new TextFieldValidator(titleTextField, "Enter a title.", errorStrings, "[ \\w]*$", "Only alphanumeric characters.");
+		titleValidator = new TextFieldValidator(titleTextField, "Enter a title.", errorStrings, "[! \\w]*$", "Only alphanumeric characters.");
 		titleTextField.focusedProperty().addListener(titleValidator);
 	}
 

@@ -52,7 +52,7 @@ public class DurationLabel extends TLEventLabel {
 	@Override
 	public void updateDesign() {
 		if (isSelected()) {
-			setId("event-selected");
+			setId("duration-label-selected");
 		} else {
 			setId("duration-label");
 		}

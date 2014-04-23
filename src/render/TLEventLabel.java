@@ -20,6 +20,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -60,6 +61,8 @@ public abstract class TLEventLabel extends Label {
 	 * The model of the program to update selected event
 	 */
 	private TimelineMaker model;
+	
+	private Tooltip tooltip;
 
 	/**
 	 * The x and y position of this event
@@ -68,8 +71,6 @@ public abstract class TLEventLabel extends Label {
 	private int yPos;
 
 	private Image icon;
-
-	private ContextMenu contextMenu;
 
 	/**
 	 * Set the text of the label to text
@@ -85,7 +86,6 @@ public abstract class TLEventLabel extends Label {
 		this.yPos = yPos;
 		if(event.getIcon()!=null)
 			this.icon = event.getIcon().getImage();
-		contextMenu = new ContextMenu();
 		init();
 	}
 
@@ -117,40 +117,17 @@ public abstract class TLEventLabel extends Label {
 	 */
 	private void init(){
 		initDesign();
-		initContextMenu();
+		initTooltip();
 		initHandlers();
 	}
 
 	/**
-	 * Initializes the ContextMenu which will display when the item is clicked
+	 * Initializes the Tooltip which will display when hovering over the label
 	 */
-	private void initContextMenu() {
-		contextMenu.setOnShowing(new EventHandler<WindowEvent>() {
-			public void handle(WindowEvent e) {
-				//System.out.println("showing");
-			}
-		});
-
-		Text t = new Text();
-		t.setText(event.getName());
-		t.setFont(Font.font("Verdana",20));
-		t.setFill(Color.BLACK);
-		CustomMenuItem name = new CustomMenuItem(t);
-
-		TextArea test = new TextArea();
-		test.setText(event.getDescription());
-		test.setPrefWidth(200);
-		test.setEditable(false);
-		test.setWrapText(true);
-
-
-		if(event.getCategory() != null){
-			MenuItem category = new MenuItem("Category: "+event.getCategory().getName());
-			CustomMenuItem text = new CustomMenuItem(test);
-			contextMenu.getItems().addAll(name, category, text);
-			setContextMenu(contextMenu);
-		}
-
+	private void initTooltip() {
+		tooltip = new Tooltip(tooltipText());
+		tooltip.setGraphic(new ImageView(icon));
+		setTooltip(tooltip);
 	}
 
 	/**
@@ -161,10 +138,9 @@ public abstract class TLEventLabel extends Label {
 		setLayoutY(yPos);
 		Category c = event.getCategory();
 		Color clr = c.getColor();
-		String color = clr.toString(); //This works fine, I kept textfill because it wont overwrite the stylesheet
+		String color = clr.toString();
 		color = color.substring(2);
-		setStyle("-fx-background-color: #" + color);
-		//setTextFill(Color.web(event.getCategory().getColor().toString()));
+		setStyle("-fx-event-color: #" + color);
 		uniqueDesign();
 	}
 
@@ -172,8 +148,6 @@ public abstract class TLEventLabel extends Label {
 	 * Initialize generic handlers for the TLEventLabel
 	 */
 	private void initHandlers(){
-		final Label label = this;
-		setTooltip(new Tooltip(tooltipText()));
 		setOnMouseEntered(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {
 				Platform.runLater(new Thread(new Runnable() {

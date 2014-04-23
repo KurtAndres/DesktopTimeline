@@ -19,7 +19,7 @@ public class Driver extends Application {
 			SignInWindowController controller = loader.<SignInWindowController> getController();
 			primaryStage.setTitle("Welcome");
 			Scene scene = new Scene(root);
-//			scene.getStylesheets().add("gui/MainWindow.css");
+			scene.getStylesheets().add("gui/MainWindow.css");
 			primaryStage.setScene(scene);
 			primaryStage.setMinWidth(300);
 			primaryStage.setMinHeight(150);

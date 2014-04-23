@@ -40,7 +40,7 @@ public class AtomicLabel extends TLEventLabel {
 	@Override
 	public void updateDesign() {
 		if (isSelected()) {
-			setId("event-selected");
+			setId("atomic-label-selected");
 		} else {
 			setId("atomic-label");
 		}

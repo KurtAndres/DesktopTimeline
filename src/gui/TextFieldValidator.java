@@ -23,6 +23,7 @@ public class TextFieldValidator implements ChangeListener<Boolean> {
 		this.invalidStrings = invalidStrings;
 		this.pattern = Pattern.compile(pattern);
 		this.patternMismatchMessage = patternMismatchMessage;
+		valid = true;
 		field.setPromptText(prompt);
 	}
 	
@@ -46,7 +47,11 @@ public class TextFieldValidator implements ChangeListener<Boolean> {
 		
 	}
 	
-	public boolean isValid() { return valid; }
+	public boolean isValid() { 
+		if (valid)
+			validate();
+		return valid; 
+	}
 
 	@Override
 	public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
