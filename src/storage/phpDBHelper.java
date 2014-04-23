@@ -73,7 +73,7 @@ public class phpDBHelper {
 		}
 
 	}
-	public static void parse() throws ParseException{
+	private static void parse() throws ParseException{
 		
 
 		JSONParser parser=new JSONParser(); //parser
@@ -123,7 +123,7 @@ public class phpDBHelper {
 
 
 
-	public static String getEvents(){ 
+	private static String getEvents(){ 
 		try {
 
 			//getting json string from database
@@ -135,7 +135,7 @@ public class phpDBHelper {
 			return e.getMessage();
 		}
 	}
-	public static String getUid(){ 
+	private static String getUid(){ 
 		try {
 
 			//getting json string from database
@@ -159,7 +159,7 @@ public class phpDBHelper {
 		}
 	}
 
-	public static String getTimelines(){ 
+	private static String getTimelines(){ 
 		try {
 
 			//getting json string from database

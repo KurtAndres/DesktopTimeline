@@ -67,6 +67,7 @@ public class phpPushHelper {
 				category = someEvent.getCategory().getName();
 				startDate = someEvent.getStartDate().toString();
 				description = someEvent.getDescription();
+				System.out.println(description);
 				iconid = Integer.toString(someEvent.getIconIndex());
 				internet = new URL("http://cs.wheaton.edu/~kurt.andres/addEvent.php?tid="+tid+"&name="+eName+"&type="
 						+type+"&startdate="+startDate+"&enddate="+endDate+"&category="+category+"&iconid="+iconid+"&description="+description);
