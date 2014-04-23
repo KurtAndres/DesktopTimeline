@@ -7,22 +7,22 @@
 }
 
 /* Applies to all labels */
-.label{
-	-fx-font-weight: bold;
-	-fx-effect: dropshadow(gaussian, -fx-accent, 3, 0, 0, 0);
-}
+//.label{
+//	-fx-font-weight: bold;
+//	-fx-effect: dropshadow(gaussian, -fx-accent, 3, 0, 0, 0);
+//}
 
 /* Applies to all buttons */
-.button{
-	-fx-font-weight: bold;
-	-fx-background-color: linear-gradient(-fx-base, -fx-accent);
-}
-.button:hover {
-	-fx-effect: dropshadow(gaussian, white, 10, 0, 0, 0);
-}
-.button:hover:focused {
-	-fx-background-color: linear-gradient(derive(-fx-accent, 40%), derive(-fx-base, 30%));
-}
+//.button{
+//	-fx-font-weight: bold;
+//	-fx-background-color: linear-gradient(-fx-base, -fx-accent);
+//}
+//.button:hover {
+//	-fx-effect: dropshadow(gaussian, white, 10, 0, 0, 0);
+//}
+//.button:hover:focused {
+//	-fx-background-color: linear-gradient(derive(-fx-accent, 40%), derive(-fx-base, 30%));
+//}
 
 /* Applies to default textfields */
 //.text-field {
