@@ -73,7 +73,7 @@ public class CategoryPropertiesWindowController {
 	// fx:id="renderColorLabel"
 	private Label renderColorLabel; // Value injected by FXMLLoader
 
-	private TextFieldChecker titleChecker;
+	private TextFieldValidator titleChecker;
 
 	// Handler for Button[fx:id="cancelButton"] onAction
 	@FXML
@@ -141,7 +141,7 @@ public class CategoryPropertiesWindowController {
 			}
 		}
 
-		titleChecker = new TextFieldChecker(categoryNameTextField, "Enter a title.", errorStrings, "[ \\w]*$", "Only alphanumerics characters.");
+		titleChecker = new TextFieldValidator(categoryNameTextField, "Enter a title.", errorStrings, "[ \\w]*$", "Only alphanumerics characters.");
 		categoryNameTextField.focusedProperty().addListener(titleChecker);
 	}
 

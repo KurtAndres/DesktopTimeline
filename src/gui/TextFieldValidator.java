@@ -8,7 +8,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 
-public class TextFieldChecker implements ChangeListener<Boolean> {
+public class TextFieldValidator implements ChangeListener<Boolean> {
 	
 	protected TextField field;
 	protected String prompt;
@@ -17,7 +17,7 @@ public class TextFieldChecker implements ChangeListener<Boolean> {
 	protected String patternMismatchMessage;
 	protected boolean valid;
 	
-	public TextFieldChecker(TextField field, String prompt, HashMap<String, String> invalidStrings, String pattern, String patternMismatchMessage) {
+	public TextFieldValidator(TextField field, String prompt, HashMap<String, String> invalidStrings, String pattern, String patternMismatchMessage) {
 		this.field = field;
 		this.prompt = prompt;
 		this.invalidStrings = invalidStrings;

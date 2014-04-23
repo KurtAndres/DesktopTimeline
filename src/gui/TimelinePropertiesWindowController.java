@@ -116,7 +116,7 @@ public class TimelinePropertiesWindowController {
 	// fx:id="titleTextField"
 	private TextField titleTextField; // Value injected by FXMLLoader
 	
-	private TextFieldChecker titleChecker;
+	private TextFieldValidator titleChecker;
 
 	// Handler for Button[fx:id="cancelButton"] onAction
 	@FXML
@@ -187,7 +187,7 @@ public class TimelinePropertiesWindowController {
 			for (String title : timelineMaker.getTimelineTitles())
 				errorStrings.put(title, "Timeline already exists.");
 		
-		titleChecker = new TextFieldChecker(titleTextField, "Enter a title.", errorStrings, "[ \\w]*$", "Only alphanumeric characters.");
+		titleChecker = new TextFieldValidator(titleTextField, "Enter a title.", errorStrings, "[ \\w]*$", "Only alphanumeric characters.");
 		titleTextField.focusedProperty().addListener(titleChecker);
 	}
 

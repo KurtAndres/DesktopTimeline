@@ -137,9 +137,9 @@ public class EventPropertiesWindowController {
 	// fx:id="typeLabel"
 	private Label typeLabel; // Value injected by FXMLLoader
 
-	private TextFieldChecker titleChecker;
+	private TextFieldValidator titleChecker;
 
-	private TextFieldChecker startDateChecker, endDateChecker;
+	private TextFieldValidator startDateChecker, endDateChecker;
 
 	// Handler for Button[fx:id="newIconButton"] onAction
 	@FXML
@@ -265,7 +265,7 @@ public class EventPropertiesWindowController {
 					errorStrings.put(e.getName(), "Event already exists.");
 		}
 
-		titleChecker = new TextFieldChecker(titleTextField, "Enter a title.", errorStrings, "[ \\w]*$", "Only alphanumeric characters.");
+		titleChecker = new TextFieldValidator(titleTextField, "Enter a title.", errorStrings, "[ \\w]*$", "Only alphanumeric characters.");
 		titleTextField.focusedProperty().addListener(titleChecker);
 
 		initDateCheckers();
@@ -275,8 +275,8 @@ public class EventPropertiesWindowController {
 	private void initDateCheckers() {
 		HashMap<String, String> errorStrings = new HashMap<String, String>();
 		errorStrings.put("", "Cannot be blank.");
-		startDateChecker = new TextFieldChecker(startDateTextField, "mm/dd/yyyy", errorStrings, "(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/((19|20)\\d\\d)", "mm/dd/yyyy");
-		endDateChecker = new TextFieldChecker(endDateTextField, "mm/dd/yyyy", errorStrings, "(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/((19|20)\\d\\d)", "mm/dd/yyyy");
+		startDateChecker = new TextFieldValidator(startDateTextField, "mm/dd/yyyy", errorStrings, "(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/((19|20)\\d\\d)", "mm/dd/yyyy");
+		endDateChecker = new TextFieldValidator(endDateTextField, "mm/dd/yyyy", errorStrings, "(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/((19|20)\\d\\d)", "mm/dd/yyyy");
 		startDateTextField.focusedProperty().addListener(startDateChecker);
 		endDateTextField.focusedProperty().addListener(endDateChecker);
 
