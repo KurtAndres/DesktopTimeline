@@ -69,7 +69,7 @@ public class phpPushHelper {
 				description = someEvent.getDescription();
 				iconid = Integer.toString(someEvent.getIconIndex());
 				internet = new URL("http://cs.wheaton.edu/~kurt.andres/addEvent.php?tid="+tid+"&name="+eName+"&type="
-						+type+"&startdate="+startDate+"&enddate="+endDate+"&category="+category+"&description="+description+"&iconid="+iconid);
+						+type+"&startdate="+startDate+"&enddate="+endDate+"&category="+category+"&iconid="+iconid+"&description="+description);
 				sc = new Scanner(internet.openStream());
 				
 			}
