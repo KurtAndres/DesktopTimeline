@@ -18,7 +18,7 @@
 	-fx-background-color: linear-gradient(-fx-base, -fx-accent);
 }
 .button:hover {
-	-fx-effect: dropshadow(gaussian, white, 5, 0, 0, 0);
+	-fx-effect: dropshadow(gaussian, white, 10, 0, 0, 0);
 }
 .button:hover:focused {
 	-fx-background-color: linear-gradient(derive(-fx-accent, 40%), derive(-fx-base, 30%));
@@ -86,7 +86,8 @@
 	-fx-border-style: solid;
 	-fx-border-color: black;
 	-fx-background-radius: 5 5 5 5;
-	-fx-effect: dropshadow(gaussian, rgb(128, 128, 128), 5, 0, 0, 0);
+	-fx-background-color: -fx-event-color;
+	-fx-effect: dropshadow(gaussian, -fx-event-color, 10, 0.5, 0, 0);
 }
 #atomic-label-selected {
 	-fx-border-radius: 5 5 5 5;
@@ -94,7 +95,7 @@
 	-fx-border-color: black;
 	-fx-background-color: derive(-fx-event-color, 50%);
 	-fx-background-radius: 5 5 5 5;
-	-fx-effect: dropshadow(gaussian, rgb(128, 128, 128), 5, 0, 0, 0);
+	-fx-effect: dropshadow(gaussian, -fx-event-color, 10, 0.5, 0, 0);
 }
 
 /* Applies to id = duration-label
@@ -108,12 +109,13 @@
 	-fx-border-style: solid;
 	-fx-border-color: black;
 	-fx-background-color: -fx-event-color;
-	-fx-effect: dropshadow(gaussian, rgb(128, 128, 128), 5, 0, 0, 0);
+	-fx-effect: dropshadow(gaussian, -fx-event-color, 10, 0.5, 0, 0);
 }
 #duration-label-selected {-fx-border-style: solid;
+	-fx-border-style: solid;
 	-fx-border-color: black;
 	-fx-background-color: derive(-fx-event-color, 50%);
-	-fx-effect: dropshadow(gaussian, rgb(128, 128, 128), 5, 0, 0, 0);
+	-fx-effect: dropshadow(gaussian, -fx-event-color, 10, 0.5, 0, 0);
 }
 
 /* Applies to id = event-selected

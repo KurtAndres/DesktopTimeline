@@ -34,20 +34,17 @@ public class AtomicLabel extends TLEventLabel {
 	}
 
 	@Override
-	public void uniqueHandlers() {
-	}
-
-	@Override
 	public void updateDesign() {
-		if (isSelected()) {
+		if (isSelected())
 			setId("atomic-label-selected");
-		} else {
+		else if (isHovered())
+			setId("atomic-label-hover");
+		else 
 			setId("atomic-label");
-		}
 	}
 
 	@Override
-	public void uniqueDesign() {
+	public void initUniqueDesign() {
 		setId("atomic-label");
 	}
 
@@ -58,5 +55,4 @@ public class AtomicLabel extends TLEventLabel {
 				+ "\nDate: " + TLEvent.getFormattedDate(event.getStartDate())
 				+ "\nDescription: " + event.getDescription();
 	}
-
 }

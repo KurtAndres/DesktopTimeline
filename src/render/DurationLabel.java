@@ -42,24 +42,21 @@ public class DurationLabel extends TLEventLabel {
 			TimelineMaker model, ArrayList<TLEventLabel> eventLabels) {
 		super(xPos, yPos, event, model, eventLabels);
 		this.width = width;
-		uniqueDesign(); // yeah this is kludgy
-	}
-
-	@Override
-	public void uniqueHandlers() {
+		initUniqueDesign(); // yeah this is kludgy
 	}
 
 	@Override
 	public void updateDesign() {
-		if (isSelected()) {
+		if (isSelected())
 			setId("duration-label-selected");
-		} else {
+		else if (isHovered())
+			setId("duration-label-hover");
+		else 
 			setId("duration-label");
-		}
 	}
 
 	@Override
-	public void uniqueDesign() {
+	public void initUniqueDesign() {
 		setPrefWidth(width);
 		setAlignment(Pos.CENTER);
 		setId("duration-label");

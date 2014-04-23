@@ -81,6 +81,9 @@ public class SignInWindowController {
 		assert usernameField != null : "fx:id=\"usernameField\" was not injected: check your FXML file 'SignInWindow.fxml'.";
 	}
 
+	/**
+	 * Initialize the TextFieldValidators for the username and password fields.
+	 */
 	public void initValidators() {
 		HashMap<String, String> invalidStrings = new HashMap<String, String>();
 		invalidStrings.put("", "Cannot be blank.");

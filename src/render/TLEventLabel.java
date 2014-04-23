@@ -45,7 +45,7 @@ public abstract class TLEventLabel extends Label {
 	/**
 	 * Whether this is the selected event or not
 	 */
-	private boolean selected;
+	protected boolean selected, hovered;
 
 	/**
 	 * The event associated with this label
@@ -101,15 +101,14 @@ public abstract class TLEventLabel extends Label {
 	public boolean isSelected() {
 		return selected;
 	}
-
+	
 	/**
-	 * Setter for selected, that updates the label in accordance with the selection value
+	 * Getter for selected
 	 * 
-	 * @param selected
+	 * @return selected
 	 */
-	public void setSelected(boolean selected) {
-		this.selected = selected;
-		updateDesign();
+	public boolean isHovered() {
+		return hovered;
 	}
 
 	/**
@@ -141,7 +140,7 @@ public abstract class TLEventLabel extends Label {
 		String color = clr.toString();
 		color = color.substring(2);
 		setStyle("-fx-event-color: #" + color);
-		uniqueDesign();
+		initUniqueDesign();
 	}
 
 	/**
@@ -152,7 +151,7 @@ public abstract class TLEventLabel extends Label {
 			public void handle(MouseEvent e) {
 				Platform.runLater(new Thread(new Runnable() {
 					public void run() {
-						setId("label-highlighted");
+						setHovered(true);
 					}
 				}));
 			}
@@ -161,7 +160,7 @@ public abstract class TLEventLabel extends Label {
 			public void handle(MouseEvent e) {
 				new Thread(new Runnable() {
 					public void run() {
-						updateDesign();
+						setHovered(false);
 					}
 				}).start();
 			}
@@ -202,18 +201,29 @@ public abstract class TLEventLabel extends Label {
 				model.selectEvent(event);
 			}
 		});
-		uniqueHandlers();
 	}
-
+	
+	public abstract void initUniqueDesign();
+	
 	/**
-	 * Abstract method where unique design code can go. 
+	 * Setter for selected, that updates the label in accordance with the selection value
+	 * 
+	 * @param selected
 	 */
-	public abstract void uniqueDesign();
-
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+		updateDesign();
+	}
+	
 	/**
-	 * Initialize handlers unique to Duration or Atomic
+	 * Setter for hovered, that updates the label in accordance with the hover value
+	 * 
+	 * @param selected
 	 */
-	public abstract void uniqueHandlers();
+	protected void setHovered(boolean hovered) {
+		this.hovered = hovered;
+		updateDesign();
+	}
 
 	/**
 	 * How the label will update itself
