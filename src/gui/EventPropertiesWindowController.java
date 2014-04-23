@@ -171,8 +171,7 @@ public class EventPropertiesWindowController {
 	@FXML
 	void createPressed(ActionEvent event) {
 		Category selectedCategory = timelineMaker.getSelectedTimeline()
-				.getCategory(
-						categoryComboBox.getSelectionModel().getSelectedItem());
+				.getCategory(categoryComboBox.getSelectionModel().getSelectedItem());
 		Icon icon = timelineMaker.getIcon(iconComboBox.getSelectionModel()
 				.getSelectedItem());
 		String title = titleTextField.getText();

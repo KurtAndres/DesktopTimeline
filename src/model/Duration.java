@@ -60,10 +60,10 @@ public class Duration extends TLEvent {
 		this.endDate = endDate;
 	}
 
-	/**
-	 * Saves the event to the database.
-	 * 
-	 */
-	public void save() {
+	public Duration clone(){
+		Duration toReturn = new Duration(this.name, this.getCategory().clone(), (Date) this.getStartDate().clone(), 
+				(Date) this.getEndDate().clone(), this.getIconIndex(), this.getDescription());
+				
+		return toReturn;
 	}
 }

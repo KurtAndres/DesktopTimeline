@@ -1,2 +1,4 @@
 *.db
+*.class
 bin/gui/DeleteCategoryConfirmation.fxml
+bin/gui/EventPropertiesWindowController$1.class

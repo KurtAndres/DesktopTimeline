@@ -42,7 +42,7 @@ public class MainWindowController {
 	 * The model of the program
 	 */
 	private TimelineMaker timelineMaker;
-
+	
 	@FXML
 	private ResourceBundle resources;
 
@@ -134,6 +134,12 @@ public class MainWindowController {
 	private MenuItem printMenuItem;
 
 	@FXML
+	private MenuItem undoMenuItem;
+
+	@FXML
+	private MenuItem redoMenuItem;
+
+	@FXML
 	private Label timelinesLabel;
 
 	@FXML
@@ -205,6 +211,28 @@ public class MainWindowController {
 	}
 
 	@FXML
+	void undoPressed(ActionEvent event){
+		System.out.println("Undo");
+		TimelineMaker.Memento m = Driver.undo();
+		if(m != null)
+			timelineMaker.loadMemento(m);	
+		
+		timelineMaker.updateGraphics();
+		populateListView();		
+	}
+
+	@FXML
+	void redoPressed(ActionEvent event){
+		System.out.println("Redo");
+		TimelineMaker.Memento m = Driver.redo();
+		if(m != null)
+			timelineMaker.loadMemento(m);
+		
+		timelineMaker.updateGraphics();
+		populateListView();
+	}
+
+	@FXML
 	void deleteEventPressed(ActionEvent event) {
 		timelineMaker.deleteEvent();
 	}
@@ -229,7 +257,7 @@ public class MainWindowController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	@FXML
@@ -390,6 +418,7 @@ public class MainWindowController {
 
 	@FXML
 	void savePressed(ActionEvent event) throws IOException {
+		Driver.addMemento(timelineMaker);
 		try {
 			phpPushHelper.send(timelineMaker);
 		} catch (ParseException e) {
@@ -414,7 +443,7 @@ public class MainWindowController {
 			}
 		});
 	}
-	
+
 	/**
 	 * Helper method for DeleteTimelineConfirmationController. Updates the categoryListView if the timeline is deleted.
 	 */
@@ -477,6 +506,20 @@ public class MainWindowController {
 		populateListView();
 		timelineMaker.graphics.setPanel(renderScrollPane, blankPane);
 
+	}
+	
+	/**
+	 * Clones the MainWindowController. To be used by the TimelineMaker's deep clone process. 
+	 * Since MainWindowController and TimelineMaker both have instances of each other, this method takes a TimelineMaker in order to avoid the circular references...
+	 * Does not clone @FXML variables as those are not part of the MainWindowController's state.
+	 * @param tm The timelineMaker to set
+	 * @return
+	 */
+	public MainWindowController clone(TimelineMaker tm){
+		MainWindowController toReturn = new MainWindowController();
+		toReturn.timelineMaker = tm;
+			
+		return toReturn;
 	}
 
 }
