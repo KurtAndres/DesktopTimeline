@@ -620,7 +620,10 @@ public class TimelineMaker {
 			m.icons.add(new Icon(icon.getName(), icon.getImage(), icon.getPath()));
 		}
 		
-		m.selectedTimeline = this.selectedTimeline.clone();
+		if(this.selectedTimeline != null)
+			m.selectedTimeline = this.selectedTimeline.clone();
+		else
+			m.selectedTimeline = null;
 		if(this.selectedEvent != null)		
 			m.selectedEvent = this.selectedEvent.clone();
 		else

@@ -219,7 +219,7 @@ public class MainWindowController {
 			timelineMaker.loadMemento(m);	
 		
 		timelineMaker.updateGraphics();
-		
+		populateListView();		
 	}
 
 	@FXML
