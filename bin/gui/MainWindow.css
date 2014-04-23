@@ -73,6 +73,7 @@
 	-fx-border-color: black;
 	-fx-background-color: -fx-event-color;
     -fx-background-radius: 5 5 5 5;
+    -fx-effect: null;
 }
 #atomic-label-hover {
 	-fx-border-radius: 5 5 5 5;
@@ -96,6 +97,7 @@
 	-fx-border-style: solid;
 	-fx-border-color: black;
 	-fx-background-color: -fx-event-color;
+	-fx-effect: null;
 }
 #duration-label-hover {
 	-fx-border-style: solid;

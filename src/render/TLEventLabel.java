@@ -45,7 +45,7 @@ public abstract class TLEventLabel extends Label {
 	/**
 	 * Whether this is the selected event or not
 	 */
-	protected boolean selected, hovered;
+	private boolean selected, hovered;
 
 	/**
 	 * The event associated with this label
@@ -103,9 +103,9 @@ public abstract class TLEventLabel extends Label {
 	}
 	
 	/**
-	 * Getter for selected
+	 * Getter for hovered
 	 * 
-	 * @return selected
+	 * @return hovered
 	 */
 	public boolean isHovered() {
 		return hovered;
@@ -151,6 +151,8 @@ public abstract class TLEventLabel extends Label {
 			public void handle(MouseEvent e) {
 				Platform.runLater(new Thread(new Runnable() {
 					public void run() {
+						for(TLEventLabel label : eventLabels)
+							label.setHovered(false);
 						setHovered(true);
 					}
 				}));
@@ -160,6 +162,8 @@ public abstract class TLEventLabel extends Label {
 			public void handle(MouseEvent e) {
 				new Thread(new Runnable() {
 					public void run() {
+						for(TLEventLabel label : eventLabels)
+							label.setHovered(false);
 						setHovered(false);
 					}
 				}).start();
@@ -194,9 +198,8 @@ public abstract class TLEventLabel extends Label {
 						}));
 					}
 				}
-				for(TLEventLabel label : eventLabels){
+				for(TLEventLabel label : eventLabels)
 					label.setSelected(false);
-				}
 				setSelected(true);
 				model.selectEvent(event);
 			}
