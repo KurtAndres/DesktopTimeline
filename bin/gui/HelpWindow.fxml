@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" fx:id="helpWindowAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="gui.HelpWindowController">
+  <children>
+    <ScrollPane hbarPolicy="AS_NEEDED" prefHeight="300.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <content>
+        <VBox id="VBox" alignment="CENTER" prefHeight="-1.0" prefWidth="390.0" spacing="5.0">
+          <children>
+            <Label alignment="TOP_LEFT" text="Getting started:">
+              <font>
+                <Font name="System Bold" size="16.0" />
+              </font>
+              <VBox.margin>
+                <Insets />
+              </VBox.margin>
+            </Label>
+            <Label prefHeight="-1.0" prefWidth="380.0" text="This software can be used to create, edit, and view historical timelines.&#10;Use the toolbar on the left to acces basic functions.&#10;&#10;To get started with a new timeline, click &quot;Add&quot; in the Timelines section.&#10;To edit an existing timeline, select the title from the list of timelines and click &quot;Edit.&quot;&#10;To delete an existing timeline, select the timeline and click &quot;Delete.&quot;&#10;&#10;Each timeline contains at least one category - the default category.&#10;To add a new category, click &quot;Add&quot; under the Categories section.&#10;To edit an existing category, select the title from the list of categories and click &quot;Edit.&quot;&#10;To delete an existing category, select the category and click &quot;Delete.&quot;&#10;&#10;Finally, each category contains a certain number of events.&#10;To add a new event, click &quot;Add&quot; under the Events section.&#10;There are two types of events: an atomic or single-date event and a duration event. You can toggle between these in the Event Properties Window.&#10;To edit an existing event, select the event in the display panel and click &quot;Edit.&quot;&#10;To delete an existing event, select the event in the display panel and click &quot;Delete.&quot;" wrapText="true" />
+          </children>
+          <padding>
+            <Insets left="10.0" right="15.0" top="10.0" />
+          </padding>
+        </VBox>
+      </content>
+    </ScrollPane>
+  </children>
+</AnchorPane>

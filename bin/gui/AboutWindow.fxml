@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" fx:id="aboutAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="gui.AboutWindowController">
+  <children>
+    <ScrollPane hbarPolicy="AS_NEEDED" prefHeight="300.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <content>
+        <VBox id="VBox" alignment="CENTER" prefHeight="-1.0" prefWidth="390.0" spacing="5.0">
+          <children>
+            <Label alignment="TOP_LEFT" text="Credits:">
+              <font>
+                <Font name="System Bold" size="16.0" />
+              </font>
+              <VBox.margin>
+                <Insets />
+              </VBox.margin>
+            </Label>
+            <Label prefHeight="-1.0" prefWidth="380.0" text="Authors:&#10;Kurt Andres,&#10;Daniel Conroy,&#10;Dr. Stewart DeSoto,&#10;Kayley Lane,&#10;Leanne Miller,&#10;Andrew Sutton,&#10;Andrew Thompson,&#10;Brian Williamson,&#10;Josh Wright&#10;&#10;CSCI 335: Software Devolopment&#10;Spring 2014" wrapText="true" />
+          </children>
+          <padding>
+            <Insets left="10.0" right="15.0" top="10.0" />
+          </padding>
+        </VBox>
+      </content>
+    </ScrollPane>
+  </children>
+</AnchorPane>

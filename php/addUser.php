@@ -16,16 +16,15 @@ $result = mysqli_query($db, "SELECT * FROM userAdmin WHERE name=".$name);
         while($row = mysqli_fetch_assoc($result)){
                 if("'".$row['password']."'" == $password){
                 //echo "Duplicate User Password Combo";
-                $found = true;
+		$found = true;
                  }else{
-                        echo $found;
-                        //echo " Not Duplicate ";
+                        
                         }
-                }
+		}
 if($found==true | $name == "''" | $password == "''"){
-        //echo "don't add anything";
-        }else{
-                $sql="INSERT INTO userAdmin(name, password) VALUES (".$name.",".$password.")";
+	//echo "don't add anything";
+        }else{               
+		$sql="INSERT INTO userAdmin(name, password) VALUES (".$name.",".$password.")";
                 mysqli_query($db, $sql);
                 }
 

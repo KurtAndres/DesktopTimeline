@@ -53,15 +53,13 @@ public class Timeline implements TimelineAPI {
 	 * would be very simple
 	 */
 	public static enum AxisLabel {
-		DAYS, WEEKS, MONTHS, YEARS, DECADES, CENTURIES, MILLENNIA;
+		DAYS, MONTHS, YEARS, WEEKS, DECADES, CENTURIES, MILLENNIA;
 	}
 
 	/**
 	 * Array of the AxisLabels, for getting the value based on an index
 	 */
-	private static final AxisLabel[] AXIS_LABELS = { AxisLabel.DAYS,
-		AxisLabel.WEEKS, AxisLabel.MONTHS, AxisLabel.YEARS,
-		AxisLabel.DECADES, AxisLabel.CENTURIES, AxisLabel.MILLENNIA };
+	private static final AxisLabel[] AXIS_LABELS = { AxisLabel.DAYS, AxisLabel.WEEKS, AxisLabel.MONTHS, AxisLabel.YEARS};
 
 	/**
 	 * The units to render the timeline in

@@ -9,10 +9,10 @@ import javafx.scene.control.TextInputControl;
 
 abstract class TextFieldChecker implements ChangeListener<Boolean> {
 	
-	private TextField field;
-	private String prompt;
-	private HashMap<String, String> errorStrings;
-	private boolean valid;
+	protected TextField field;
+	protected String prompt;
+	protected HashMap<String, String> errorStrings;
+	protected boolean valid;
 	
 	public TextFieldChecker(TextField field, String prompt, HashMap<String, String> errorStrings) {
 		this.field = field;

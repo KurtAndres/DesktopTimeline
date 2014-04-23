@@ -138,29 +138,24 @@ public class MainWindowController {
 	@FXML
 	private Pane blankPane;
 
-	/**
-	 * Brings up a new unresizable JavaFX stage with the text in
-	 * 
-	 * @param String
-	 *      	 the string to show
-	 */
-	private void showDialog(String show) {
-		Stage dialog = new Stage();
-		dialog.initStyle(StageStyle.UTILITY);
-		TextArea text = new TextArea(show);
-		text.setMaxWidth(300);
-		text.setWrapText(true);
-		text.setEditable(false);
-		Scene scene = new Scene(new Group(text));
-		dialog.setScene(scene);
-		dialog.initStyle(StageStyle.UTILITY);
-		dialog.setResizable(false);
-		dialog.show();
-	}
 
 	@FXML
 	void aboutPressed(ActionEvent event) {
-		showDialog(timelineMaker.getAboutText());
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(
+					"AboutWindow.fxml"));
+			Parent root = (Parent) loader.load();
+			AboutWindowController controller = loader
+					.<AboutWindowController> getController();
+			Stage stage = new Stage();
+			stage.setTitle("About");
+			Scene scene = new Scene(root);
+//			scene.getStylesheets().add("gui/EventPropertiesWindow.css");
+			stage.setScene(scene);
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
@@ -321,7 +316,21 @@ public class MainWindowController {
 
 	@FXML
 	void helpPressed(ActionEvent event) {
-		showDialog(timelineMaker.getHelpText());
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(
+					"HelpWindow.fxml"));
+			Parent root = (Parent) loader.load();
+			HelpWindowController controller = loader
+					.<HelpWindowController> getController();
+			Stage stage = new Stage();
+			stage.setTitle("Help");
+			Scene scene = new Scene(root);
+//			scene.getStylesheets().add("gui/EventPropertiesWindow.css");
+			stage.setScene(scene);
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
