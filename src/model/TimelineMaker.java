@@ -303,7 +303,7 @@ public class TimelineMaker {
 	public void editTimeline(Timeline t, String title, Color colorTL,
 			Color colorBG, AxisLabel axisUnit, Font font) {
 		timelines.remove(selectedTimeline);
-		Timeline newTimeline = new Timeline(title, t.getEvents(), colorTL,
+		Timeline newTimeline = new Timeline(title, t.getEvents(), t.getCategories(), colorTL,
 				colorBG, axisUnit);
 		newTimeline.setID(t.getID());
 		timelines.add(newTimeline);

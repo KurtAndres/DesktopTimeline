@@ -142,6 +142,35 @@ public class Timeline implements TimelineAPI {
 		dirty = true;
 
 	}
+	
+	/**
+	 * Constructor for name, events, categories, and axisLabel
+	 * 
+	 * @param name
+	 *            Timeline name
+	 * @param events
+	 *            TLEvents in timeline
+	 * @param axisLabel
+	 *            Unit to render timeline in
+	 */
+	public Timeline(String name, TLEvent[] events, ArrayList<Category> categories, Color colorTL,
+			Color colorBG, AxisLabel axisLabel) {
+		this.name = name;
+		if (events != null)
+			this.events = new ArrayList<TLEvent>(Arrays.asList(events));
+		else
+			this.events = new ArrayList<TLEvent>();
+		if (categories != null)
+			this.categories = categories;
+		else
+			this.categories = new ArrayList<Category>();
+		this.axisLabel = axisLabel;
+		this.colorBG = colorBG;
+		this.colorTL = colorTL;
+		dirty = true;
+	}
+
+
 
 	/**
 	 * Return the unique ID of this event for the database.
@@ -403,6 +432,15 @@ public class Timeline implements TimelineAPI {
 	public Iterator<Category> getCategoryIterator() {
 		return categories.iterator();
 	}
+	
+	/**
+	 * Retrieve the array-list of categories.
+	 * @return
+	 */
+	public ArrayList<Category> getCategories() {
+		return categories;
+	}
+
 
 	/**
 	 * 
