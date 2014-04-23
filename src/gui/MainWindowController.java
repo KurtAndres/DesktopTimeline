@@ -24,6 +24,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -128,6 +129,9 @@ public class MainWindowController {
 
 	@FXML
 	private MenuItem saveMenuItem;
+	
+	@FXML
+	private MenuItem printMenuItem;
 
 	@FXML
 	private Label timelinesLabel;
@@ -302,6 +306,11 @@ public class MainWindowController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@FXML
+	void printPressed(ActionEvent event) {
+		WritableImage snapshot = renderScrollPane.snapshot(null, null);
 	}
 
 	@FXML
