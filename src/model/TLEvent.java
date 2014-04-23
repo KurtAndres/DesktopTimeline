@@ -7,34 +7,31 @@ import java.sql.Date;
 
 import storage.DBHelper;
 
-public class TLEvent {
+public abstract class TLEvent {
+	/**
+	 * The description for the event and the name of the event
+	 */
 	protected String description, name;
-
 	/**
 	 * The start date of this event
 	 */
 	private Date startDate;
-
 	/**
 	 * The category of this event
 	 */
 	private Category category;
-
 	/**
 	 * the unique id of this event
 	 */
 	private int id;
-
 	/**
 	 * The icon of this event
 	 */
 	private Icon icon;
-
 	/**
 	 * The index of this event's icon in the icon hashmap
 	 */
 	private int iconIndex;
-
 	/**
 	 * Constructor
 	 * 
@@ -46,7 +43,6 @@ public class TLEvent {
 		this.name = name;
 		category = new Category("Default");
 	}
-
 	/**
 	 * Constructor
 	 * 
@@ -70,7 +66,6 @@ public class TLEvent {
 		this.icon = new Icon("None", null, null);
 		this.iconIndex = iconIndex;
 	}
-
 	/**
 	 * Method to return the description of the TLEvent.
 	 * 
@@ -79,7 +74,6 @@ public class TLEvent {
 	public String getDescription() {
 		return description;
 	}
-
 	/**
 	 * Method to return the name of the TLEvent.
 	 * 
@@ -88,7 +82,6 @@ public class TLEvent {
 	public String getName() {
 		return name;
 	}
-
 	/**
 	 * Method to return the start date of the TLEvent.
 	 * 
@@ -97,7 +90,6 @@ public class TLEvent {
 	public Date getStartDate() {
 		return startDate;
 	}
-
 	/**
 	 * Method to return the category of the TLEvent.
 	 * 
@@ -106,7 +98,6 @@ public class TLEvent {
 	public Category getCategory() {
 		return category;
 	}
-
 	/**
 	 * Sets the description.
 	 * 
@@ -116,7 +107,6 @@ public class TLEvent {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
 	/**
 	 * Sets the name.
 	 * 
@@ -126,7 +116,6 @@ public class TLEvent {
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	/**
 	 * Sets the start date.
 	 * 
@@ -136,7 +125,6 @@ public class TLEvent {
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
-
 	/**
 	 * Sets the category.
 	 * 
@@ -146,14 +134,12 @@ public class TLEvent {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-
 	/**
 	 * Saves the event to the database.
 	 */
 	public void save(DBHelper db, String timelineName) {
 		db.saveEvent(this, timelineName);
 	}
-
 	/**
 	 * Getter method for the id
 	 * 
@@ -162,7 +148,6 @@ public class TLEvent {
 	public int getID() {
 		return id;
 	}
-
 	/**
 	 * Setter method for the id
 	 * 
@@ -172,7 +157,6 @@ public class TLEvent {
 	public void setID(int id) {
 		this.id = id;
 	}
-
 	/**
 	 * Getter method for the icon
 	 * 
@@ -191,7 +175,6 @@ public class TLEvent {
 	public void setIcon(Icon icon) {
 		this.icon = icon;
 	}
-
 	/**
 	 * Getter method for the iconIndex
 	 * 
@@ -200,7 +183,6 @@ public class TLEvent {
 	public int getIconIndex() {
 		return iconIndex;
 	}
-
 	/**
 	 * Setter method for the iconIndex
 	 * 
@@ -209,18 +191,11 @@ public class TLEvent {
 	 */
 	public void setIconIndex(int iconIndex) {
 		this.iconIndex = iconIndex;
-	}
-	
-	public TLEvent clone(){
-		TLEvent toReturn = new TLEvent(this.name);	
-		toReturn.startDate = (Date) this.startDate.clone();
-		toReturn.category = this.category.clone();
-		toReturn.description = this.description; //Strings are immutable, no need to clone
-		toReturn.id = this.id;
-		toReturn.iconIndex = this.iconIndex;
-		toReturn.icon = new Icon(icon.getName(), icon.getImage(), icon.getPath());
-		
-		return toReturn;
-	}
+	}	
+	/**
+	 * Deep clone for events.
+	 * @return The cloned event.
+	 */
+	public abstract TLEvent clone();	
 	
 }

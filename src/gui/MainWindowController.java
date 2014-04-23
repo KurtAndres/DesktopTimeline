@@ -487,8 +487,18 @@ public class MainWindowController {
 
 	}
 	
-	public MainWindowController clone(){
+	/**
+	 * Clones the MainWindowController. To be used by the TimelineMaker's deep clone process. 
+	 * Since MainWindowController and TimelineMaker both have instances of each other, this method takes a TimelineMaker in order to avoid the circular references...
+	 * Does not clone @FXML variables as those are not part of the MainWindowController's state.
+	 * @param tm The timelineMaker to set
+	 * @return
+	 */
+	public MainWindowController clone(TimelineMaker tm){
 		MainWindowController toReturn = new MainWindowController();
+		toReturn.timelineMaker = tm;
+			
+		return toReturn;
 	}
 
 }

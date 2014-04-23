@@ -596,13 +596,15 @@ public class TimelineMaker {
 		//m.icons = this.icons;
 		//m.selectedTimeline = this.selectedTimeline;
 		//m.selectedEvent = this.selectedEvent;
-		m.database = this.database;
-		m.mainWindow = this.mainWindow;
-		m.graphics = this.graphics;
+		//m.database = this.database;
+		//m.mainWindow = this.mainWindow;
+		//m.graphics = this.graphics;
 		
 		//Deep copy the timelines
-		for (Timeline t : this.timelines)
-			m.timelines.add(t.clone()); //Performs a deep copy each timeline
+		m.timelines = new ArrayList<Timeline>();
+		for (Timeline t : this.timelines){
+			m.timelines.add(t.clone());
+		}
 		
 		/*HashMap<Category, String> categories = new HashMap<Category, String>();
 		for(Timeline t : timelines){
@@ -613,14 +615,18 @@ public class TimelineMaker {
 		m.categories = categories;*/
 		
 		//Deep copy the icons
+		m.icons = new ArrayList<Icon>();
 		for (Icon icon : this.icons) {
 			m.icons.add(new Icon(icon.getName(), icon.getImage(), icon.getPath()));
 		}
 		
 		m.selectedTimeline = this.selectedTimeline.clone();
-		m.selectedEvent = this.selectedEvent.clone();
+		if(this.selectedEvent != null)		
+			m.selectedEvent = this.selectedEvent.clone();
+		else
+			m.selectedEvent = null;
 		
-		m.mainWindow = this.mainWindow.clone();
+		//Do not store the mainWindow or the graphics object, as the only state they store is the TimelineMaker
 		
 		return m;
 	}
@@ -635,7 +641,6 @@ public class TimelineMaker {
 		/*try {
 			return new TimelineMaker(m);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return this;
 		}*/
@@ -649,17 +654,18 @@ public class TimelineMaker {
 		this.graphics = m.graphics;
 		populateEventIcons();*/
 		
+		this.timelines = new ArrayList<Timeline>();
 		for (Timeline t : m.timelines)
 			this.timelines.add(t.clone());
 		
-		for (Timeline t : this.timelines) {
+		/*for (Timeline t : this.timelines) {
 			for (Category c : m.categories.keySet()) {
 				if (t.getName().equals(m.categories.get(c))) {
 					t.addCategory(c);
 				}
 			}
-		}
-		for (Timeline t : this.timelines) { // Sets categories to events.
+		}*/
+		/*for (Timeline t : this.timelines) { // Sets categories to events.
 			if (t.getEvents() == null)
 				continue;
 			for (TLEvent e : t.getEvents()) {
@@ -668,7 +674,7 @@ public class TimelineMaker {
 					e.setCategory(toSet);
 				}
 			}
-		}
+		}*/
 		for (Icon icon : m.icons) {
 			icons.add(icon);
 		}

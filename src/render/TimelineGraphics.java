@@ -83,4 +83,13 @@ public class TimelineGraphics {
 		this.blankPane = blankPane;
 		renderTimeline(model.getSelectedTimeline());
 	}
+	/*
+	public TimelineGraphics clone(TimelineMaker tm){
+		TimelineGraphics toReturn = new TimelineGraphics(tm);
+		toReturn.blankPane = new Pane();
+		
+		return toReturn;
+		
+	}*/
+	
 }

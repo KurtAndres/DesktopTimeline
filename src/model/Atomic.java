@@ -9,6 +9,10 @@ import java.sql.Date;
  * 
  */
 public class Atomic extends TLEvent {
+	
+	public Atomic(String name){
+		super(name);
+	}
 
 	/**
 	 * 
@@ -28,12 +32,10 @@ public class Atomic extends TLEvent {
 		super(name, startDate, category, iconIndex, description);
 	}
 
-	/**
-	 * Saves the event to the database. TODO: insert the functionality for
-	 * saving to the database.
-	 */
-	public void save() {
-		//
-	}
+	public Atomic clone(){
+		Atomic toReturn = new Atomic(this.name, this.getCategory().clone(), 
+				(Date) this.getStartDate().clone(), this.getIconIndex(), this.getDescription());	
 
+		return toReturn;
+	}
 }
