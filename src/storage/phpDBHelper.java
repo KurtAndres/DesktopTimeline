@@ -106,7 +106,7 @@ public class phpDBHelper {
 			jobj2 = (JSONObject)it2.next();
 			TLEvent event;
 			Category cat = new Category((String)jobj2.get("category"));
-			cat.setColor(Color.web("0xffffffff"));
+			cat.setColor(Color.web((String) jobj2.get("categoryColor")));
 			catMap.put(cat,(String)jobj2.get("tid"));
 			if (jobj2.get("type").equals("duration") ) {
 				event = new Duration((String)jobj2.get("eventName"),  cat,

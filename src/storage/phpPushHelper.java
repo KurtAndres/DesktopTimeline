@@ -32,7 +32,7 @@ public class phpPushHelper {
 		String uid = phpDBHelper.uid;
 		String tName, axis_label, background_color;
 		String axis_color;
-		String tid, type, endDate, startDate, eName, category, description, iconid; 
+		String tid, type, endDate, startDate, eName, category, description, iconid, catcolor; 
 		
 		URL internet = new URL("http://cs.wheaton.edu/~kurt.andres/deleteTimelineEvents.php?uid="+uid);
 		Scanner sc = new Scanner(internet.openStream());
@@ -65,11 +65,12 @@ public class phpPushHelper {
 				
 				eName = someEvent.getName();
 				category = someEvent.getCategory().getName();
+				catcolor = someEvent.getCategory().getColor().toString();
 				startDate = someEvent.getStartDate().toString();
 				description = someEvent.getDescription().replaceAll(" ", "%20");
 				iconid = Integer.toString(someEvent.getIconIndex());
 				internet = new URL("http://cs.wheaton.edu/~kurt.andres/addEvent.php?tid="+tid+"&name="+eName+"&type="
-						+type+"&startdate="+startDate+"&enddate="+endDate+"&category="+category+"&iconid="+iconid+"&description="+description);
+						+type+"&startdate="+startDate+"&enddate="+endDate+"&category="+category+"&iconid="+iconid+"&description="+description+"&catcolor="+catcolor);
 				sc = new Scanner(internet.openStream());
 				
 			}
