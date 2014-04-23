@@ -198,8 +198,6 @@ public abstract class TLEventLabel extends Label {
 					if(e.getClickCount() == 2){
 						Platform.runLater(new Thread(new Runnable() {
 							public void run() {
-								//								contextMenu.show(label, MouseInfo.getPointerInfo().getLocation().getX(), MouseInfo.getPointerInfo().getLocation().getY());
-								// TODO Replace with editing.
 								try {
 									FXMLLoader loader = new FXMLLoader(getClass().getResource(
 											"../gui/EventPropertiesWindow.fxml"));

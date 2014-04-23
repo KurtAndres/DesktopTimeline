@@ -20,7 +20,6 @@ public class Driver extends Application {
 			primaryStage.setTitle("Welcome");
 			Scene scene = new Scene(root);
 //			scene.getStylesheets().add("gui/MainWindow.css");
-			// Let's try again. Do this.
 			primaryStage.setScene(scene);
 			primaryStage.setMinWidth(300);
 			primaryStage.setMinHeight(150);
@@ -30,7 +29,7 @@ public class Driver extends Application {
 			e.printStackTrace();
 		}
 	}
-
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
