@@ -31,6 +31,9 @@ $description = "'".$_GET['description']."'";
 //iconid - to keep track of icon on the local sql lite database
 $iconid = "'".$_GET['iconid']."'";
 
+//catcolor- for category colors
+$catcolor = "'".$_GET['catcolor']."'";
+
 if($eid!="''"){
 	$result = mysqli_query($db, "SELECT * FROM events WHERE eid=".$eid);
 	if(mysqli_num_rows($result)>0){
@@ -63,6 +66,10 @@ if($eid!="''"){
                         $sql="UPDATE events SET iconid=".$iconid."WHERE eid=".$eid;
                         $result=mysqli_query($db, $sql);
                         }
+         if($catcolor!="''"){
+                        $sql="UPDATE events SET categoryColor=".$catcolor."WHERE eid=".$eid;
+                        $result=mysqli_query($db, $sql);
+                        }
 			}
 	}
 //NOTICE a time-line is only added if the below conditions are met
@@ -86,7 +93,10 @@ if($tid!= "''" & $name != "''" & $eid == "''"){
 			if($iconid == "''"){
 				$iconid = "'"."0"."'";
 				}
-	$sql="INSERT INTO events(tid, eventName, type, startDate, endDate, category, description, iconid) VALUES (".$tid.",".$name.",".$type.",".$startdate.",".$enddate.",".$category.",".$description.",".$iconid.")";
+			if($catcolor == "''"){
+				$catcolor = "'"."0xffffffff"."'";
+				}
+	$sql="INSERT INTO events(tid, eventName, type, startDate, endDate, category, description, iconid, categoryColor) VALUES (".$tid.",".$name.",".$type.",".$startdate.",".$enddate.",".$category.",".$description.",".$iconid.",".$catcolor.")";
         mysqli_query($db, $sql);
         }
 
