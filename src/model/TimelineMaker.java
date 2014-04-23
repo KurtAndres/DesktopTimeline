@@ -70,21 +70,6 @@ public class TimelineMaker {
 	public TimelineGraphics graphics;
 	int idCounter;
 
-	private final String help_text = "HELP: How to use this software\n\n"
-			+ "This software is used to create, edit, and view Timelines.\n"
-			+ "\tUse the buttons on the left in the Timeline section of the toolbar to add, edit, or delete a timeline.\n"
-			+ "Each timeline has a set of categories.\n"
-			+ "\tThere must be at least one category, the default category.\n"
-			+ "\tYou may add categories by clicking the \"add\" button in the Category section.\n"
-			+ "Each timeline also has a set of events.\n"
-			+ "\tCreate events with the \"add\" button on the bottom\n"
-			+ "\tTo edit and delete events, select them on the rendered timeline and then proceed to edit or delete them.";
-
-	private final String about_text = "Credits: \n\n"
-			+ "Authors: Andrew Sutton, Josh Wright, Kayley Lane, Conner Vick, Brian Williamson, Andrew Thompson, Kurt Andres, Daniel Conroy, and Leanne Miller\n"
-			+ "\tCSCI 335: Software Development\n"
-			+ "\tSpring 2014";
-
 	/**
 	 * Constructor. Create a new TimelineMaker application model with database,
 	 * graphics, and GUI components. 
@@ -498,29 +483,6 @@ public class TimelineMaker {
 	public int timeSize() {
 		return timelines.size();
 	}
-
-	/**
-	 * Gets the help text
-	 * 
-	 * @return the final string help_text.
-	 */
-	public String getHelpText() {
-		return help_text;
-	}
-
-	/**
-	 * Gets the about text
-	 * 
-	 * @return the final string about_text.
-	 */
-	public String getAboutText() {
-		return about_text;
-	}
-	
-		
-	   
-        
-    
 
 	/**
 	 * An attempt at associating the events with their icons on start-up.

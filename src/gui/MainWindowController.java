@@ -182,7 +182,7 @@ public class MainWindowController {
 	void deleteCategoryPressed(ActionEvent event) {
 		if (timelineMaker.getSelectedTimeline() == null)
 			return;
-		try {
+		try{
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(
 					"DeleteCategoryConfirmation.fxml"));
 			Parent root = (Parent) loader.load();

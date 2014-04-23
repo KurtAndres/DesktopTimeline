@@ -163,7 +163,8 @@ public class TimelinePropertiesWindowController {
 	private void initComboBox() {
 		AxisLabel[] labels = Timeline.AxisLabel.values();
 		for (AxisLabel label : labels)
-			axisUnitComboBox.getItems().addAll(label);
+			if (label == AxisLabel.DAYS || label == AxisLabel.MONTHS || label == AxisLabel.YEARS)
+				axisUnitComboBox.getItems().addAll(label);
 		axisUnitComboBox.setValue(Timeline.AxisLabel.YEARS);
 	}
 
