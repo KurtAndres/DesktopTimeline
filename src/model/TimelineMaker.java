@@ -543,19 +543,23 @@ public class TimelineMaker {
 		for (Timeline t : m.timelines){
 			this.timelines.add(t.clone());
 			database.saveTimeline(t);
+			if(t.getEvents() != null)
+				for(TLEvent e : t.getEvents()){
+					database.saveEvent(e, t.getName());
+				}
 		}
 
 		for (Icon icon : m.icons) {
-			if(icon != null){
+			if(icon.getPath() != null){
 				icons.add(icon);
 				database.saveIcon(icon);
 			}
 		}
-		populateEventIcons();
 
 		selectedTimeline = m.selectedTimeline;
-		selectedEvent = m.selectedEvent;	
+		selectedEvent = m.selectedEvent;
 
+		populateEventIcons();
 		updateGraphics();
 	}
 

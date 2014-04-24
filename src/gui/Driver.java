@@ -2,8 +2,6 @@ package gui;
 
 import java.util.ArrayList;
 
-import org.json.simple.parser.ParseException;
-
 import storage.phpPushHelper;
 import model.TimelineMaker;
 import javafx.application.Application;
@@ -14,6 +12,7 @@ import javafx.scene.Scene;
 
 /**
  * This is the driver for the program. Main launches start.
+ * Also keeps track of the programs mementos.
  */
 public class Driver extends Application {
 	/**
