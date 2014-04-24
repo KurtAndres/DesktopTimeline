@@ -33,7 +33,7 @@ public class phpPushHelper {
 		String tName, axis_label, background_color;
 		String axis_color;
 		String tid, type, endDate, startDate, eName, category, description, iconid, catcolor; 
-	
+		
 		
 		URL internet = new URL("http://cs.wheaton.edu/~kurt.andres/deleteTimelineEvents.php?uid="+uid);
 		Scanner sc = new Scanner(internet.openStream());
@@ -52,7 +52,7 @@ public class phpPushHelper {
 			Object obj = parser.parse(sc.nextLine()); 
 			JSONArray array = (JSONArray)obj;
 			JSONObject obj1 = (JSONObject)array.get(0);
-		
+			
 			System.out.println(obj1.get("tid"));
 			tid = (String)obj1.get("tid");
 			TLEvent[] tla = tl.getEvents();
