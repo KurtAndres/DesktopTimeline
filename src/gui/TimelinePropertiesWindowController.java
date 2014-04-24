@@ -134,7 +134,7 @@ public class TimelinePropertiesWindowController {
 			Color backgroundColor = colorBackgroundChooser.getValue();
 			Color timelineColor = colorTimelineChooser.getValue();
 			AxisLabel axisUnit = axisUnitComboBox.getValue();
-			Font font = null; // TODO set font?
+			Font font = null;
 			if (timeline != null)
 				timelineMaker.editTimeline(timeline, title, timelineColor,
 						backgroundColor, axisUnit, font);

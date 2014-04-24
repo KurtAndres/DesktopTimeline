@@ -559,7 +559,8 @@ public class TimelineMaker {
 		selectedTimeline = m.selectedTimeline;
 		selectedEvent = m.selectedEvent;
 
-		populateEventIcons();
+		//populateEventIcons();
+		mainWindow.populateListView();
 		updateGraphics();
 	}
 
