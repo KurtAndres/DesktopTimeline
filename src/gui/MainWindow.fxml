@@ -98,11 +98,6 @@
                     <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                   </accelerator>
                 </MenuItem>
-                <MenuItem mnemonicParsing="false" onAction="#printPressed" text="Print To Image" fx:id="printMenuItem">
-                  <accelerator>
-                    <KeyCodeCombination alt="UP" code="P" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                  </accelerator>
-                </MenuItem>
                 <MenuItem disable="false" mnemonicParsing="false" onAction="#exitPressed" text="Exit" fx:id="exitMenuItem">
                   <accelerator>
                     <KeyCodeCombination alt="DOWN" code="F4" control="UP" meta="UP" shift="UP" shortcut="UP" />
