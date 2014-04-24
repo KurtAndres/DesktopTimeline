@@ -2,31 +2,17 @@ package model;
 
 import render.*;
 import gui.*;
+import gui.Driver;
 import storage.*;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
+
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
 import model.Timeline.AxisLabel;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Scanner;
-import java.awt.GridLayout;
-
-import javax.swing.*;
-
-import java.awt.event.*;
-import java.io.IOException;
-
-import org.json.simple.parser.ParseException;
 
 /**
  * TimelineMaker.java
@@ -83,7 +69,7 @@ public class TimelineMaker {
 	 */
 	public TimelineMaker() {
 		System.out.println(pass+" "+user);		
-		
+
 		database = new DBHelper("timeline.db");
 		graphics = new TimelineGraphics(this);
 		timelines = new ArrayList<Timeline>();
@@ -92,21 +78,21 @@ public class TimelineMaker {
 		phpDBHelper p = new phpDBHelper(user, pass);
 		for (Timeline t : database.getTimelines())
 			database.removeTimeline(t);
-		
+
 		p.doit();
-		
+
 		try {
 			for (Timeline t : database.getTimelines())
 				timelines.add(t);
 			HashMap<Category, String> categories = database.getCategories();
-			for (Timeline t : timelines) { // Very lame. Should have better implementation but don't have time.
+			for (Timeline t : timelines) {
 				for (Category c : categories.keySet()) {
 					if (t.getName().equals(categories.get(c))) {
 						t.addCategory(c);
 					}
 				}
 			}
-			for (Timeline t : timelines) { // sets categories.
+			for (Timeline t : timelines) { // Sets categories.
 				if (t.getEvents() == null)
 					continue;
 				for (TLEvent e : t.getEvents()) {
@@ -122,6 +108,7 @@ public class TimelineMaker {
 			populateEventIcons();
 			selectedTimeline = timelines.get(0);
 			selectedEvent = null;
+			Driver.addMemento(this);
 		} catch (IndexOutOfBoundsException e) {
 			System.out.println("Your database is empty.");
 		} catch (Exception e) {
@@ -129,7 +116,7 @@ public class TimelineMaker {
 			System.out.println("Error loading from Database.");
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param t
@@ -164,7 +151,8 @@ public class TimelineMaker {
 		if (i != null) {
 			icons.add(i);
 			database.saveIcon(i);
-		}
+			Driver.addMemento(this);
+		}		
 	}
 
 	/**
@@ -175,6 +163,7 @@ public class TimelineMaker {
 	 * @return success
 	 */
 	public boolean deleteIcon(String icon) {
+
 		if (icons.size() <= 1)
 			return false;
 		Icon ico = new Icon(null, null, null);
@@ -192,7 +181,10 @@ public class TimelineMaker {
 					e.setIcon(null);
 			}
 		}
-		return icons.remove(ico);
+		boolean toReturn = icons.remove(ico);
+		Driver.addMemento(this);
+
+		return toReturn;
 	}
 
 	/**
@@ -272,6 +264,7 @@ public class TimelineMaker {
 		database.saveTimeline(selectedTimeline);
 		mainWindow.populateListView();
 		updateGraphics();
+		Driver.addMemento(this);
 	}
 
 	/**
@@ -289,6 +282,7 @@ public class TimelineMaker {
 			selectedEvent = null;
 			graphics.clearScreen();
 			mainWindow.populateListView();
+			Driver.addMemento(this);
 		}
 	}
 
@@ -311,6 +305,7 @@ public class TimelineMaker {
 		selectedTimeline = newTimeline;
 		mainWindow.populateListView();
 		updateGraphics();
+		Driver.addMemento(this);
 	}
 
 	/**
@@ -349,7 +344,7 @@ public class TimelineMaker {
 	 */
 
 	public void addEvent(String title, Date startDate, Date endDate,
-			Category category, String description, Icon icon) {
+			Category category, String description, Icon icon) {	
 		TLEvent event;
 		if (endDate != null) {
 			event = new Duration(title, category,
@@ -366,6 +361,7 @@ public class TimelineMaker {
 			selectedEvent = event;
 			updateGraphics();
 			database.saveEvent(event, selectedTimeline.getName());
+			Driver.addMemento(this);
 		}
 	}
 
@@ -380,6 +376,7 @@ public class TimelineMaker {
 			database.removeEvent(selectedEvent, selectedTimeline.getName());
 			selectedEvent = null;
 			updateGraphics();
+			Driver.addMemento(this);
 		}
 	}
 
@@ -394,7 +391,7 @@ public class TimelineMaker {
 	public void editEvent(TLEvent oldEvent, String title, Date startDate,
 			Date endDate, Category category, String description, Icon icon) {
 		if (selectedEvent != null && selectedTimeline != null
-				&& selectedTimeline.contains(selectedEvent)) {
+				&& selectedTimeline.contains(selectedEvent)) {		
 			selectedTimeline.deleteEvent(selectedEvent);
 			TLEvent toAdd;
 			if (endDate != null)
@@ -411,29 +408,28 @@ public class TimelineMaker {
 			toAdd.setCategory(category);
 			updateGraphics();
 			database.editEvent(toAdd, selectedTimeline.getName());
+			Driver.addMemento(this);
 		}
 	}
-	
+
 
 	/**
 	 * Adds a category to the selected timeline and saves it.
 	 * 
-	 * @param category
-	 *            saves this category to the database.
+	 * @param category The category to add.
 	 */
 	public void addCategory(Category category) {
 		selectedTimeline.addCategory(category);
 		database.saveCategory(category, selectedTimeline.getName());
+		Driver.addMemento(this);
 	}
 
 	/**
-	 * Deletes a category
+	 * Deletes a category and all events belonging to that category.
 	 * 
-	 * @param category
-	 *            removes this category from the database.
+	 * @param category The category to delete.
 	 */
-	public void deleteCategory(Category category) {
-		//All events which belong to the category are also deleted.
+	public void deleteCategory(Category category) {	
 		for(TLEvent e : selectedTimeline.getEvents()) {
 			if(e.getCategory().getName().equals(category.getName())){
 				selectedEvent = e;
@@ -442,6 +438,7 @@ public class TimelineMaker {
 		}
 		selectedTimeline.deleteCategory(category);
 		database.removeCategory(category, selectedTimeline.getName());
+		Driver.addMemento(this);
 	}
 
 	/**
@@ -452,6 +449,7 @@ public class TimelineMaker {
 	 */
 	public void editCategory(Category category) {
 		database.editCategory(category, selectedTimeline.getName());
+		Driver.addMemento(this);
 	}
 
 	/**
@@ -481,7 +479,7 @@ public class TimelineMaker {
 	public int timeSize() {
 		return timelines.size();
 	}
-	
+
 	/**
 	 * An attempt at associating the events with their icons on start-up.
 	 * Intended to load the events with their icons from the database.
@@ -501,26 +499,27 @@ public class TimelineMaker {
 			}
 		}
 	}
-	
+
 	/**
 	 * Creates a Memento object storing the current state of the TimelineMaker.
 	 */
 	public TimelineMaker.Memento createMemento(){
+		//Does not store the mainWindow or the graphics object, as the only state they store is the TimelineMaker
 		System.out.println("Creating Memento");
 		Memento m = new Memento();
-		
+
 		//Deep copy the timelines
 		m.timelines = new ArrayList<Timeline>();
 		for (Timeline t : this.timelines){
 			m.timelines.add(t.clone());
 		}
-		
+
 		//Deep copy the icons
 		m.icons = new ArrayList<Icon>();
 		for (Icon icon : this.icons) {
 			m.icons.add(new Icon(icon.getName(), icon.getImage(), icon.getPath()));
 		}
-		
+
 		if(this.selectedTimeline != null)
 			m.selectedTimeline = this.selectedTimeline.clone();
 		else
@@ -529,12 +528,10 @@ public class TimelineMaker {
 			m.selectedEvent = this.selectedEvent.clone();
 		else
 			m.selectedEvent = null;
-		
-		//Do not store the mainWindow or the graphics object, as the only state they store is the TimelineMaker
-		
+
 		return m;
 	}
-	
+
 	/**
 	 * Restores the state of the TimelineMaker to the given Memento.
 	 * 
@@ -543,18 +540,25 @@ public class TimelineMaker {
 	 */
 	public void loadMemento(Memento m){
 		this.timelines = new ArrayList<Timeline>();
-		for (Timeline t : m.timelines)
+		for (Timeline t : m.timelines){
 			this.timelines.add(t.clone());
-		
+			database.saveTimeline(t);
+		}
+
 		for (Icon icon : m.icons) {
-			icons.add(icon);
+			if(icon != null){
+				icons.add(icon);
+				database.saveIcon(icon);
+			}
 		}
 		populateEventIcons();
-		
+
 		selectedTimeline = m.selectedTimeline;
-		selectedEvent = m.selectedEvent;		
+		selectedEvent = m.selectedEvent;	
+
+		updateGraphics();
 	}
-	
+
 	/**
 	 * Memento class for the purpose of supporting undo and redo. Stores the state of the TimelineMaker.
 	 * @author Leanne
@@ -577,7 +581,7 @@ public class TimelineMaker {
 		 * The event selected in this application.
 		 */
 		private TLEvent selectedEvent;
-		
+
 	}
 
 }

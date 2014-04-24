@@ -213,7 +213,7 @@ public class MainWindowController {
 	@FXML
 	void undoPressed(ActionEvent event){
 		System.out.println("Undo");
-		TimelineMaker.Memento m = Driver.undo();
+		TimelineMaker.Memento m = Driver.undo(timelineMaker);
 		if(m != null)
 			timelineMaker.loadMemento(m);	
 		
@@ -418,7 +418,6 @@ public class MainWindowController {
 
 	@FXML
 	void savePressed(ActionEvent event) throws IOException {
-		Driver.addMemento(timelineMaker);
 		try {
 			phpPushHelper.send(timelineMaker);
 		} catch (ParseException e) {
