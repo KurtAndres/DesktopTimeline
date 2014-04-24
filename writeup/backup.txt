@@ -27,4 +27,5 @@ Conner
 Created functionality for pulling and pushing to the online database for the desktop version that was adapted for use in the Android and web version. Helped with the Android version�s and web version�s code adaption. Worked on some of the PHP for accessing the database with Kurt. Did a lot of database testing and error fixing.
 
 NOTES
-*There is a problem with threading that only occurs on mac and seems to be a problem with javaFX itself
+*There is a problem with threading that only occurs on Mac and seems to be a problem with JavaFX itself.
+*Additionally, CSS styling was done for a Windows machine, so it may not be as aesthetically pleasing on Mac or Ubuntu.

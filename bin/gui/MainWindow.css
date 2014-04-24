@@ -3,7 +3,7 @@
     -fx-font-family: "Liberation Sans Narrow";
     -fx-base: rgb(80, 90, 100);
     -fx-accent: rgb(10, 90, 255);
-    -fx-background-color: linear-gradient(-fx-base, white, -fx-base);
+    -fx-background-color: linear-gradient(derive(-fx-base, 40%), white, derive(-fx-base, 40%));
 }
 
 /* Applies to id = render-pane
