@@ -264,9 +264,7 @@ public class MainWindowController {
 			return;
 		Category selectedCategory = timelineMaker.getSelectedTimeline()
 				.getSelectedCategory();
-		if (selectedCategory.getName().equals("DEFAULT")) {
-			System.out.println("Cannot edit default category");
-		} else {
+		if (!selectedCategory.getName().equals("DEFAULT")) {
 			try {
 				FXMLLoader loader = new FXMLLoader(getClass().getResource(
 						"CategoryPropertiesWindow.fxml"));

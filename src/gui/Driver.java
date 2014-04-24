@@ -2,6 +2,9 @@ package gui;
 
 import java.util.ArrayList;
 
+import org.json.simple.parser.ParseException;
+
+import storage.phpPushHelper;
 import model.TimelineMaker;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +19,7 @@ public class Driver extends Application {
 	/**
 	 * The model of the program
 	 */
-	TimelineMaker timelineMaker;
+	private static TimelineMaker timelineMaker;
 	/**
 	 * The list of Mementos. Used for undoing and redoing actions.
 	 */
@@ -62,6 +65,7 @@ public class Driver extends Application {
 	 * Asks the timelineMaker to create a Memento of itself, then adds that Memento to the list of Mementos.
 	 */
 	public static void addMemento(TimelineMaker tm){
+		timelineMaker = tm;
 		Mementos.add(nextMemento, tm.createMemento());
 		System.out.println("Added mem at: " + nextMemento);
 		nextMemento++;
@@ -92,5 +96,14 @@ public class Driver extends Application {
 		}
 		else
 			return null;
+	}
+	
+	@Override
+	public void stop() {
+		try {
+			phpPushHelper.send(timelineMaker);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
