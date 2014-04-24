@@ -19,6 +19,13 @@ $axis_color = "'".$_GET['axis_color']."'";
 //get background color
 $background_color = "'".$_GET['background_color']."'";
 
+//detect if coming from web team
+$webTeam = false;
+$web = "'".$_GET['web']."'";
+if($web != "''"){
+	$webTeam = true;	
+	}
+
 if($uid!= "''" & $name != "''"){
 	$result = mysqli_query($db, "SELECT * FROM timelines WHERE uid=".$uid);
 	$found = false;
@@ -33,6 +40,15 @@ if($uid!= "''" & $name != "''"){
 	if($found){
 		//echo "Not Added";		
 		}else{
+			if($webTeam & $axis_color!= "''"){
+				$newAxis_color = substr_replace($axis_color, '0x', 1, -7);
+				$axis_color = substr_replace($newAxis_color, 'ff', 9, 0);
+				}
+			if($webTeam & $background_color!= "''"){
+				$newBackground_color = substr_replace($background_color, '0x', 1, -7);
+				$background_color = substr_replace($newBackground_color, 'ff', 9, 0);
+				}
+				
 			if($axis_label == "''"){
 				$axis_label = "'YEARS'";
 				}
@@ -42,19 +58,20 @@ if($uid!= "''" & $name != "''"){
 			if($background_color == "''"){
 				$background_color = "'0x999999ff'";
 				}
-			
-			$sql="INSERT INTO timelines(uid, name, axis_label, background_color, axis_color) VALUES (".$uid.",".$name.",".$axis_label.",".$background_color.",".$axis_color.")";
-			mysqli_query($db, $sql);
+				
+		$sql="INSERT INTO timelines(uid, name, axis_label, background_color, axis_color) VALUES (".$uid.",".$name.",".$axis_label.",".$background_color.",".$axis_color.")";
+		mysqli_query($db, $sql);
 			//echo "added";			
 			}
 		}
-	
+
 if($uid!= "''"){
 	$result = mysqli_query($db, "SELECT * FROM timelines WHERE uid=".$uid);
 	while($row = mysqli_fetch_assoc($result)){
+		echo $row;
      		$json[] = $row;
 		}
-	echo json_encode($json);
+	//echo json_encode($json);
 	//$row = mysqli_fetch_assoc($result);
 	//echo json_encode($row);	
 	//$row = mysqli_fetch_array($result);
