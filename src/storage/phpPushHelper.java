@@ -45,7 +45,7 @@ public class phpPushHelper {
 			axis_color = tl.getColorTL().toString();
 			background_color = tl.getColorBG().toString();
 			
-			internet = new URL("http://cs.wheaton.edu/~kurt.andres/addTimeline.php?uid="+uid+"&name="+tName+"&axis_label="
+			internet = new URL("http://cs.wheaton.edu/~kurt.andres/addTimeline2.php?uid="+uid+"&name="+tName+"&axis_label="
 					+axis_label+"&axis_color="+axis_color+"&background_color="+background_color);
 			sc = new Scanner(internet.openStream());
 			
@@ -74,7 +74,7 @@ public class phpPushHelper {
 				internet = new URL("http://cs.wheaton.edu/~kurt.andres/addEvent.php?tid="+tid+"&name="+eName+"&type="
 						+type+"&startdate="+startDate+"&enddate="+endDate+"&category="+category+"&iconid="+iconid+"&description="+description+"&catcolor="+catcolor);
 				sc = new Scanner(internet.openStream());
-				
+				System.out.println(internet);
 			}
 			
 		}
