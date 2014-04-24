@@ -100,7 +100,10 @@ public class Driver extends Application {
 	@Override
 	public void stop() {
 		try {
-			phpPushHelper.send(timelineMaker);
+			if (timelineMaker != null) {
+				timelineMaker.loadMemento(Mementos.get(nextMemento - 1));
+				phpPushHelper.send(timelineMaker);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
