@@ -68,7 +68,7 @@ public class TimelineMaker {
 	 * graphics, and GUI components. 
 	 */
 	public TimelineMaker() {
-		System.out.println(pass+" "+user);		
+			
 
 		database = new DBHelper("timeline.db");
 		graphics = new TimelineGraphics(this);
@@ -505,7 +505,7 @@ public class TimelineMaker {
 	 */
 	public TimelineMaker.Memento createMemento(){
 		//Does not store the mainWindow or the graphics object, as the only state they store is the TimelineMaker
-		System.out.println("Creating Memento");
+		
 		Memento m = new Memento();
 
 		//Deep copy the timelines

@@ -66,7 +66,7 @@ public class Driver extends Application {
 	public static void addMemento(TimelineMaker tm){
 		timelineMaker = tm;
 		Mementos.add(nextMemento, tm.createMemento());
-		System.out.println("Added mem at: " + nextMemento);
+		
 		nextMemento++;
 	}
 	/**
