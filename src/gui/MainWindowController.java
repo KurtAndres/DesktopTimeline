@@ -5,15 +5,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import org.json.simple.parser.ParseException;
-
-import storage.phpPushHelper;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -23,17 +19,19 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import model.Category;
 import model.TLEvent;
 import model.Timeline;
 import model.TimelineMaker;
+
+import org.json.simple.parser.ParseException;
+
+import storage.phpPushHelper;
 
 
 public class MainWindowController {
@@ -42,7 +40,7 @@ public class MainWindowController {
 	 * The model of the program
 	 */
 	private TimelineMaker timelineMaker;
-	
+
 	@FXML
 	private ResourceBundle resources;
 
@@ -129,7 +127,7 @@ public class MainWindowController {
 
 	@FXML
 	private MenuItem saveMenuItem;
-	
+
 	@FXML
 	private MenuItem printMenuItem;
 
@@ -160,7 +158,7 @@ public class MainWindowController {
 			Stage stage = new Stage();
 			stage.setTitle("About");
 			Scene scene = new Scene(root);
-//			scene.getStylesheets().add("gui/EventPropertiesWindow.css");
+			scene.getStylesheets().add("gui/MainWindow.css");
 			stage.setScene(scene);
 			stage.show();
 		} catch (Exception e) {
@@ -216,7 +214,7 @@ public class MainWindowController {
 		TimelineMaker.Memento m = Driver.undo(timelineMaker);
 		if(m != null)
 			timelineMaker.loadMemento(m);	
-		
+
 		timelineMaker.updateGraphics();
 		populateListView();		
 	}
@@ -227,7 +225,7 @@ public class MainWindowController {
 		TimelineMaker.Memento m = Driver.redo();
 		if(m != null)
 			timelineMaker.loadMemento(m);
-		
+
 		timelineMaker.updateGraphics();
 		populateListView();
 	}
@@ -266,23 +264,25 @@ public class MainWindowController {
 			return;
 		Category selectedCategory = timelineMaker.getSelectedTimeline()
 				.getSelectedCategory();
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(
-					"CategoryPropertiesWindow.fxml"));
-			Parent root = (Parent) loader.load();
-			CategoryPropertiesWindowController controller = loader
-					.<CategoryPropertiesWindowController> getController();
-			controller.initData(timelineMaker, selectedCategory);
-			Stage stage = new Stage();
-			stage.setTitle("Edit Category");
-			Scene scene = new Scene(root);
-			scene.getStylesheets().add("gui/CategoryPropertiesWindow.css");
-			stage.setScene(scene);
-			stage.setMinWidth(292);
-			stage.setMinHeight(144);
-			stage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (!selectedCategory.getName().equals("DEFAULT")) {
+			try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource(
+						"CategoryPropertiesWindow.fxml"));
+				Parent root = (Parent) loader.load();
+				CategoryPropertiesWindowController controller = loader
+						.<CategoryPropertiesWindowController> getController();
+				controller.initData(timelineMaker, selectedCategory);
+				Stage stage = new Stage();
+				stage.setTitle("Edit Category");
+				Scene scene = new Scene(root);
+				scene.getStylesheets().add("gui/CategoryPropertiesWindow.css");
+				stage.setScene(scene);
+				stage.setMinWidth(292);
+				stage.setMinHeight(144);
+				stage.show();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -335,7 +335,7 @@ public class MainWindowController {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@FXML
 	void printPressed(ActionEvent event) {
 		WritableImage snapshot = renderScrollPane.snapshot(null, null);
@@ -362,7 +362,7 @@ public class MainWindowController {
 			Stage stage = new Stage();
 			stage.setTitle("Help");
 			Scene scene = new Scene(root);
-//			scene.getStylesheets().add("gui/EventPropertiesWindow.css");
+			scene.getStylesheets().add("gui/MainWindow.css");
 			stage.setScene(scene);
 			stage.show();
 		} catch (Exception e) {
@@ -506,7 +506,7 @@ public class MainWindowController {
 		timelineMaker.graphics.setPanel(renderScrollPane, blankPane);
 
 	}
-	
+
 	/**
 	 * Clones the MainWindowController. To be used by the TimelineMaker's deep clone process. 
 	 * Since MainWindowController and TimelineMaker both have instances of each other, this method takes a TimelineMaker in order to avoid the circular references...
@@ -517,7 +517,7 @@ public class MainWindowController {
 	public MainWindowController clone(TimelineMaker tm){
 		MainWindowController toReturn = new MainWindowController();
 		toReturn.timelineMaker = tm;
-			
+
 		return toReturn;
 	}
 
