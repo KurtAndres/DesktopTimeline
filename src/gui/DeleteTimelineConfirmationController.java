@@ -2,11 +2,8 @@ package gui;
 
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import model.TimelineMaker;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -14,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.TimelineMaker;
 
 /**
  * Controls the window for delete timeline confirmation.

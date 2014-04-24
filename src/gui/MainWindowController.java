@@ -5,15 +5,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import org.json.simple.parser.ParseException;
-
-import storage.phpPushHelper;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -23,17 +19,19 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import model.Category;
 import model.TLEvent;
 import model.Timeline;
 import model.TimelineMaker;
+
+import org.json.simple.parser.ParseException;
+
+import storage.phpPushHelper;
 
 
 public class MainWindowController {
@@ -160,7 +158,7 @@ public class MainWindowController {
 			Stage stage = new Stage();
 			stage.setTitle("About");
 			Scene scene = new Scene(root);
-//			scene.getStylesheets().add("gui/EventPropertiesWindow.css");
+			scene.getStylesheets().add("gui/MainWindow.css");
 			stage.setScene(scene);
 			stage.show();
 		} catch (Exception e) {
@@ -362,7 +360,7 @@ public class MainWindowController {
 			Stage stage = new Stage();
 			stage.setTitle("Help");
 			Scene scene = new Scene(root);
-//			scene.getStylesheets().add("gui/EventPropertiesWindow.css");
+			scene.getStylesheets().add("gui/MainWindow.css");
 			stage.setScene(scene);
 			stage.show();
 		} catch (Exception e) {

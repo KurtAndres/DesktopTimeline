@@ -2,32 +2,24 @@ package render;
 
 import gui.EventPropertiesWindowController;
 
-import java.awt.MouseInfo;
 import java.util.ArrayList;
 
-import model.Category;
-import model.TLEvent;
-import model.TimelineMaker;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+import model.Category;
+import model.TLEvent;
+import model.TimelineMaker;
 
 /**
  * An abstract class to create labels for Atomic and Duration events to render.
