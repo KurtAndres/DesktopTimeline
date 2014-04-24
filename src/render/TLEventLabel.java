@@ -79,6 +79,7 @@ public abstract class TLEventLabel extends Label {
 	 */
 	TLEventLabel(int xPos, int yPos, TLEvent event, TimelineMaker model, ArrayList<TLEventLabel> eventLabels){
 		super(event.getName());
+		
 		this.event = event;
 		this.eventLabels = eventLabels;
 		this.model = model;

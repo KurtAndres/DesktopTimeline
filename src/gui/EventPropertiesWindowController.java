@@ -302,9 +302,11 @@ public class EventPropertiesWindowController {
 	}
 
 	private Date processDate(String date) {
-		String month = date.substring(0,2);
-		String day = date.substring(3,5);
-		String year = date.substring(6, date.length());
+		int firstSlash = date.indexOf("/");
+		int secondSlash = date.lastIndexOf("/");
+		String month = date.substring(0, firstSlash);
+		String day = date.substring(firstSlash + 1, secondSlash);
+		String year = date.substring(secondSlash + 1, date.length());
 		return Date.valueOf(year + "-" + month + "-" + day);
 	}
 
