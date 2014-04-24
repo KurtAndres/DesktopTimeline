@@ -66,7 +66,7 @@ if($uid!= "''" & $name != "''"){
 		}
 
 if($uid!= "''"){
-	$result = mysqli_query($db, "SELECT * FROM timelines WHERE uid=".$uid);
+	$result = mysqli_query($db, "SELECT * FROM timelines WHERE uid=".$uid." AND name=".$name);
 	while($row = mysqli_fetch_assoc($result)){
 		if($webTeam){
 			$background_color = $row['background_color'];
