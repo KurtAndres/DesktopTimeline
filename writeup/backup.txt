@@ -1,11 +1,11 @@
-TIMELINE PROJECT � Desktop Version
+TIMELINE PROJECT – Desktop Version
 Phase 3 Write-up
 Kurt Andres, Leanne Miller, Andrew Thompson, and Conner Vick
 
 INTRODUCTION TO THE PROJECT
 The project is divided into four packages: gui, model, render, and storage. Each package is responsible for different aspects of the application. Each package will be explained in detail below. To start the project run Driver.java in the gui package.
 G.U.I.
-The gui package stores the .fxml, .css, and controller .java files for the various windows used. It also stores Driver.java, which has the main method and is a JavaFX Application. The Driver launches a sign-in window (see SignIn*.*) wherein the user enters username and password details. The program then consults the remote database to determine if that username and password match a current set of user credentials. If so, the program loads that user�s timelines and launches the main window. Otherwise, a new user is created with the given credentials, and the main window is launched. 
+The gui package stores the .fxml, .css, and controller .java files for the various windows used. It also stores Driver.java, which has the main method and is a JavaFX Application. The Driver launches a sign-in window (see SignIn*.*) wherein the user enters username and password details. The program then consults the remote database to determine if that username and password match a current set of user credentials. If so, the program loads that user痴 timelines and launches the main window. Otherwise, a new user is created with the given credentials, and the main window is launched. 
 The main window (see MainWindow*.*) is responsible for most of the user interaction. It prompts the creation of new windows (such as the EventPropertiesWindow or AboutWindow) upon user input. All of these windows are styled using corresponding CSS style sheets.
 The gui package also stores the TextFieldValidator class. This class is a ChangeListener for a JavaFX TextField that uses regular expressions to validate the contents of the field. The GUI windows confirm that all fields are valid (and in some cases, unused) before closing or using the input to create or edit timelines, categories, and events.
 Model
@@ -13,19 +13,22 @@ Model
 Render
 The render package is largely the same as in phase two. It is responsible for populating the display pane in the main window with the axes, event labels, and the like. In this version, the TLEvent class and subclasses have been edited to improve render appearance and to support additional functionality for user interaction with event labels.
 Storage
-The desktop version maintains its own database (timeline.db) while the user is adding/editing timelines, events etc. This is done in DBHelper.java. On load the program prompts the user for a name and password and phpDBHelper.java makes php calls and gets the user�s data from the online database and loads it into the timeline.db. phpPushHelper.java updates the online database with all of the new data when the user hits save. 
+The desktop version maintains its own database (timeline.db) while the user is adding/editing timelines, events etc. This is done in DBHelper.java. On load the program prompts the user for a name and password and phpDBHelper.java makes php calls and gets the user痴 data from the online database and loads it into the timeline.db. phpPushHelper.java updates the online database with all of the new data when the user hits save. 
 
 USABILITY TESTS
 
 DIVISION OF WORKLOAD
 Kurt
 Managed the online database and created all the PHP files for interacting with the clients. Helped with troubleshooting and error fixing with the interaction between the database and the Desktop version.
+
+I built the database, controlled all SQL and PHP functionality. This included the ability to have universal database access for all users on all platforms. Much time was spent to ensure the same .php files could be called and would update the same DB. This was an interesting task because each team stored info differently and utilized different storage calls. All php allowed for the dynamic addition of users, timelines, and events. I interacted with every team to create functionality, field php requests, and provide php, json, and java support for DB implementations. Also managed the DB and was responsible for the admin account and handling broken DB entries, and organization.
+
 Leanne
 Andrew
 I was responsible for most of the enhancements made to the GUI and the rendering. I reworked or wrote from scratch all of the GUI windows using Eclipse and the JavaFX SceneBuilder to both better match the model and to provide a cleaner and more usable interface design. Additionally, I wrote and implemented the TextFieldValidator class for all of the various text-input fields across GUI windows. For that, I had to learn how to use regular expressions in Java (an endeavor that was expedited once we covered the topic in class). Another main effort of mine was to improve the rendering of the timeline and events themselves in the display pane. In order to do so, I learned CSS and created CSS style sheets (see MainWindow.css) that determine what happens visually with event interaction. I also spruced up mouse event interaction; now the events display their information in a Tooltip when the mouse hovers over them and open an edit window when double-clicked. Finally, I was involved throughout the project in making minor changes to the model classes whenever a bug was found or a new feature was added.
 Conner
-Created functionality for pulling and pushing to the online database for the desktop version that was adapted for use in the Android and web version. Helped with the Android version�s and web version�s code adaption. Worked on some of the PHP for accessing the database with Kurt. Did a lot of database testing and error fixing.
+Created functionality for pulling and pushing to the online database for the desktop version that was adapted for use in the Android and web version. Helped with the Android version痴 and web version痴 code adaption. Worked on some of the PHP for accessing the database with Kurt. Did a lot of database testing and error fixing.
 
-NOTES
+Notes
 *There is a problem with threading that only occurs on Mac and seems to be a problem with JavaFX itself.
 *Additionally, CSS styling was done for a Windows machine, so it may not be as aesthetically pleasing on Mac or Ubuntu.
