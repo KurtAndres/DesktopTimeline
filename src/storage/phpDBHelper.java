@@ -50,7 +50,7 @@ public class phpDBHelper {
 		tlMap = new HashMap<String,Timeline>();
 		tlNameIdMap = new HashMap<String,String>();
 		catMap = new HashMap<Category, String>();
-		System.out.println("u:"+user+" p:"+pass);
+		
 		try{
 
 			parse();
@@ -148,12 +148,12 @@ public class phpDBHelper {
 			JSONArray array = (JSONArray)obj; //turn parsed object into array
 			JSONObject obj1 = (JSONObject)array.get(0);
 			sc.close();
-			System.out.println(obj1.get("uid"));
+			
 			uid = (String)obj1.get("uid");
 			return (String)obj1.get("uid");
 
 		} catch (Exception e){
-			System.out.println("here4");
+			
 			System.out.println(e.getMessage());
 			return null;
 		}

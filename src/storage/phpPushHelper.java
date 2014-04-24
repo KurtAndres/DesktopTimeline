@@ -53,7 +53,7 @@ public class phpPushHelper {
 			JSONArray array = (JSONArray)obj;
 			JSONObject obj1 = (JSONObject)array.get(0);
 			
-			System.out.println(obj1.get("tid"));
+			
 			tid = (String)obj1.get("tid");
 			TLEvent[] tla = tl.getEvents();
 			for(TLEvent someEvent: tla){
@@ -74,7 +74,7 @@ public class phpPushHelper {
 				internet = new URL("http://cs.wheaton.edu/~kurt.andres/addEvent.php?tid="+tid+"&name="+eName+"&type="
 						+type+"&startdate="+startDate+"&enddate="+endDate+"&category="+category+"&iconid="+iconid+"&description="+description+"&catcolor="+catcolor);
 				sc = new Scanner(internet.openStream());
-				System.out.println(internet);
+			
 			}
 			
 		}

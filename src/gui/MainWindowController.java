@@ -207,7 +207,7 @@ public class MainWindowController {
 
 	@FXML
 	void undoPressed(ActionEvent event){
-		System.out.println("Undo");
+		
 		TimelineMaker.Memento m = Driver.undo(timelineMaker);
 		if(m != null)
 			timelineMaker.loadMemento(m);	
@@ -218,7 +218,7 @@ public class MainWindowController {
 
 	@FXML
 	void redoPressed(ActionEvent event){
-		System.out.println("Redo");
+		
 		TimelineMaker.Memento m = Driver.redo();
 		if(m != null)
 			timelineMaker.loadMemento(m);
