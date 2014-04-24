@@ -40,7 +40,7 @@ public class DBHelper implements DBHelperAPI {
 	 * executing queries, although I try to use prepared statements if possible
 	 */
 	private Connection connection = null;
-	private ResultSet resultSet = null; // this was a bad idea. make local!!
+	private ResultSet resultSet = null; // this was a bad idea. make local!! 
 	private Statement statement = null;
 
 	/**
@@ -51,10 +51,7 @@ public class DBHelper implements DBHelperAPI {
 	/**
 	 * Used for making database Android compatible, useful to save as a variable
 	 */
-	private static final String ID = "_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE"; // unique
-																								// id
-																								// for
-																								// android
+	private static final String ID = "_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE"; // unique id for android
 
 	/**
 	 * Constructor; sets the database name
