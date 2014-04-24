@@ -110,7 +110,7 @@ public class TimelineMaker {
 			selectedEvent = null;
 			Driver.addMemento(this);
 		} catch (IndexOutOfBoundsException e) {
-			System.out.println("Your database is empty.");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Error loading from Database.");
