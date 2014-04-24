@@ -68,10 +68,19 @@ if($uid!= "''" & $name != "''"){
 if($uid!= "''"){
 	$result = mysqli_query($db, "SELECT * FROM timelines WHERE uid=".$uid);
 	while($row = mysqli_fetch_assoc($result)){
-		echo $row;
+		if($webTeam){
+			$background_color = $row['background_color'];
+			$axis_color = $row['axis_color'];
+			$temp_background_color= substr_replace($background_color, '', 0, -8);
+			$temp_axis_color= substr_replace($axis_color, '', 0, -8);
+			$temp_background_color= substr($temp_background_color, 0, 6)." ";
+			$temp_axis_color= substr($temp_axis_color, 0, 6)." ";
+			$row['background_color']=$temp_background_color;
+			$row['axis_color']=$temp_axis_color;
+			}
      		$json[] = $row;
 		}
-	//echo json_encode($json);
+	echo json_encode($json);
 	//$row = mysqli_fetch_assoc($result);
 	//echo json_encode($row);	
 	//$row = mysqli_fetch_array($result);
