@@ -93,7 +93,7 @@ public class Timeline implements TimelineAPI {
 		axisLabel = AxisLabel.YEARS;
 		setDirty(true);
 		categories = new ArrayList<Category>();
-		categories.add(new Category("DEFAULT"));
+		categories.add(new Category("DEFAULT", Color.WHITE));
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class Timeline implements TimelineAPI {
 		this.events = new ArrayList<TLEvent>();
 		dirty = true;
 		categories = new ArrayList<Category>();
-		categories.add(new Category("DEFAULT"));
+		categories.add(new Category("DEFAULT", Color.WHITE));
 	}
 
 	/**
@@ -130,7 +130,7 @@ public class Timeline implements TimelineAPI {
 	public Timeline(String name, TLEvent[] events, Color colorTL,
 			Color colorBG, AxisLabel axisLabel) {
 		categories = new ArrayList<Category>();
-		categories.add(new Category("DEFAULT"));
+		categories.add(new Category("DEFAULT", Color.WHITE));
 		this.name = name;
 		if (events != null)
 			this.events = new ArrayList<TLEvent>(Arrays.asList(events));
