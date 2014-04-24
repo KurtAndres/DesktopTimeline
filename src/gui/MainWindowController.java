@@ -19,7 +19,6 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -150,8 +149,7 @@ public class MainWindowController {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(
 					"AboutWindow.fxml"));
 			Parent root = (Parent) loader.load();
-			AboutWindowController controller = loader
-					.<AboutWindowController> getController();
+			AboutWindowController controller = loader.<AboutWindowController> getController();
 			Stage stage = new Stage();
 			stage.setTitle("About");
 			Scene scene = new Scene(root);
@@ -207,7 +205,7 @@ public class MainWindowController {
 
 	@FXML
 	void undoPressed(ActionEvent event){
-		
+
 		TimelineMaker.Memento m = Driver.undo(timelineMaker);
 		if(m != null)
 			timelineMaker.loadMemento(m);	
@@ -218,7 +216,7 @@ public class MainWindowController {
 
 	@FXML
 	void redoPressed(ActionEvent event){
-		
+
 		TimelineMaker.Memento m = Driver.redo();
 		if(m != null)
 			timelineMaker.loadMemento(m);
@@ -346,11 +344,9 @@ public class MainWindowController {
 	@FXML
 	void helpPressed(ActionEvent event) {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(
-					"HelpWindow.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("HelpWindow.fxml"));
 			Parent root = (Parent) loader.load();
-			HelpWindowController controller = loader
-					.<HelpWindowController> getController();
+			HelpWindowController controller = loader.<HelpWindowController> getController();
 			Stage stage = new Stage();
 			stage.setTitle("Help");
 			Scene scene = new Scene(root);
