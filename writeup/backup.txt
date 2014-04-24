@@ -1,0 +1,22 @@
+TIMELINE PROJECT – Desktop Version
+Phase 3 Write-up
+Kurt Andres, Leanne Miller, Andrew Thompson, and Conner Vick
+
+INTRODUCTION TO THE PROJECT
+The project is divided into four packages: gui, model, render, and storage. Each package is responsible for different aspects of the application. Each package will be explained in detail below. To start the project run Driver.java in the gui package.
+G.U.I.
+The gui package stores the .fxml, .css, and controller .java files for the various windows used. It also stores Driver.java, which has the main method is a JavaFX Application.
+Model
+
+Render
+
+Storage
+The desktop version maintains its own database (timeline.db) while the user is adding/editing timelines, events etc. This is done in DBHelper.java. On load the program prompts the user for a name and password and phpDBHelper.java makes php calls and gets the user’s data from the online database and loads it into the timeline.db. phpPushHelper.java updates the online database with all of the new data when the user hits save. 
+
+USABILITY TESTS
+
+DIVISION OF WORKLOAD
+Kurt – Managed the online database and created all the PHP files for interacting with the clients. Helped with troubleshooting and error fixing with the interaction between the database and the Desktop version.
+Leanne
+Andrew
+Conner – Created functionality for pulling and pushing to the online database for the desktop version that was adapted for use in the Android and web version. Helped with the Android version’s and web version’s code adaption. Worked on some of the PHP for accessing the database with Kurt. Did a lot of database testing and error fixing.
