@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 
 /**
  * This is the driver for the program. Main launches start.
+ * Also keeps track of the programs mementos.
  */
 public class Driver extends Application {
 	/**
