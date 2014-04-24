@@ -129,9 +129,6 @@ public class MainWindowController {
 	private MenuItem saveMenuItem;
 
 	@FXML
-	private MenuItem printMenuItem;
-
-	@FXML
 	private MenuItem undoMenuItem;
 
 	@FXML
@@ -334,11 +331,6 @@ public class MainWindowController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	@FXML
-	void printPressed(ActionEvent event) {
-		WritableImage snapshot = renderScrollPane.snapshot(null, null);
 	}
 
 	@FXML

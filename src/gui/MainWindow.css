@@ -6,41 +6,6 @@
     -fx-background-color: linear-gradient(-fx-base, white, -fx-base);
 }
 
-/* Applies to all labels */
-//.label{
-//	-fx-font-weight: bold;
-//	-fx-effect: dropshadow(gaussian, -fx-accent, 3, 0, 0, 0);
-//}
-
-/* Applies to all buttons */
-//.button{
-//	-fx-font-weight: bold;
-//	-fx-background-color: linear-gradient(-fx-base, -fx-accent);
-//}
-//.button:hover {
-//	-fx-effect: dropshadow(gaussian, white, 10, 0, 0, 0);
-//}
-//.button:hover:focused {
-//	-fx-background-color: linear-gradient(derive(-fx-accent, 40%), derive(-fx-base, 30%));
-//}
-
-/* Applies to default textfields */
-//.text-field {
-//	-fx-background-color:
-//        -fx-base,
-//        #FFFFFF;
-//    -fx-background-insets: 0, 2;
-//    -fx-background-radius: 0, 0;
-//}
-//.text-field:hover {
-//	-fx-background-color: -fx-accent, #FFFFFF;
-//}
-//.text-field:focused {
-//	-fx-background-color: -fx-accent, #FFFFFF;
-//}
-
-
-
 /* Applies to id = render-pane
  * this should only be the pane which the timeline is rendered on
  * (an instance ) */
@@ -125,3 +90,37 @@
 .page-corner {
 	-fx-background-color: transparent;
 }
+
+/* Applies to all labels */
+//.label{
+//	-fx-font-weight: bold;
+//	-fx-effect: dropshadow(gaussian, -fx-accent, 3, 0, 0, 0);
+//}
+
+/* Applies to all buttons */
+//.button{
+//	-fx-font-weight: bold;
+//	-fx-background-color: linear-gradient(-fx-base, -fx-accent);
+//}
+//.button:hover {
+//	-fx-effect: dropshadow(gaussian, white, 10, 0, 0, 0);
+//}
+//.button:hover:focused {
+//	-fx-background-color: linear-gradient(derive(-fx-accent, 40%), derive(-fx-base, 30%));
+//}
+
+/* Applies to default textfields */
+//.text-field {
+//	-fx-background-color:
+//        -fx-base,
+//        #FFFFFF;
+//    -fx-background-insets: 0, 2;
+//    -fx-background-radius: 0, 0;
+//}
+//.text-field:hover {
+//	-fx-background-color: -fx-accent, #FFFFFF;
+//}
+//.text-field:focused {
+//	-fx-background-color: -fx-accent, #FFFFFF;
+//}
+
