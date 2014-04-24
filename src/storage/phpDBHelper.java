@@ -84,7 +84,7 @@ public class phpDBHelper {
 		Object objT = parser.parse(getTimelines()); //get json string and parse it
 		JSONArray arrayT = (JSONArray)objT; //turn parsed object into array
 		if(arrayT==null) return;
-		
+		if(array==null) return;
 
 		Iterator it = arrayT.iterator();
 		JSONObject jobj;
