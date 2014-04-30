@@ -1,6 +1,6 @@
 <?php 
 //connecting to the db
-$db = mysqli_connect('csdb.wheaton.edu', 'TimelineAdmin', 'kurtconner',"Timeline");
+$db = mysqli_connect('DB-LOCATION', 'DB-UserName', 'DB-Password',"DB-TableName");
 
 //get uid
 $uid = "'".$_GET['uid']."'";
